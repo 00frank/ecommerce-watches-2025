@@ -1,7 +1,7 @@
 interface Category {
     id: number;
     name: string;
-    subCategories: Array<Omit<Category, "subCategories">>;
+    subCategories: Array<Category>;
 }
 
 export default Category 

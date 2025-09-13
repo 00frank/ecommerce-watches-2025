@@ -4,7 +4,7 @@ import useForm from "@/hooks/useForm.hook";
 import { useState } from "react";
 import { Input } from "@/components/ui/input"
 import clsx from "clsx"
-import { LuSearch, LuX } from "react-icons/lu";
+import { Search, X } from "lucide-react";
 
 const SearchInput = () => {
 
@@ -31,7 +31,7 @@ const SearchInput = () => {
                 placeholder=" "
                 className={clsx("w-full border rounded-md px-3 py-6 pr-10 transition-colors duration-200",
                     isFocused ? "border-black" : "border-gray-300", "focus:outline-none focus:ring-1 focus:ring-black-500")} />
-            <LuSearch
+            <Search
                 size={20}
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400"
             />
@@ -44,21 +44,24 @@ const SearchProductModal = () => {
     const [isOpen, setIsOpen] = useState(false)
 
     return (
-        <Drawer open={isOpen} onOpenChange={setIsOpen} direction="top">
+        <Drawer
+            open={isOpen}
+            onOpenChange={setIsOpen}
+            direction="top">
             <DrawerTrigger
                 className="hover:scale-105 cursor-pointer">
-                <LuSearch
+                <Search
                     size={24}
                     strokeWidth={1} />
             </DrawerTrigger>
-            <DrawerContent className="py-20">
-                <div className="w-full justify-center gap-2 flex items-center">
+            <DrawerContent className="py-20 z-[999000]">
+                <div className="w-full justify-center px-6 gap-2 flex items-center">
                     <SearchInput />
-                    <LuX
+                    <X
                         size={24}
                         strokeWidth={1}
                         className="cursor-pointer"
-                        onClick={() => setIsOpen(false)}></LuX>
+                        onClick={() => setIsOpen(false)}></X>
                 </div>
             </DrawerContent>
         </Drawer>
