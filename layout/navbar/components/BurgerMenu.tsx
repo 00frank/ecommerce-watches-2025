@@ -66,14 +66,18 @@ export const Categories = ({ categories }: { categories: Category[] }) => {
 const BurgerContent = ({ children }: { children: React.ReactNode }) => {
 
 
-    const headerHeight = useMemo(() => parseInt(
-        getComputedStyle(document.documentElement)
-            .getPropertyValue("--header-height"),
-        10
-    ), [])
+    const [y, setY] = useState(0)
+    const open = useDrawerContext() //Solo mantemos para que cause renderizados.
 
-    useDrawerContext() //Solo mantemos para que cause renderizados.
-    const y = Math.min(window.scrollY, headerHeight)
+    useLayoutEffect(() => {
+        if (!open) return
+        const h = parseInt(
+            getComputedStyle(document.documentElement).getPropertyValue("--header-height"),
+            10
+        )
+        const y = Math.min(window.scrollY, h)
+        setY(y)
+    }, [open])
 
     return (
         <DrawerContent
