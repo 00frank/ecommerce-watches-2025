@@ -11,7 +11,10 @@ export default function DrawerProvider({ children }: { children: React.ReactNode
 
     const [open, setOpen] = useState(false)
 
-    useMedia("(min-width: 768px)", () => setOpen(false))
+    useMedia({
+        query: "(min-width: 768px)",
+        onMediaChange: () => setOpen(false)
+    })
 
     return (
         <DrawerContext.Provider value={open}>

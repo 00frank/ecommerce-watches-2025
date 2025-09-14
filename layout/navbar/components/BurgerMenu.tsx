@@ -4,7 +4,9 @@ import categories from "@/mocks/categories.mock"
 import Category from "@/types/category.interface"
 import { ArrowLeft, ArrowRight } from "lucide-react"
 import Link from "next/link"
-import { memo, useLayoutEffect, useState } from "react"
+import { memo, useLayoutEffect, useMemo, useState } from "react"
+import { useDrawerContext } from "../provider/Drawer.provider"
+import { on } from "events"
 
 const CategoryItem = memo(({ category }: { category: Category }) => {
 
@@ -63,24 +65,21 @@ export const Categories = ({ categories }: { categories: Category[] }) => {
 
 const BurgerContent = ({ children }: { children: React.ReactNode }) => {
 
-    const [isScrolled, setIsScrolled] = useState(false)
 
-    useLayoutEffect(() => {
-        const handleScroll = () => {
-            setIsScrolled(window.scrollY >= 40)
-        }
-        handleScroll()
-        window.addEventListener("scroll", handleScroll)
-        return () => window.removeEventListener("scroll", handleScroll)
-    }, [])
+    const headerHeight = useMemo(() => parseInt(
+        getComputedStyle(document.documentElement)
+            .getPropertyValue("--header-height"),
+        10
+    ), [])
+
+    useDrawerContext() //Solo mantemos para que cause renderizados.
+    const y = Math.min(window.scrollY, headerHeight)
 
     return (
         <DrawerContent
             className="overflow-y-auto overflow-hidden p-4"
             style={{
-                top: isScrolled
-                    ? "var(--nav-height)"
-                    : "calc(var(--header-height) + var(--nav-height))",
+                top: `calc(var(--nav-height) + var(--header-height) - ${y}px)`,
             }}>
             {children}
         </DrawerContent>
