@@ -1,23 +1,9 @@
 import categories from "@/mocks/categories.mock"
 import Link from "next/link"
 import clsx from "clsx"
+import contactLinks from "@/constants/contactLinks.constant"
 
 const keys = categories.map((category) => category.name)
-
-const contactLinks = [
-    {
-        name: "Contacto",
-        href: "/contacto",
-    },
-    {
-        name: "Empresa",
-        href: "/empresa",
-    },
-    {
-        name: "Preguntas Frecuentes",
-        href: "/preguntas-frecuentes",
-    }
-]
 
 const LinkItem = ({ name, href, className }: { name: string, href: string, className?: string }) => {
     return (

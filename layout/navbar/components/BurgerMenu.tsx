@@ -4,9 +4,8 @@ import categories from "@/mocks/categories.mock"
 import Category from "@/types/category.interface"
 import { ArrowLeft, ArrowRight } from "lucide-react"
 import Link from "next/link"
-import { memo, useLayoutEffect, useMemo, useState } from "react"
+import { memo, useLayoutEffect, useState } from "react"
 import { useDrawerContext } from "../provider/Drawer.provider"
-import { on } from "events"
 
 const CategoryItem = memo(({ category }: { category: Category }) => {
 
@@ -65,9 +64,8 @@ export const Categories = ({ categories }: { categories: Category[] }) => {
 
 const BurgerContent = ({ children }: { children: React.ReactNode }) => {
 
-
     const [y, setY] = useState(0)
-    const open = useDrawerContext() //Solo mantemos para que cause renderizados.
+    const open = useDrawerContext()
 
     useLayoutEffect(() => {
         if (!open) return
