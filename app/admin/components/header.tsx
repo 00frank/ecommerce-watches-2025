@@ -2,14 +2,12 @@
 
 import { SidebarIcon } from "lucide-react"
 
-import { SearchForm } from "@/components/search-form"
+import { SearchForm } from "@/app/admin/components/search-form"
 import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
+  BreadcrumbList
 } from "@/components/ui/breadcrumb"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"

@@ -10,10 +10,9 @@ import {
   Settings2,
   ShoppingBasket,
 } from "lucide-react"
-import { NavMain } from "@/components/nav-main"
-// import { NavProjects } from "@/components/nav-projects"
-import { NavSecondary } from "@/components/nav-secondary"
-import { NavUser } from "@/components/nav-user"
+import { NavMain } from "@/app/admin/components/nav-main"
+import { NavSecondary } from "@/app/admin/components/nav-secondary"
+import { NavUser } from "@/app/admin/components/nav-user"
 import Link from "next/link";
 
 const data = {

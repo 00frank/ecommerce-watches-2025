@@ -1,5 +1,5 @@
-import { AppSidebar } from '@/components/admin/sidebar';
-import { SiteHeader } from '@/components/admin/header';
+import { AppSidebar } from '@/app/admin/components/sidebar';
+import { SiteHeader } from '@/app/admin/components/header';
 import { SidebarProvider } from '@/components/ui/sidebar';
 import { createClient } from '@/utils/supabase/server'
 
