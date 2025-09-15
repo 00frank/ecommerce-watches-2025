@@ -63,7 +63,7 @@ const AboutUs = () => {
 
 export default function Footer() {
     return (
-        <footer className="p-24">
+        <footer className="p-24 bg-[#F3F3F3]">
             <div className="grid w-full max-w-5xl mx-auto grid-cols-1 gap-8 lg:grid-cols-3">
                 <Menu />
                 <Info />
