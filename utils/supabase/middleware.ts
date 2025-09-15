@@ -2,6 +2,15 @@ import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 
 export async function updateSession(request: NextRequest) {
+  const { pathname } = request.nextUrl;
+
+  // If the path does not start with /admin (normal user) return the next response
+  if (!pathname.startsWith('/admin')) {
+    return NextResponse.next({
+      request,
+    })
+  }
+
   let supabaseResponse = NextResponse.next({
     request,
   })
@@ -39,8 +48,8 @@ export async function updateSession(request: NextRequest) {
 
   if (
     !user &&
-    !request.nextUrl.pathname.startsWith('/admin/login') &&
-    !request.nextUrl.pathname.startsWith('/admin/reset')
+    !pathname.startsWith('/admin/login') &&
+    !pathname.startsWith('/admin/reset')
   ) {
     const url = request.nextUrl.clone()
     url.pathname = '/admin/login'
