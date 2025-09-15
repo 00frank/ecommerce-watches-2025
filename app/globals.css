@@ -16,7 +16,8 @@
   --color-primary-800: #2a2aa9;
   --color-primary-900: #2e3192;
   --color-primary-950: #19194d;
-
+  --nav-height: 100px;
+  --header-height: 40px;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
@@ -129,6 +130,8 @@
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
 }
+
+
 
 @layer base {
   * {
