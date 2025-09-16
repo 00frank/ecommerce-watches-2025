@@ -7,6 +7,7 @@ import Categories from "./components/Categories"
 import DrawerMenuTrigger from "./components/DrawerMenuTrigger"
 import SearchProductModal from "./components/SearchProductModal"
 import DrawerProvider from "./provider/Drawer.provider"
+import Container from "@/components/container"
 
 
 export default function Navbar() {
@@ -17,7 +18,7 @@ export default function Navbar() {
                 "flex gap-2 flex-col max-h-min p-0 max-w-full",
                 "w-full sticky border-b border-black/10 top-0 left-0 z-[1000] bg-white justify-center",
             )}>
-                <div className="flex h-[var(--nav-height)] items-center gap-2 px-3 w-full max-w-7xl justify-between">
+                <Container className="flex h-[var(--nav-height)] items-center gap-2 justify-between">
                     <DrawerMenuTrigger />
                     <Link href="/">
                         <Image
@@ -28,7 +29,7 @@ export default function Navbar() {
                         />
                     </Link>
                     <SearchProductModal />
-                </div>
+                </Container>
                 <Categories />
             </NavigationMenu>
             <BurgerMenu />

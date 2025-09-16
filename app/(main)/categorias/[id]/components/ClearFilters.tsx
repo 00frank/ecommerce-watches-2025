@@ -52,7 +52,7 @@ export default function ClearFilters() {
     const priceValue = !max ? `${formatMoney(min)} +` : `${formatMoney(min)} - ${formatMoney(max)}`
 
     return (
-        <div className=" border-b space-y-4 pb-4">
+        <div className="border-b space-y-4 pb-4">
             <div className="flex justify-between items-start">
                 <h4 className=" text-[18px] text-default-800">Filtros:</h4>
                 {

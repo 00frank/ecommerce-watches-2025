@@ -7,8 +7,8 @@ const sortOptions = [
     { value: "best-sellers", label: "Mas vendidos" },
     { value: "price-desc", label: "Precio, menor a mayor" },
     { value: "price-asc", label: "Precio, mayor a menor" },
-    { value: "alpha-asc", label: "Alfabeticamente, A-Z" },
-    { value: "alpha-desc", label: "Alfabeticamente, Z-A" },
+    { value: "alpha-desc", label: "Alfabeticamente, A-Z" },
+    { value: "alpha-asc", label: "Alfabeticamente, Z-A" },
     { value: "date-desc", label: "Fecha, Antiguo a nuevo" },
     { value: "date-asc", label: "Fecha, nuevo a antiguo" },
 ]
@@ -32,13 +32,13 @@ export default function SortProducts() {
                     router.push(`${window.location.pathname}?${params.toString()}`)
                 }}
                 value={sort_by}>
-                <SelectTrigger className="rounded-none text-[18px] border-0 cursor-pointer border-b shadow-none">
-                    <SelectValue placeholder="Ordernar por:" />
+                <SelectTrigger className="rounded-none text-md !text-default-800 border-0 cursor-pointer border-b shadow-none">
+                    <SelectValue id="asdasdasd" className="" placeholder="Ordernar por:" />
                 </SelectTrigger>
                 <SelectContent>
                     {sortOptions.map(i =>
                         <SelectItem
-                            className="text-[18px]"
+                            className="text-[16px] text-default-800"
                             key={i.value}
                             value={i.value}>
                             {i.label}
