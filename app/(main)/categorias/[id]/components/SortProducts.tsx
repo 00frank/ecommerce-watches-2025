@@ -13,7 +13,6 @@ const sortOptions = [
     { value: "date-asc", label: "Fecha, nuevo a antiguo" },
 ]
 
-
 export default function SortProducts() {
 
     const router = useRouter()
@@ -33,12 +32,13 @@ export default function SortProducts() {
                     router.push(`${window.location.pathname}?${params.toString()}`)
                 }}
                 value={sort_by}>
-                <SelectTrigger className="rounded-none border-0 cursor-pointer border-b shadow-none">
-                    <SelectValue className="text-black" placeholder="Ordernar por:" />
+                <SelectTrigger className="rounded-none text-[18px] border-0 cursor-pointer border-b shadow-none">
+                    <SelectValue placeholder="Ordernar por:" />
                 </SelectTrigger>
                 <SelectContent>
                     {sortOptions.map(i =>
                         <SelectItem
+                            className="text-[18px]"
                             key={i.value}
                             value={i.value}>
                             {i.label}

@@ -8,7 +8,7 @@ export default function Categories() {
       <NavigationMenuList className="py-2 max-w-4xl w-full  flex-wrap gap-2">
         {categories.map((category) => (
           <NavigationMenuItem key={category.id}>
-            <NavigationMenuTrigger className="text-black/60 text-[16px] text-semibold uppercase cursor-pointer font-normal hover:underline transition-colors duration-200">
+            <NavigationMenuTrigger className="text-default-950 text-[16px] text-semibold uppercase cursor-pointer font-normal hover:underline transition-colors duration-200">
               {category.name}
             </NavigationMenuTrigger>
             {category.subCategories && (

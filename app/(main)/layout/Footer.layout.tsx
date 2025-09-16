@@ -8,7 +8,7 @@ const keys = categories.map((category) => category.name)
 const LinkItem = ({ name, href, className }: { name: string, href: string, className?: string }) => {
     return (
         <li className={clsx(
-            "hover:underline text-black/60 hover:text-black transition-colors duration-200  cursor-pointer",
+            "hover:underline text-default-950 hover:text-black transition-colors duration-200  cursor-pointer",
             className
         )}>
             <Link replace href={href}>{name}</Link>
@@ -53,7 +53,7 @@ const AboutUs = () => {
     return (
         <section className="space-y-4  h-full">
             <h4 className="text-xl">El Mundo del Reloj</h4>
-            <p className="text-black/60">
+            <p className="text-default-800">
                 Desde hace 40 años proveemos a todo el país de toda la gama de productos para joyerías,
                 relojerías, artesanos, revendedores e independientes.
             </p>
@@ -63,7 +63,7 @@ const AboutUs = () => {
 
 export default function Footer() {
     return (
-        <footer className="p-24 bg-[#F3F3F3]">
+        <footer className="p-24 border-t border-t-black/10 bg-[#fafafa]">
             <div className="grid w-full max-w-5xl mx-auto grid-cols-1 gap-8 lg:grid-cols-3">
                 <Menu />
                 <Info />

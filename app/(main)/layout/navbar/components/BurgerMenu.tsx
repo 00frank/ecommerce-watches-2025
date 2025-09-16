@@ -21,7 +21,7 @@ const CategoryItem = memo(({ category }: { category: Category }) => {
             <button
                 className="flex group w-full hover:bg-gray-100 p-1 px-2 rounded-md cursor-pointer items-center justify-between "
                 onClick={() => setIsOpen(!isOpen)}>
-                <h3 className="text-black/70 group-hover:underline  text-semibold  text-[18px] uppercase group-hover:text-black transition-colors duration-200">
+                <h3 className="text-default-950 group-hover:underline  text-semibold  text-[18px] uppercase group-hover:text-black transition-colors duration-200">
                     {category.name}
                 </h3>
                 <ArrowRight size={20} strokeWidth={1} />
@@ -54,7 +54,7 @@ export const Categories = ({ categories }: { categories: Category[] }) => {
                         category={cat} /> :
                     <li key={cat.id}>
                         <Link
-                            className="hover:underline text-black/70  text-semibold p-1 px-2 text-[18px] uppercase hover:text-black transition-colors duration-200  cursor-pointer"
+                            className="hover:underline text-default-900 text-semibold p-1 px-2 text-[18px] uppercase hover:text-black transition-colors duration-200  cursor-pointer"
                             href={`/categoria/${cat.id}`}>{cat.name}</Link>
                     </li>
             )}

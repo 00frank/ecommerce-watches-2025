@@ -10,7 +10,7 @@ export default function Contact() {
                 <img
                     loading="lazy"
                     src="wsp.webp"
-                    className="object-cover"
+                    className="object-contain w-full"
                     alt="Contacto" />
             </picture>
             <Button

@@ -17,7 +17,7 @@ const SearchInput = () => {
         <div className="relative max-w-3xl w-full">
             <label
                 className={clsx("absolute left-3 transition-all duration-200 pointer-events-none",
-                    isFocused || hasValue ? "-top-2 text-xs text-black bg-white px-1 translate-y-0" : "top-1/2 -translate-y-1/2 text-gray-400 text-base")}
+                    isFocused || hasValue ? "-top-2 text-xs text-default-950 bg-white px-1 translate-y-0" : "top-1/2 -translate-y-1/2 text-gray-400 text-base")}
             >
                 Buscar producto
             </label>
