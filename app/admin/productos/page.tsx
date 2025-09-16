@@ -14,7 +14,7 @@ export default async function ProductosPage({ searchParams }: { searchParams: Se
   const supabase = await createClient();
   const params = await searchParams;
 
-  const page = params?.page 
+  const page = params?.page
     ? Math.max(1, parseInt(params.page || '1', 10))
     : 1;
 
@@ -27,12 +27,11 @@ export default async function ProductosPage({ searchParams }: { searchParams: Se
 
   const { data: products, error } = await supabase
     .from('products')
-    .select('*')
+    .select('*, category:category_id(*)')
     .order('created_at', { ascending: false })
     .range(from, to);
 
   if (error) {
-    console.error('Error al cargar productos:', error);
     return <div>Error al cargar los productos</div>;
   }
 
@@ -68,11 +67,10 @@ export default async function ProductosPage({ searchParams }: { searchParams: Se
               <Link
                 key={pageNumber}
                 href={`/admin/productos?page=${pageNumber}`}
-                className={`inline-flex items-center border-t-2 px-4 pt-4 text-sm font-medium ${
-                  page === pageNumber
-                    ? 'border-indigo-500 text-indigo-600'
-                    : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
-                }`}
+                className={`inline-flex items-center border-t-2 px-4 pt-4 text-sm font-medium ${page === pageNumber
+                  ? 'border-indigo-500 text-indigo-600'
+                  : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
+                  }`}
               >
                 {pageNumber}
               </Link>
