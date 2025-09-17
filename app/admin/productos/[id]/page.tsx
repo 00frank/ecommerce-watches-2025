@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
-import { CategoriesSelect } from './components/CategoriesSelect';
+import { CategoriesSelect } from '../components/CategoriesSelect';
 import { toast } from 'sonner';
 
 import Product from '@/types/product.interface';
@@ -243,6 +243,27 @@ export default function ProductPage() {
 								placeholder="Nombre del producto"
 							/>
 						</div>
+
+						<div className="space-y-2">
+              <div className="flex flex-row gap-4">
+                <div className="space-y-2 w-2/4">
+                  <Label>SKU</Label>
+                  <Input
+                    id="sku"
+                    name="sku"
+                    placeholder="Ej: REL-XYZ-001"
+                  />
+                </div>
+                <div className="space-y-2 w-2/4">
+                  <Label>Marca</Label>
+                  <Input
+                    id="brand"
+                    name="brand"
+                    placeholder="Ej: Casio, Rolex, etc."
+                  />
+                </div>
+              </div>
+            </div>
 
 						<div className="space-y-2">
 							<div className="flex flex-row gap-4">
