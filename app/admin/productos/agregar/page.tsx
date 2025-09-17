@@ -74,6 +74,7 @@ export default async function AgregarProducto() {
                 <div className="space-y-2 w-1/3">
                   <Label htmlFor="available">Stock</Label>
                   <Switch
+                    checked
                     name="available"
                     id="available"
                   />
