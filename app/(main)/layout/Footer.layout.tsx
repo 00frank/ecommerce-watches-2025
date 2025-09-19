@@ -3,7 +3,7 @@ import Link from "next/link"
 import clsx from "clsx"
 import contactLinks from "@/constants/contactLinks.constant"
 
-const keys = categories.map((category) => category.name)
+const keys = categories.map((category) => category.title)
 
 const LinkItem = ({ name, href, className }: { name: string, href: string, className?: string }) => {
     return (

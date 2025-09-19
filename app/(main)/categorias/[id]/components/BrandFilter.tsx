@@ -38,7 +38,7 @@ const Brand = ({
             <Checkbox
                 checked={is_checked}
                 className="h-5 w-5 !bg-white rounded-[4px] border-default-400 cursor-pointer transition-transform active:scale-95 !text-default-950" />
-            <p className="text-[18px] text-default-800">{name} ({item_count})</p>
+            <p className=" text-default-800">{name} ({item_count})</p>
         </li>
     )
 }

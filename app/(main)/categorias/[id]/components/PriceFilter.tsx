@@ -76,7 +76,6 @@ export default function PriceFilter() {
     return (
         <div className="space-y-8">
             <h4 className=" text-[18px] text-default-800">Precio</h4>
-            <p className="underline">El precio más alto es {formatMoney(1000)}</p>
             <div className="flex gap-2">
                 <PriceInput
                     placeholder="Min"
