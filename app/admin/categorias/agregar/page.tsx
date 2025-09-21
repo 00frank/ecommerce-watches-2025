@@ -2,7 +2,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
 import { Switch } from "@/components/ui/switch"
-import { ServerCategoriesSelect } from "../components/CategoriesSelect"
+// import { ServerCategoriesSelect } from "../components/MainCategoriesSelect"
 import { ImageProductInput } from "../components/ImageProductInput"
 import { SubmitButton } from "../components/SubmitButton"
 import { createProduct } from "./actions"
@@ -86,7 +86,7 @@ export default async function AgregarProducto() {
               <div className="flex flex-row gap-4">
                 <div className="space-y-2 w-2/3">
                   <Label htmlFor="categoryId">Categoría*</Label>
-                  <ServerCategoriesSelect />
+                  {/* <ServerCategoriesSelect /> */}
                 </div>
                 <div className="space-y-2 w-1/3">
                   <Label htmlFor="color">Color</Label>

@@ -7,11 +7,11 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
-import { CategoriesSelect } from '../components/CategoriesSelect';
+import { MainCategoriesSelect } from '../components/MainCategoriesSelect';
 import { toast } from 'sonner';
 
 import Category from '@/types/category.interface';
-import Image from 'next/image';
+import { Select } from '@/components/ui/select';
 
 export default function CategoryPage() {
   const { id } = useParams();
@@ -27,6 +27,7 @@ export default function CategoryPage() {
     title: '',
     slug: '',
     description: '',
+    mainCategory: { id: 0, title: '' },
     parent_id: 0,
     is_active: true,
     meta_title: '',
@@ -40,17 +41,18 @@ export default function CategoryPage() {
       try {
         const { data, error } = await supabase
           .from('categories')
-          .select(`*`)
+          .select(`*, mainCategory:parent_id(*)`)
           .eq('id', id)
           .single();
 
         if (error) throw error;
-
+        console.log("data", data);
         setCategory(data);
         setFormData({
           title: data.title || '',
           slug: data.slug || '',
           description: data.description || '',
+          mainCategory: data.mainCategory || null,
           parent_id: data.parent_id || 0,
           is_active: data.is_active || true,
           meta_title: data.meta_title || '',
@@ -67,7 +69,7 @@ export default function CategoryPage() {
     fetchCategory();
   }, [id]);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: any) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
@@ -248,19 +250,9 @@ export default function CategoryPage() {
           </div>
 
           <div className="space-y-6">
-            <div>
-              {!!category.parent_id && (
-                <>
-                  <Label>Categoria padre</Label>
-                  <Input
-                    id="parent_id"
-                    name="parent_id"
-                    value={formData.parent_id}
-                    onChange={handleInputChange}
-                    placeholder="ID de la categoria padre"
-                  />
-                </>
-              )}
+            <div className="space-y-2">
+              <Label>Categoria padre</Label>
+              <MainCategoriesSelect value={formData.mainCategory.title} />
             </div>
           </div>
         </div>
