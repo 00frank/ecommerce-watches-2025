@@ -1,6 +1,5 @@
 import Container from "@/components/container"
 import ProductCard from "@/components/productCard"
-import { Button } from "@/components/ui/button"
 import productMock from "@/mocks/product.mock"
 import { Product } from "@/types"
 import clsx from "clsx"

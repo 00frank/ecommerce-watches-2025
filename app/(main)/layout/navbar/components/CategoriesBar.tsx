@@ -1,21 +1,23 @@
-import { NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger } from "@/components/ui/navigation-menu"
-import { createClient } from "@/utils/supabase/server";
-import { buildCategoryTree } from "@/utils";
+"use client"
+import { NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger } from "@/components/ui/navigation-menu";
+import { Category } from "@/types";
+import isCategoryActive from "@/utils/isCategoryActive.util";
+import clsx from "clsx";
+import { useParams } from "next/navigation";
 
-// export const revalidate = 1800
+export default function CategoriesBar({ categories }: { categories: Array<Category> }) {
 
-export default async function Categories() {
-  const supabase = await createClient();
-  const { data: categories } = await supabase.from('categories').select('*').order('id', { ascending: true });
-  if (!categories) return null;
-  const categoriesTree = buildCategoryTree(categories)
+  const { category_slug } = useParams()
 
   return (
     <div className="max-md:hidden">
       <NavigationMenuList className="py-2 max-w-4xl w-full  flex-wrap gap-2">
-        {categoriesTree.map((category) => (
+        {categories.map((category) => (
           <NavigationMenuItem key={category.id}>
-            <NavigationMenuTrigger className="text-default-950  text-semibold uppercase cursor-pointer font-normal hover:underline transition-colors duration-200">
+            <NavigationMenuTrigger className={clsx(
+              "text-default-950 text-[15px]  text-semibold uppercase cursor-pointer font-normal hover:underline transition-colors duration-200",
+              isCategoryActive(category, category_slug) && "font-bold underline"
+            )}>
               {category.title}
             </NavigationMenuTrigger>
             {category.subCategories && (

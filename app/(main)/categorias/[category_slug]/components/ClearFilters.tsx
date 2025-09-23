@@ -1,5 +1,5 @@
 "use client"
-import formatMoney from "@/utils/formatMoney.utilt"
+import formatMoney from "@/utils/formatMoney.util"
 import { X } from "lucide-react"
 import { useSearchParams } from "next/navigation"
 import { useRouter } from "next/navigation"
@@ -17,7 +17,7 @@ const FilterChip = ({ value, type, removeFilter }: FilterChipProps) => {
             <button
                 onClick={removeFilter}
                 className="border active:scale-95 transition-transform flex hover:border-2 cursor-pointer hover:border-default-700 text-default-950 items-center gap-2 px-2 p-1 rounded-2xl">
-                <p className="text-[18px] text-default-950"><span className="font-medium">{type}</span>: {value}</p>
+                <p className="text-[16px] text-default-950"><span className="font-medium">{type}</span>: {value}</p>
                 <X size={16} strokeWidth={1} />
             </button>
         </li>
@@ -30,11 +30,9 @@ export default function ClearFilters() {
 
     const router = useRouter()
 
-    const priceMin = searchParams.get("price_min") || ""
-    const priceMax = searchParams.get("price_max") || ""
     const brands = searchParams.getAll("brand")
 
-    const hasAnyFilter = [priceMin, priceMax, ...brands].some(value => value)
+    const hasAnyFilter = [...brands].some(value => value)
 
     const clearFilters = () => {
         const refparams = new URLSearchParams(searchParams.toString())
@@ -47,9 +45,6 @@ export default function ClearFilters() {
         filters.forEach(({ param, value }) => refparams.delete(param, value))
         router.push(`?${refparams.toString()}`)
     }
-
-    const [min, max] = [Number(priceMin), Number(priceMax)]
-    const priceValue = !max ? `${formatMoney(min)} +` : `${formatMoney(min)} - ${formatMoney(max)}`
 
     return (
         <div className="border-b space-y-4 pb-4">
@@ -66,15 +61,6 @@ export default function ClearFilters() {
                 }
             </div>
             <ul className="flex-wrap flex gap-2 w-full">
-                {
-                    (priceMin || priceMax) &&
-                    <FilterChip
-                        type={"Precio"}
-                        value={priceValue}
-                        removeFilter={() => {
-                            removeFilter([{ param: "price_min", value: priceMin }, { param: "price_max", value: priceMax }])
-                        }} />
-                }
                 {brands.map(value =>
                     <FilterChip
                         key={"brand" + value}

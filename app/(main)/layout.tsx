@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Lato } from "next/font/google";
 import "../globals.css";
-import Footer from "./layout/Footer.layout";
+import Footer from "./layout/footer";
 import Header from "./layout/Header.layout";
 import Navbar from "./layout/navbar";
 

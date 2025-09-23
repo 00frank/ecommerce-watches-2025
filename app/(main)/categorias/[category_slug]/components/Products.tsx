@@ -1,18 +1,14 @@
 import ProductCard from "@/components/productCard"
 import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination"
-import productMock from "@/mocks/product.mock"
+import { Product } from "@/types"
 
-const productsCards = Array.from({ length: 20 }).map((_, i) => ({
-    ...productMock,
-    id: i + 1,
-}))
 
-export default function Products() {
+export default function Products({ products = [] }: { products: Product[] }) {
     return (
         <section className="flex w-full justify-end gap-12 flex-col">
             <div className="grid grid-cols-2 sm:grid-cols-3  xl:grid-cols-4 gap-2 sm:gap-4">
                 {
-                    productsCards.map(product => (
+                    products.map(product => (
                         <ProductCard key={product.id} {...product} />
                     ))
                 }
