@@ -23,7 +23,7 @@ export default function SearchProduct({ onSearch }: Props) {
     const hasValue = search.length > 0
 
     const handleSearch = (value: string = search) => {
-        if (value === searchParams.get("query")) return
+        if (value === searchParams.get("query")) return //En caso de que el valor cambio, no se haga ningun cambio de URL (evita peticiones innecesarias)
         const s = new URLSearchParams(searchParams)
         s.set("query", value)
         router.push(`/search/?${s}`)
@@ -52,7 +52,7 @@ export default function SearchProduct({ onSearch }: Props) {
                 onFocus={() => setIsFocused(true)}
                 onBlur={() => {
                     setIsFocused(false)
-                    handleSearch()
+                    if (!hasValue) handleSearch("")
                 }}
                 placeholder=" "
                 className={clsx("w-full border rounded-md px-3 py-6 pr-10 transition-colors duration-200",

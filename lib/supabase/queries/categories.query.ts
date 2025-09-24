@@ -1,4 +1,3 @@
-import { Category } from "@/types";
 import { SupabaseClientType } from "@/types/supabaseClient.type";
 import { buildCategoryTree } from "@/utils/buildCategoryTree.util";
 
@@ -10,7 +9,9 @@ export default class CategoriesQuery {
             .select('*')
             .order('id', { ascending: true })
 
-        const categoriesTree = buildCategoryTree(categories as Array<Omit<Category, 'subCategories'>>)
+        if (!categories) return []
+
+        const categoriesTree = buildCategoryTree(categories)
         return categoriesTree
     }
 

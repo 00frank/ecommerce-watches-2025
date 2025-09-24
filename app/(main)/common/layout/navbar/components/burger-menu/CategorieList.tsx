@@ -7,7 +7,20 @@ import Link from "next/link"
 import { useParams } from "next/navigation"
 import { memo, useState } from "react"
 
-const CategoryItem = memo(({ category, isLinkActive, seeAllActive }: { category: Category } & { isLinkActive: boolean, seeAllActive: boolean }) => {
+interface CategoryItemProps {
+    category: Category,
+    isLinkActive: boolean,
+    seeAllActive: boolean
+}
+
+
+interface CategoryLinkProps {
+    slug: string,
+    title: string,
+    isLinkActive: boolean
+}
+
+const CategoryItem = memo(({ category, isLinkActive, seeAllActive }: CategoryItemProps) => {
 
     const [isOpen, setIsOpen] = useState(false)
 
@@ -20,11 +33,11 @@ const CategoryItem = memo(({ category, isLinkActive, seeAllActive }: { category:
         <li>
             <button
                 className={clsx(
-                    "flex group w-full hover:bg-gray-100 p-1 px-2  cursor-pointer items-center justify-between ",
-                    isLinkActive && "bg-gray-100"
+                    "flex group w-full hover:bg-gray-100 p-1 px-2  cursor-pointer items-center justify-between text-default-700",
+                    isLinkActive && "bg-gray-100 text-default-950"
                 )}
                 onClick={() => setIsOpen(!isOpen)}>
-                <h3 className="text-default-950  text-semibold  text-md uppercase group-hover:text-black transition-colors duration-200">
+                <h3 className="text-semibold  text-md uppercase group-hover:text-default-950 transition-colors duration-200">
                     {category.title}
                 </h3>
                 <ArrowRight size={20} strokeWidth={1} />
@@ -38,7 +51,7 @@ const CategoryItem = memo(({ category, isLinkActive, seeAllActive }: { category:
                         <h3>{category.title}</h3>
                     </button>
                     <CategoryLink
-                        slug={category.slug}
+                        slug={category.slug || ""}
                         title={"Ver todo"}
                         isLinkActive={seeAllActive}
                     />
@@ -51,7 +64,7 @@ const CategoryItem = memo(({ category, isLinkActive, seeAllActive }: { category:
     )
 })
 
-const CategoryLink = ({ slug, title, isLinkActive }: Pick<Category, 'slug' | 'title'> & { isLinkActive: boolean }) => {
+const CategoryLink = ({ slug, title, isLinkActive }: CategoryLinkProps) => {
     return (
         <li className={clsx(
             "p-1 px-2 flex",
@@ -59,8 +72,8 @@ const CategoryLink = ({ slug, title, isLinkActive }: Pick<Category, 'slug' | 'ti
         )}>
             <Link
                 className={clsx(
-                    "hover:underline w-full  text-default-900 text-semibold text-md uppercase hover:text-black transition-colors duration-200  cursor-pointer",
-                    isLinkActive && "underline !text-black "
+                    "hover:underline w-full text-default-700 text-semibold text-md uppercase hover:text-default-950 transition-colors duration-200  cursor-pointer",
+                    isLinkActive && "underline !text-default-950 "
                 )}
                 href={`/categorias/${slug}`}>{title}</Link>
         </li>
@@ -85,8 +98,8 @@ export default function CategoriesList({ categories }: { categories: Category[] 
                         category={cat} /> :
                     <CategoryLink
                         key={cat.id}
-                        slug={cat.slug}
-                        title={cat.title}
+                        slug={cat.slug || ""}
+                        title={cat.title || ""}
                         isLinkActive={isEqualSlug}
                     />
             })}

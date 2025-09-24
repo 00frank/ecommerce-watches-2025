@@ -1,8 +1,9 @@
 import { Category } from "@/types"
+import { CategoryDatabase } from "@/types/category.interface"
 
 export type CategoryTree = Category
 
-export function buildCategoryTree(rows: Array<Omit<Category, "subCategories">>): Array<CategoryTree> {
+export function buildCategoryTree(rows: Array<CategoryDatabase>): Array<CategoryTree> {
 
 
   const byId = new Map<number, CategoryTree>()

@@ -18,9 +18,9 @@ export default function CategoriesList({ categories }: { categories: Array<Categ
                         key={category.id}
                         className={clsx(
                             "uppercase",
-                            isCategoryActive(category, category_slug) && "font-bold underline"
+                            isCategoryActive(category, category_slug) && "font-medium text-default-950 underline"
                         )}
-                        name={category.title}
+                        name={category.title || ""}
                         href={`/categorias/${category.slug}`} />
                 ))}
             </ul>
