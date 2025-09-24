@@ -51,6 +51,8 @@ const CategoryItem = memo(({ category, isLinkActive, seeAllActive }: { category:
     )
 })
 
+CategoryItem.displayName = "CategoryItem"
+
 const CategoryLink = ({ slug, title, isLinkActive }: Pick<Category, 'slug' | 'title'> & { isLinkActive: boolean }) => {
     return (
         <li className={clsx(

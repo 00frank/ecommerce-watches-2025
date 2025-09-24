@@ -18,7 +18,7 @@ const ImageContainer = ({ image_url, name }: { image_url: string, name: string }
     )
 }
 
-interface ProductInfoProps extends Omit<Product, "image_url"> { }
+type ProductInfoProps = Omit<Product, "image_url"> 
 
 const ProductInfo = ({
     brand,

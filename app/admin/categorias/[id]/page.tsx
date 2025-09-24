@@ -69,7 +69,7 @@ export default function CategoryPage() {
     fetchCategory();
   }, [id]);
 
-  const handleInputChange = (e: any) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
