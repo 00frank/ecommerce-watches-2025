@@ -1,12 +1,12 @@
-import ProductCard from "@/components/productCard"
+import ProductCard from "@/app/(main)/common/components/productCard"
 import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination"
-import { Product } from "@/types"
+import { ProductDatabase } from "@/types/product.interface"
 
 
-export default function Products({ products = [] }: { products: Product[] }) {
+export default function Products({ products = [] }: { products: ProductDatabase[] }) {
     return (
         <section className="flex w-full justify-end gap-12 flex-col">
-            <div className="grid grid-cols-2 sm:grid-cols-3  xl:grid-cols-4 gap-2 sm:gap-4">
+            <div className="grid grid-cols-2 justify-start flex-1 sm:grid-cols-3  xl:grid-cols-4 gap-2 sm:gap-4">
                 {
                     products.map(product => (
                         <ProductCard key={product.id} {...product} />

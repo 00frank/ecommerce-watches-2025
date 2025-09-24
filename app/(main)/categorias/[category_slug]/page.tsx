@@ -1,51 +1,42 @@
 import Container from "@/components/container"
-import BrandFilter from "./components/BrandFilter"
-import ClearFilters from "./components/ClearFilters"
-import FiltersDrawer from "./components/FilterDrawer"
-import Products from "./components/Products"
-import SortProducts from "./components/SortProducts"
 import { Params } from "@/types/params.type"
 import { SearchParams } from "@/types/searchParams.type"
 import ProductsQuery from "@/lib/supabase/queries/products.query"
-import { createClient } from "@/utils/supabase/server"
-
+import { notFound } from "next/navigation"
+import { createClient } from "@/lib/supabase/server"
+import CategoriesQuery from "@/lib/supabase/queries/categories.query"
+import ProductList from "../../common/container/product-list"
 
 export default async function CategoryPage({ searchParams: sp, params: p }: { searchParams: Promise<SearchParams>, params: Promise<Params> }) {
 
     const { category_slug } = await p
-    const { brand, sort_by } = await sp
+    const { brand = "", sort_by } = await sp
+
+    const categorias = await CategoriesQuery.getSubCategoriesIdsBySlug(await createClient(), category_slug || "")
+
+    if (!categorias) return notFound()
 
     const products = await ProductsQuery.getProducts(await createClient(), {
         filter: {
-            category_slug: category_slug,
-            brand: brand
+            categories_id: categorias,
+            brand: brand,
         },
         sort: sort_by
     })
 
-    const brands = await ProductsQuery.getDistinctProductBrands(await createClient(), {
-        category_slug: category_slug
+    if (!products || products.length == 0) return notFound()
+
+    const brands = await ProductsQuery.getBrandsCountsByCategoriesId(await createClient(), {
+        categories_id: categorias
     })
 
-    console.log(brands)
+    if (!brands) return notFound()
 
     return (
-        <Container
-            as="main"
-            className="min-h-[75dvh]  py-12 gap-8 flex flex-col">
-            <section className="flex justify-between flex-wrap md:justify-end items-center gap-8 flex-[0.1]">
-                <FiltersDrawer />
-                <SortProducts />
-                <h4 className="text-default-800 font-medium">97 Productos</h4>
-            </section>
-            <div className="flex flex-1 gap-8  w-full ">
-                <aside className="max-w-[275px] w-full max-md:hidden  space-y-8">
-                    <ClearFilters />
-                    {/* <BrandFilter brands={brands} /> */}
-                </aside>
-                <Products products={products} />
-            </div>
+        <Container>
+            <ProductList
+                brands={brands}
+                products={products} />
         </Container>
-
     )
 }

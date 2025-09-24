@@ -11,7 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { createClient } from "@/utils/supabase/client"
+import { createClient } from "@/lib/supabase/client"
 import { buildCategoryTree, CategoryTree } from "@/utils/buildCategoryTree.util";
 
 interface CategoriesSelectProps {

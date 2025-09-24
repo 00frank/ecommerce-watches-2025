@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { Lato } from "next/font/google";
 import "../globals.css";
-import Footer from "./layout/footer";
-import Header from "./layout/Header.layout";
-import Navbar from "./layout/navbar";
+import Footer from "./common/layout/footer";
+import Header from "./common/layout/Header.layout";
+import Navbar from "./common/layout/navbar";
+import ProductSearchProvider from "./common/provider/ProductSearch.provider";
 
 
 const lato = Lato({
@@ -29,10 +30,12 @@ export default function RootLayout({
       <body
         className={`${lato.className} antialiased`}
       >
-        <Header />
-        <Navbar />
-        {children}
-        <Footer />
+        <ProductSearchProvider>
+          <Header />
+          <Navbar />
+          {children}
+          <Footer />
+        </ProductSearchProvider>
       </body>
     </html>
   );

@@ -1,10 +1,10 @@
 import { Category } from "@/types";
+import { SupabaseClientType } from "@/types/supabaseClient.type";
 import { buildCategoryTree } from "@/utils/buildCategoryTree.util";
-import { SupabaseClient } from "@supabase/supabase-js";
 
 export default class CategoriesQuery {
 
-    static async getAllCategories(client: SupabaseClient) {
+    static async getAllCategories(client: SupabaseClientType) {
         const { data: categories } = await client
             .from('categories')
             .select('*')
@@ -14,20 +14,45 @@ export default class CategoriesQuery {
         return categoriesTree
     }
 
-    static async getCategoryBySlug(client: SupabaseClient, category_slug?: string) {
-        const { data: category } = await client
+    static async getCategoryBySlug(client: SupabaseClientType, category_slug?: string) {
+        let query = client
             .from('categories')
             .select('*')
-            .eq('slug', category_slug)
-            .single()
+
+        if (category_slug) {
+            query = query.eq('slug', category_slug)
+        }
+
+        const { data: category } = await query.single()
+
         return category
     }
 
-    static async getSubCategoriesByParentId(client: SupabaseClient, parent_id?: number) {
-        const { data } = await client
+    static async getSubCategoriesIdsBySlug(client: SupabaseClientType, slug: string) {
+
+
+        const category = await this.getCategoryBySlug(client, slug)
+
+        if (!category) return
+
+        let query = client
             .from('categories')
-            .select('*')
-            .eq('parent_id', parent_id)
-        return data;
+            .select('id')
+
+        //Si es `parent_id` =  null es una categoria padre
+
+        if (category.parent_id) {
+            return [category.id]
+        }
+
+        const { data } = await query.eq('parent_id', category.id)
+
+        if (data && data.length > 0) {
+            return data.map((item) => item.id)
+        } else {
+            return [category.id]
+        }
+
+
     }
 }

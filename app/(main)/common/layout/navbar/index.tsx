@@ -8,7 +8,7 @@ import SearchProductModal from "./components/SearchProductModal"
 import DrawerProvider from "./provider/Drawer.provider"
 import Container from "@/components/container"
 import CategoriesQuery from "@/lib/supabase/queries/categories.query"
-import { createClient } from "@/utils/supabase/server"
+import { createClient } from "@/lib/supabase/server"
 import CategoriesBar from "./components/CategoriesBar"
 
 

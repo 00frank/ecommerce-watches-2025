@@ -1,6 +1,6 @@
 'use server'
 
-import { createClient } from '@/utils/supabase/server'
+import { createClient } from '@/lib/supabase/server'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 
@@ -42,12 +42,12 @@ export async function createProduct(formData: FormData) {
         .upload(`${fileName}`, imageFile)
 
       if (uploadError) throw uploadError
-      
+
       // Get public URL
       const { data: { publicUrl } } = await supabase.storage
         .from('product-images')
         .getPublicUrl(uploadData.path)
-      
+
       productData.image_url = publicUrl
     }
 

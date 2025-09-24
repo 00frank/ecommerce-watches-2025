@@ -10,6 +10,7 @@ export default function useForm<T>(initialState: T) {
         })
     }
 
+
     return {
         form,
         onChange,

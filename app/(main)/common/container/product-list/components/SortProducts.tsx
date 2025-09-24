@@ -1,13 +1,14 @@
 "use client"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import ProductSortTypes from "@/types/productSort.type";
 import { X } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 
-const sortOptions = [
-    { value: "alpha-desc", label: "Alfabeticamente, A-Z" },
-    { value: "alpha-asc", label: "Alfabeticamente, Z-A" },
-    { value: "date-desc", label: "Fecha, Antiguo a nuevo" },
-    { value: "date-asc", label: "Fecha, nuevo a antiguo" },
+const sortOptions: Array<{ value: ProductSortTypes, label: string }> = [
+    { value: "alpha-asc", label: "Alfabeticamente, A-Z" },
+    { value: "alpha-desc", label: "Alfabeticamente, Z-A" },
+    { value: "date-asc", label: "Fecha, Antiguo a nuevo" },
+    { value: "date-desc", label: "Fecha, Nuevo a antiguo" },
 ]
 
 export default function SortProducts() {
@@ -24,9 +25,9 @@ export default function SortProducts() {
         <div className="flex items-center">
             <Select
                 onValueChange={(value) => {
-                    const params = new URLSearchParams(searchParams.toString())
+                    const params = new URLSearchParams(searchParams)
                     params.set("sort_by", value)
-                    router.push(`${window.location.pathname}?${params.toString()}`)
+                    router.push(`${window.location.pathname}?${params}`)
                 }}
                 value={sort_by}>
                 <SelectTrigger className="rounded-none text-md !text-default-800 border-0 cursor-pointer border-b shadow-none">
@@ -47,11 +48,12 @@ export default function SortProducts() {
                 <button>
                     <X
                         onClick={() => {
-                            const params = new URLSearchParams(searchParams.toString())
+                            const params = new URLSearchParams(searchParams)
                             params.delete("sort_by")
-                            router.replace(`${window.location.pathname}?${params.toString()}`)
+                            router.replace(`${window.location.pathname}?${params}`)
                         }}
                         cursor="pointer"
+                        className="hover:scale-105"
                         size={24}
                         strokeWidth={1} />
                 </button>

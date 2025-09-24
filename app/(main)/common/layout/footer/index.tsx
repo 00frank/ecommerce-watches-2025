@@ -2,7 +2,7 @@ import contactLinks from "@/constants/contactLinks.constant"
 import CategoriesList from "./components/CategoriesList"
 import LinkItem from "./components/LinkItem"
 import CategoriesQuery from "@/lib/supabase/queries/categories.query"
-import { createClient } from "@/utils/supabase/server"
+import { createClient } from "@/lib/supabase/server"
 
 
 const Info = () => {

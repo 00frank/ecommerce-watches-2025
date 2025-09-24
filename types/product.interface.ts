@@ -1,18 +1,10 @@
 import Category from "./category.interface";
+import { Database } from "./database.type";
 
-interface Product {
-    id: number
-    name: string
-    has_stock: boolean
-    sku: string
-    brand: string
-    description: string
-    is_active: boolean
-    color: string
-    category_id: number
-    created_at: string
+export type ProductDatabase = Database["public"]["Tables"]["products"]["Row"]
+
+interface Product extends ProductDatabase {
     category: Category
-    image_url: string
 }
 
 export default Product 

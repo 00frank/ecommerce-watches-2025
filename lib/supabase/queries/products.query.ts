@@ -1,100 +1,123 @@
-import { Product } from "@/types";
-import { SupabaseClient } from "@supabase/supabase-js";
-import CategoriesQuery from "./categories.query";
+import ProductSortTypes from "@/types/productSort.type";
+import { SupabaseClientType } from "@/types/supabaseClient.type";
+
 
 interface ProductFilter {
-  category_slug?: string,
-  brand?: string,
+  categories_id?: Array<number>,
+  brand?: Array<string> | string,
+  product_name?: string
 }
+
 
 export default class ProductsQuery {
 
+  private static getSortQuery(sort: ProductSortTypes): { column: string, ascending: boolean } {
+    if (sort === "date-asc") return { column: "created_at", ascending: true }
+    if (sort === "alpha-asc") return { column: "name", ascending: true }
+    if (sort === "alpha-desc") return { column: "name", ascending: false }
+
+    return { column: "created_at", ascending: false } //Por defecto data-desc
+  }
+
   static async getProducts(
-    client: SupabaseClient,
+    client: SupabaseClientType,
     {
       filter,
-      sort
+      sort = "date-desc",
+      page = 0
     }: {
       filter: ProductFilter,
-      sort?: string
+      sort?: ProductSortTypes
+      page?: number
     }
-  ): Promise<Product[]> {
+  ) {
 
-    const { category_slug, brand } = filter
-    const category = await CategoriesQuery.getCategoryBySlug(client, category_slug)
-    console.log("category", category)
-    const subCategories = await CategoriesQuery.getSubCategoriesByParentId(client, category.id)
-    let categoryIds = []
-    if (subCategories && subCategories.length > 0) {
-      categoryIds = subCategories.map((item) => item.id)
-    } else {
-      categoryIds = [category.id]
-    }
+    const { brand, product_name, categories_id } = filter
 
+    const limit = 15
+    const rangeFrom = page * limit
+    const rangeTo = rangeFrom + (limit - 1)
+
+    const sortQuery = this.getSortQuery(sort)
     let query = client
       .from("products")
-      .select(`
-            *,
-            category:categories(slug)
-                `)
+      .select("*, category:categories(slug)")
+      .range(rangeFrom, rangeTo)
+      .order(sortQuery.column, { ascending: sortQuery.ascending })
 
-    if (category_slug) {
-      query = query.in("category_id", categoryIds)
+    if (categories_id) {
+      query = query.in("category_id", categories_id)
     }
 
-    if (brand) query = query.eq("brand", brand)
+    if (brand) {
+      query = query.in("brand", Array.isArray(brand) ? brand : [brand])
+    }
+
+    if (product_name) {
+      query = query.ilike("name", `%${product_name}%`)
+    }
 
     const { data } = await query
-
 
     return data || []
   }
 
 
-  static async getDistinctProductBrands(
-    client: SupabaseClient,
+  static async getBrandsCountsByName(
+    client: SupabaseClientType,
     {
-      category_slug
+      product_name
     }: {
-      category_slug?: string
+      product_name?: string
     }
-  ): Promise<string[]> {
-    // category
-    const category = await CategoriesQuery.getCategoryBySlug(client, category_slug)
-    let categoryIds = []
+  ) {
 
-    // verificar si la categoria tiene parent_id, si es nulo, comprobar si hay registros de category con dicho parent_id
-    if (!category.parent_id) {
-      const { data } = await client
-        .from('categories')
-        .select('id')
-        .eq('parent_id', category.id)
+    let query = client
+      .from("products")
+      .select("brand, SUM(quantity) as product_count")
 
-      if (data !== null && data.length > 0) {
-        // selected parent category (retrieve subcategories)
-        categoryIds = data.map((item) => item.id)
-      } else {
-        // selected category without subcategories
-        categoryIds = [category.id]
-      }
-    } else {
-      // selected subcategory
-      categoryIds = [category.id]
+    if (product_name) {
+      query = query.ilike("name", `%${product_name}%`)
     }
 
-    const { data, error } = await client
+    const { data } = await query
+    return data
+  }
+
+
+  static async getBrandsCountsByCategoriesId(
+    client: SupabaseClientType,
+    {
+      categories_id
+    }: {
+      categories_id: Array<number>
+    }
+  ) {
+
+    const { data } = await client
       .rpc('get_brands_by_category_id', {
-        categories_id: categoryIds
+        categories_id: categories_id
       });
-      
-    console.log("brands", data) 
-    if (error) {
-      console.error(error)
-      return []
+
+    return data
+
+  }
+
+  static async getProductBySku(
+    client: SupabaseClientType,
+    {
+      sku
+    }: {
+      sku: string
     }
+  ) {
+    const { data } = await client
+      .from("products")
+      .select("*")
+      .eq("sku", sku)
+      .single()
 
-    return data || []
-
+    return data
   }
 
 }

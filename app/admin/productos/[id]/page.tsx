@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { createClient } from '@/utils/supabase/client';
+import { createClient } from '@/lib/supabase/client';
 import { useParams, useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -245,25 +245,25 @@ export default function ProductPage() {
 						</div>
 
 						<div className="space-y-2">
-              <div className="flex flex-row gap-4">
-                <div className="space-y-2 w-2/4">
-                  <Label>SKU</Label>
-                  <Input
-                    id="sku"
-                    name="sku"
-                    placeholder="Ej: REL-XYZ-001"
-                  />
-                </div>
-                <div className="space-y-2 w-2/4">
-                  <Label>Marca</Label>
-                  <Input
-                    id="brand"
-                    name="brand"
-                    placeholder="Ej: Casio, Rolex, etc."
-                  />
-                </div>
-              </div>
-            </div>
+							<div className="flex flex-row gap-4">
+								<div className="space-y-2 w-2/4">
+									<Label>SKU</Label>
+									<Input
+										id="sku"
+										name="sku"
+										placeholder="Ej: REL-XYZ-001"
+									/>
+								</div>
+								<div className="space-y-2 w-2/4">
+									<Label>Marca</Label>
+									<Input
+										id="brand"
+										name="brand"
+										placeholder="Ej: Casio, Rolex, etc."
+									/>
+								</div>
+							</div>
+						</div>
 
 						<div className="space-y-2">
 							<div className="flex flex-row gap-4">
