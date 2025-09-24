@@ -8,6 +8,7 @@ interface Category {
     meta_description: string;
     created_at: string;
     subCategories: Array<Category>;
+    description: string
 }
 
 export default Category 

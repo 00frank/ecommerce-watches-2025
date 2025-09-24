@@ -1,5 +1,5 @@
 import { Category } from "@/types";
-import { buildCategoryTree } from "@/utils/buildCategoryTree.util";
+import { buildCategoryTree } from "@/utils";
 import { SupabaseClient } from "@supabase/supabase-js";
 
 export default class CategoriesQuery {

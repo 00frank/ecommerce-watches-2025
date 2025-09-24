@@ -13,6 +13,8 @@ interface Product {
     created_at: string
     category: Category
     image_url: string
+    price: number
+    quantity: number
 }
 
 export default Product 
