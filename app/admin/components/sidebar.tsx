@@ -52,10 +52,6 @@ const data = {
           url: "/admin/categorias/agregar",
         },
         {
-          title: "Listado",
-          url: "/admin/categorias/listado",
-        },
-        {
           title: "Historial",
           url: "/admin/categorias/historial",
         }
@@ -148,7 +144,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
-        {/* <NavProjects projects={data.projects} /> */}
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>

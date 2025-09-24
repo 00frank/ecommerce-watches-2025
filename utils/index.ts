@@ -1,4 +1,4 @@
-import { Category } from "@/types"
+import { Category, Product } from "@/types"
 
 export type CategoryTree = Omit<Category, 'subCategories'> & {
   subCategories: CategoryTree[] | null
@@ -25,7 +25,7 @@ export function buildCategoryTree(rows: Category[]): CategoryTree[] {
     }
     const parent = byId.get(pid)
     if (parent) {
-      ;(parent.subCategories as CategoryTree[]).push(node)
+      (parent.subCategories as CategoryTree[]).push(node)
     } else {
       // padre inexistente: tratar como raíz para no perderlo
       roots.push(node)
@@ -42,4 +42,52 @@ export function buildCategoryTree(rows: Category[]): CategoryTree[] {
   }
 
   return roots.map(finalize)
+}
+
+export function getColorForAudit(action: string) {
+  if (action === "CREATE") return "bg-green-500 text-white"
+  if (action === "UPDATE") return "bg-blue-500 text-white"
+  if (action === "DELETE") return "bg-red-500 text-white"
+}
+
+export function getIconForAudit(action: string) {
+  if (action === "CREATE") return "✨"
+  if (action === "UPDATE") return "✏️"
+  if (action === "DELETE") return "🗑️"
+  return ""
+}
+
+export function getLabelForAudit(action: string) {
+  if (action === "CREATE") return "Creación"
+  if (action === "UPDATE") return "Actualización"
+  if (action === "DELETE") return "Eliminación"
+}
+
+export type DiffProductItem = {
+  field: string;
+  oldValue: string;
+  newValue: string;
+};
+
+export function getAuditLogDiff(oldValue: Record<string, any>, newValue: Record<string, any>) {
+  const diff: DiffProductItem[] = [];
+  const allKeys = new Set([
+    ...Object.keys(oldValue || {}),
+    ...Object.keys(newValue || {}),
+  ]);
+
+  allKeys.forEach((key) => {
+    const oldVal = oldValue?.[key];
+    const newVal = newValue?.[key];
+
+    if (oldVal !== newVal) {
+      diff.push({
+        field: key,
+        oldValue: oldVal,
+        newValue: newVal,
+      });
+    }
+  });
+
+  return diff;
 }
