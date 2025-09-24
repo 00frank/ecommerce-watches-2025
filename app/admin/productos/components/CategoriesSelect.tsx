@@ -12,7 +12,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { createClient } from "@/utils/supabase/client"
-import { buildCategoryTree, CategoryTree } from "@/utils";
+import { buildCategoryTree, CategoryTree } from "@/utils/buildCategoryTree.util";
 
 interface CategoriesSelectProps {
   value?: string;

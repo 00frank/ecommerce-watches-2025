@@ -3,24 +3,6 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { useSearchParams } from "next/navigation"
 import { useRouter } from "next/navigation"
 
-const brandsMock = [
-    {
-        id: 1,
-        name: "Brand 1",
-        item_count: 50
-    },
-    {
-        id: 2,
-        name: "Brand 2",
-        item_count: 30
-    },
-    {
-        id: 3,
-        name: "Brand 3",
-        item_count: 20
-    },
-]
-
 interface BrandProps {
     name: string,
     item_count: number,
@@ -38,15 +20,19 @@ const Brand = ({
             <Checkbox
                 checked={is_checked}
                 className="h-5 w-5 !bg-white rounded-[4px] border-default-400 cursor-pointer transition-transform active:scale-95 !text-default-950" />
-            <p className="text-[18px] text-default-800">{name} ({item_count})</p>
+            <p className=" text-default-800">{name} ({item_count})</p>
         </li>
     )
 }
 
-export default function BrandFilter() {
+export default function BrandFilter({
+    brands
+}: {
+    brands: string[]
+}) {
     const params = useSearchParams()
     const rotuer = useRouter()
-    const brands = params.getAll("brand")
+    const brandsParams = params.getAll("brand")
 
     const setBrand = (brand: string) => {
         const refparams = new URLSearchParams(params.toString())
@@ -63,11 +49,12 @@ export default function BrandFilter() {
             <h4 className=" text-[18px] text-default-800">Marcas</h4>
             <ul className="mt-6 space-y-2">
                 {
-                    brandsMock.map(brand =>
+                    brands.map(brand =>
                         <Brand
-                            key={brand.id}
-                            {...brand}
-                            is_checked={brands.includes(brand.name)}
+                            key={brand}
+                            name={brand}
+                            item_count={brandsParams.filter(b => b === brand).length}
+                            is_checked={brandsParams.includes(brand)}
                             setBrand={setBrand}
                         />
                     )

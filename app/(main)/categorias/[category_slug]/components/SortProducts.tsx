@@ -4,9 +4,6 @@ import { X } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 
 const sortOptions = [
-    { value: "best-sellers", label: "Mas vendidos" },
-    { value: "price-desc", label: "Precio, menor a mayor" },
-    { value: "price-asc", label: "Precio, mayor a menor" },
     { value: "alpha-desc", label: "Alfabeticamente, A-Z" },
     { value: "alpha-asc", label: "Alfabeticamente, Z-A" },
     { value: "date-desc", label: "Fecha, Antiguo a nuevo" },

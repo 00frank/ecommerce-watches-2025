@@ -1,37 +1,9 @@
-import categories from "@/mocks/categories.mock"
-import Link from "next/link"
-import clsx from "clsx"
 import contactLinks from "@/constants/contactLinks.constant"
+import CategoriesList from "./components/CategoriesList"
+import LinkItem from "./components/LinkItem"
+import CategoriesQuery from "@/lib/supabase/queries/categories.query"
+import { createClient } from "@/utils/supabase/server"
 
-const keys = categories.map((category) => category.name)
-
-const LinkItem = ({ name, href, className }: { name: string, href: string, className?: string }) => {
-    return (
-        <li className={clsx(
-            "hover:underline text-default-950 hover:text-black transition-colors duration-200  cursor-pointer",
-            className
-        )}>
-            <Link replace href={href}>{name}</Link>
-        </li>
-    )
-}
-
-const Menu = () => {
-    return (
-        <section className="space-y-4">
-            <h4 className="text-xl">Menú</h4>
-            <ul className="space-y-2">
-                {keys.map((key) => (
-                    <LinkItem
-                        key={key}
-                        className="uppercase"
-                        name={key}
-                        href={`/${key}`} />
-                ))}
-            </ul>
-        </section>
-    )
-}
 
 const Info = () => {
     return (
@@ -61,11 +33,12 @@ const AboutUs = () => {
     )
 }
 
-export default function Footer() {
+export default async function Footer() {
+    const categories = await CategoriesQuery.getAllCategories(await createClient())
     return (
         <footer className="p-24 border-t border-t-black/10 bg-[#fafafa]">
             <div className="grid w-full max-w-5xl mx-auto grid-cols-1 gap-8 lg:grid-cols-3">
-                <Menu />
+                <CategoriesList categories={categories} />
                 <Info />
                 <AboutUs />
             </div>

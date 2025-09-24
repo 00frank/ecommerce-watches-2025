@@ -1,15 +1,15 @@
 import { Category, Product } from "@/types"
 
-export type CategoryTree = Omit<Category, 'subCategories'> & {
-  subCategories: CategoryTree[] | null
-}
+export type CategoryTree = Category
 
-export function buildCategoryTree(rows: Category[]): CategoryTree[] {
+export function buildCategoryTree(rows: Array<Omit<Category, "subCategories">>): Array<CategoryTree> {
+
+
   const byId = new Map<number, CategoryTree>()
 
   // 1) Crear nodos
   for (const r of rows) {
-    const { subCategories: _omit, ...rest } = r
+    const { ...rest } = r
     byId.set(r.id, { ...rest, subCategories: [] })
   }
 
@@ -38,7 +38,7 @@ export function buildCategoryTree(rows: Category[]): CategoryTree[] {
     if (kids && kids.length) {
       return { ...n, subCategories: kids.map(finalize) }
     }
-    return { ...n, subCategories: null }
+    return { ...n, subCategories: [] }
   }
 
   return roots.map(finalize)

@@ -2,15 +2,19 @@ import { NavigationMenu } from "@/components/ui/navigation-menu"
 import clsx from "clsx"
 import Image from "next/image"
 import Link from "next/link"
-import BurgerMenu from "./components/BurgerMenu"
-import Categories from "./components/Categories"
+import BurgerMenu from "./components/burger-menu"
 import DrawerMenuTrigger from "./components/DrawerMenuTrigger"
 import SearchProductModal from "./components/SearchProductModal"
 import DrawerProvider from "./provider/Drawer.provider"
 import Container from "@/components/container"
+import CategoriesQuery from "@/lib/supabase/queries/categories.query"
+import { createClient } from "@/utils/supabase/server"
+import CategoriesBar from "./components/CategoriesBar"
 
 
-export default function Navbar() {
+export default async function Navbar() {
+
+    const categories = await CategoriesQuery.getAllCategories(await createClient())
 
     return (
         <DrawerProvider >
@@ -30,9 +34,9 @@ export default function Navbar() {
                     </Link>
                     <SearchProductModal />
                 </Container>
-                <Categories />
+                <CategoriesBar categories={categories} />
             </NavigationMenu>
-            <BurgerMenu />
+            <BurgerMenu categories={categories} />
         </DrawerProvider >
     )
 }
