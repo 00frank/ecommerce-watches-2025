@@ -14,10 +14,10 @@ export default class CategoriesQuery {
         return categoriesTree
     }
 
-    static async getCategoryIdBySlug(client: SupabaseClient, category_slug?: string) {
+    static async getCategoryBySlug(client: SupabaseClient, category_slug?: string) {
         const { data: category } = await client
             .from('categories')
-            .select('id')
+            .select('*')
             .eq('slug', category_slug)
             .single()
         return category

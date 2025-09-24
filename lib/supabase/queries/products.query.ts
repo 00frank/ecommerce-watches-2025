@@ -49,13 +49,41 @@ export default class ProductsQuery {
             category_slug?: string
         }
     ): Promise<string[]> {
-        const getCategoryID = await CategoriesQuery.getCategoryIdBySlug(client, category_slug)
+        // category
+        const category = await CategoriesQuery.getCategoryBySlug(client, category_slug)
+        let slugs = []
 
-        const { data: product } = await client.from("products")
-            .select("brand")
-            .eq("category_id", getCategoryID?.id)
+        // verificar si la categoria tiene parent_id, si es nulo, comprobar si hay registros de category con dicho parent_id
+        if (!category.parent_id) {
+            const { data } = await client
+            .from('categories')
+            .select('slug')
+            .eq('parent_id', category.id)
 
-        console.log(product, getCategoryID)
+            if (data !== null && data.length > 0) {
+                // selected parent category (retrieve subcategories)
+                slugs = data.map((item) => item.slug)
+            } else {
+                // selected category without subcategories
+                slugs = [category.slug]
+            }
+        } else {
+            // selected subcategory
+            slugs = [category.slug]
+        }
+        
+        const { data, error } = await client
+        .rpc('get_brands_by_slug_param', {
+          slugs: slugs
+        });
+
+        if (error) {
+            console.error(error)
+            return []
+        }
+
+        return data || []
+
     }
 
 }
