@@ -23,4 +23,11 @@ export default class CategoriesQuery {
         return category
     }
 
+    static async getSubCategoriesByParentId(client: SupabaseClient, parent_id?: number) {
+        const { data } = await client
+            .from('categories')
+            .select('*')
+            .eq('parent_id', parent_id)
+        return data;
+    }
 }
