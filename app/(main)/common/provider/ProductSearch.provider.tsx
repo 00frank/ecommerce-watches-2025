@@ -19,7 +19,7 @@ const getSearchQuery = () => {
 
 export default function ProductSearchProvider({ children }: { children: React.ReactNode }) {
 
-    const [search, setSearch] = useState(getSearchQuery)
+    const [search, setSearch] = useState(() => getSearchQuery())
 
     return (
         <createProductSearchContext.Provider value={{
