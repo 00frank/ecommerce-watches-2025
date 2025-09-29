@@ -26,16 +26,17 @@ interface ProductInfoProps extends Omit<ProductDatabase, "image_url"> { }
 const ProductInfo = ({
     brand,
     name,
-    color,
     quantity,
-
+    description
 }: ProductInfoProps) => {
     return (
         <section className="flex-1 p-6 flex  gap-10 flex-col">
-            <header>
-                <h1 className="uppercase text-[12px] font-medium text-default-700">{brand}</h1>
-                <h2 className="uppercase text-4xl font-bold">{name}</h2>
-                <p className="text-4xl font-bold">{color}</p>
+            <header className="space-y-2">
+                <div>
+                    <h1 className="uppercase text-[12px] font-medium text-default-700">{brand}</h1>
+                    <h2 className="uppercase text-4xl font-bold">{name}</h2>
+                </div>
+                <p className="text-default-600">{description}</p>
             </header>
             <p className={
                 clsx(

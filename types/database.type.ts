@@ -135,6 +135,7 @@ export type Database = {
                     price: number | null
                     quantity: number | null
                     sku: string | null
+                    description: string | null
                 }
                 Insert: {
                     asked_count?: number | null
@@ -149,6 +150,7 @@ export type Database = {
                     price?: number | null
                     quantity?: number | null
                     sku?: string | null
+                    description?: string | null
                 }
                 Update: {
                     asked_count?: number | null
@@ -163,6 +165,7 @@ export type Database = {
                     price?: number | null
                     quantity?: number | null
                     sku?: string | null
+                    description?: string | null
                 }
                 Relationships: [
                     {
@@ -181,6 +184,13 @@ export type Database = {
         Functions: {
             get_brands_by_category_id: {
                 Args: { categories_id: number[] }
+                Returns: {
+                    brand: string
+                    product_count: number
+                }[]
+            }
+            get_brands_by_product_name: {
+                Args: { product_name: string }
                 Returns: {
                     brand: string
                     product_count: number

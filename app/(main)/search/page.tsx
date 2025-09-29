@@ -10,27 +10,43 @@ export default async function SearchPage({ searchParams: sp }: { searchParams: P
 
     const { brand = "", sort_by, query, page } = await sp
 
-    const products = await ProductsQuery.getProducts(await createClient(), {
+    const normalizedPage = Number(page) || 0
+
+    const client = await createClient()
+
+    const products = await ProductsQuery.getProducts(client, {
         filter: {
             brand: brand,
             product_name: query,
         },
         sort: sort_by,
-        page: Number(page) || 0,
+        page: normalizedPage,
     })
 
-    // const brands = await ProductsQuery.getBrandsCountsByName(await createClient(), { product_name: search })
+    const brands = await ProductsQuery.getBrandsByProductName(client, query || "")
+
+    const countInfo = await ProductsQuery.getProductCounts(client, {
+        brand: brand,
+        product_name: query
+    })
 
     return (
         <Container>
             <header className="flex flex-col items-center gap-5 justify-center py-10 w-full">
-                <h2 className="text-2xl ">Resultados de búsqueda</h2>
+                <h2 className="text-2xl">Resultados de búsqueda</h2>
                 <SearchProduct />
             </header>
             {products.length > 0 ?
                 <ProductList
-                    brands={[{ brand: "Casio", product_count: 0 }]}
-                    products={products} />
+                    brands={brands}
+                    products={products}
+                    product_count={countInfo.count}
+                    pagination_info={{
+                        total_pages: countInfo.total_pages,
+                        current_page: normalizedPage
+                    }}
+
+                />
                 : <NotFoundProduct />
             }
         </Container>

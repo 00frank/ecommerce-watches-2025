@@ -8,6 +8,7 @@ interface ProductFilter {
   product_name?: string
 }
 
+const ITEMS_PER_PAGE = 15
 
 export default class ProductsQuery {
 
@@ -34,9 +35,8 @@ export default class ProductsQuery {
 
     const { brand, product_name, categories_id } = filter
 
-    const limit = 15
-    const rangeFrom = page * limit
-    const rangeTo = rangeFrom + (limit - 1)
+    const rangeFrom = page * ITEMS_PER_PAGE
+    const rangeTo = rangeFrom + (ITEMS_PER_PAGE - 1)
 
     const sortQuery = this.getSortQuery(sort)
     let query = client
@@ -63,29 +63,43 @@ export default class ProductsQuery {
   }
 
 
-  static async getBrandsCountsByName(
+  static async getProductCounts(
     client: SupabaseClientType,
     {
+      brand,
+      categories_id,
       product_name
-    }: {
-      product_name?: string
-    }
+    }: ProductFilter
   ) {
-
     let query = client
       .from("products")
-      .select("brand, SUM(quantity) as product_count")
+      .select("", { count: "exact", head: true })
+
+    if (brand) {
+      query = query.in("brand", Array.isArray(brand) ? brand : [brand])
+    }
+
+    if (categories_id) {
+      query = query.in("category_id", categories_id)
+    }
 
     if (product_name) {
       query = query.ilike("name", `%${product_name}%`)
     }
 
-    const { data } = await query
-    return data
+    const { count: c } = await query
+    const count = c || 0
+
+    const isExact = count % ITEMS_PER_PAGE === 0
+
+    return {
+      count,
+      total_pages: Math.floor(count / ITEMS_PER_PAGE) - (isExact ? 1 : 0),
+    }
   }
 
 
-  static async getBrandsCountsByCategoriesId(
+  static async getBrandsByCategoriesId(
     client: SupabaseClientType,
     {
       categories_id
@@ -101,6 +115,18 @@ export default class ProductsQuery {
 
     return data
 
+  }
+
+  static async getBrandsByProductName(
+    client: SupabaseClientType,
+    product_name: string
+  ) {
+
+    const { data } = await client
+      .rpc('get_brands_by_product_name', {
+        product_name: product_name
+      })
+    return data || []
   }
 
   static async getProductBySku(
