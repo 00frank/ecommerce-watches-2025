@@ -4,69 +4,45 @@ import { createClient } from '@/utils/supabase/server'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 
-interface ProductFormData {
-  name: string
-  price: string
-  sku: string
-  brand: string
-  color: string
-  quantity: number
-  category_id: string
-  image_url?: string
+interface CategoryFormData {
+  title: string
+  slug: string
+  description?: string
+  parent_id?: string
+  is_active: boolean
+  meta_title: string
+  meta_description: string
 }
 
-export async function createProduct(formData: FormData) {
+export async function createCategory(formData: FormData) {
   const supabase = await createClient()
-  const productData: ProductFormData = {
-    name: formData.get('name') as string,
-    price: formData.get('price') as string,
-    sku: formData.get('sku') as string,
-    brand: formData.get('brand') as string,
-    color: formData.get('color') as string,
-    quantity: Boolean(formData.get('available') as string) ? 1 : 0,
-    category_id: formData.get('categoryId') as string,
+
+  const isSubcategory = formData.get('is_subcategory') === 'on';
+
+  const categoryData: CategoryFormData = {
+    title: (formData.get('title') as string).trim(),
+    slug: (formData.get('slug') as string).trim(),
+    is_active: formData.get('is_active') === 'on',
+    description: (formData.get('title') as string).trim(),
+    meta_title: (formData.get('meta_title') as string).trim(),
+    meta_description: (formData.get('meta_description') as string).trim(),
   }
 
-  console.log("productData", productData);
-
-  const imageFile = formData.get('image') as File | null
+  if (isSubcategory) {
+    const categoryId = formData.get('category_id') as string;
+    categoryData.parent_id = categoryId;
+    const { data: parentCategory } = await supabase.from('categories').select('*').eq('id', categoryId).single()
+    categoryData.description = `${parentCategory.description} - ${categoryData.title}`;
+  }
 
   try {
-    // Upload image if exists
-
-    if (imageFile && imageFile.size > 0) {
-      const fileExt = imageFile.name.split('.').pop()
-      const fileName = `${Math.random().toString(36).substring(2)}.${fileExt}`
-      const { data: uploadData, error: uploadError } = await supabase.storage
-        .from('product-images')
-        .upload(`${fileName}`, imageFile)
-
-      if (uploadError) throw uploadError
-      
-      // Get public URL
-      const { data: { publicUrl } } = await supabase.storage
-        .from('product-images')
-        .getPublicUrl(uploadData.path)
-      
-      productData.image_url = publicUrl
-    }
-
-    // Insert product
-    const { data: product, error } = await supabase
-      .from('products')
-      .insert([
-        productData
-      ])
-      .select()
-      .single()
-
+    const { error } = await supabase.from('categories').insert([categoryData])
     if (error) throw error
-
-    revalidatePath('/admin/productos')
+    revalidatePath('/admin/categorias')
   } catch (error) {
-    console.error('Error creating product:', error)
-    throw new Error(error instanceof Error ? error.message : 'Error al crear el producto')
+    console.error('Error creating category:', error)
+    throw new Error(error instanceof Error ? error.message : 'Error al crear la categoría')
   } finally {
-    redirect('/admin/productos')
+    redirect('/admin/categorias')
   }
 }

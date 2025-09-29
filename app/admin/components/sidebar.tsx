@@ -14,6 +14,7 @@ import { NavMain } from "@/app/admin/components/nav-main"
 import { NavSecondary } from "@/app/admin/components/nav-secondary"
 import { NavUser } from "@/app/admin/components/nav-user"
 import Link from "next/link";
+import { Badge } from "@/components/ui/badge";
 
 const data = {
   user: {
@@ -133,9 +134,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
                   <Command className="size-4" />
                 </div>
-                <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">Empresa de relojes</span>
-                  <span className="truncate text-xs">Plan Pro CZ9</span>
+                <div className="grid flex-1 gap-0.5 text-left text-sm leading-tight">
+                  <span className="truncate font-medium">Importadora La Unión</span>
+                  <Badge variant="secondary" className="text-xs">Plan Pro</Badge>
                 </div>
               </Link>
             </SidebarMenuButton>

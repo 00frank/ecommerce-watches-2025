@@ -4,8 +4,8 @@ import { SiteHeader } from '@/app/admin/components/header';
 import { AppSidebar } from '@/app/admin/components/sidebar';
 
 export const metadata = {
-  title: 'Panel de Productos',
-  description: 'Panel de productos de la tienda de relojes',
+  title: 'Panel de Categorias',
+  description: 'Panel de categorias de la tienda de relojes',
 };
 
 export default async function AdminLayout({
