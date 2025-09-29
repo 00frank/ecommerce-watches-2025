@@ -138,7 +138,9 @@ export default function CategoriesBar({ categories }: { categories: Array<Catego
       className="max-md:hidden">
       <NavigationMenuList className="py-2 max-w-4xl w-full  flex-wrap gap-2">
         {categories.map((category) => (
-          <NavigationMenuItem>
+          <NavigationMenuItem
+            key={category.id}
+          >
             {
               category.subCategories.length > 0 ?
                 <ButtonOpenCategory
