@@ -245,15 +245,6 @@ export default function BannersPage() {
       <Card className="mb-6">
         <CardHeader className="flex flex-row justify-between items-center">
           <CardTitle>Subir imágenes</CardTitle>
-          {existingBanners.length > 0 && (
-            <Button 
-              variant="outline" 
-              onClick={loadExistingBanners}
-              disabled={isLoading}
-            >
-              {isLoading ? 'Cargando...' : 'Cargar banners existentes'}
-            </Button>
-          )}
         </CardHeader>
         <CardContent>
           <div 
