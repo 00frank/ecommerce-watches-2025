@@ -47,6 +47,7 @@ const data = {
       title: "Categorias",
       url: "/admin/categorias",
       icon: BookOpenText,
+      isActive: true,
       items: [
         {
           title: "Agregar",
@@ -61,17 +62,7 @@ const data = {
     {
       title: "Banners",
       url: "/admin/banners",
-      icon: Wallpaper,
-      items: [
-        {
-          title: "Agregar",
-          url: "/admin/banners/agregar",
-        },
-        {
-          title: "Listado",
-          url: "/admin/banners/listado",
-        },
-      ],
+      icon: Wallpaper
     },
     {
       title: "Configuraciones",
@@ -80,11 +71,11 @@ const data = {
       items: [
         {
           title: "General",
-          url: "/admin/configuraciones/general",
+          url: "/admin/configuraciones",
         },
         {
           title: "Whatsapp",
-          url: "/admin/configuraciones/whatsapp",
+          url: "/admin/configuraciones#whatsapp",
         }
       ],
     },
@@ -101,23 +92,6 @@ const data = {
       icon: Send,
     },
   ],
-  // projects: [
-  //   {
-  //     name: "Design Engineering",
-  //     url: "#",
-  //     icon: Frame,
-  //   },
-  //   {
-  //     name: "Sales & Marketing",
-  //     url: "#",
-  //     icon: PieChart,
-  //   },
-  //   {
-  //     name: "Travel",
-  //     url: "#",
-  //     icon: Map,
-  //   },
-  // ],
 }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
