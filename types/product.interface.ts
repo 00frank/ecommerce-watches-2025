@@ -12,6 +12,7 @@ interface Product {
     created_at: string;
     category: Category;
     image_url: string;
+    is_active: boolean;
 }
 
 export default Product 

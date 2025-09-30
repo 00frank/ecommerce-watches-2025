@@ -34,9 +34,9 @@ export async function ProductCard({ product }: { product: Product }) {
         </h2>
       </div>
       <div className="flex flex-col w-2/6">
-        <p className="text-sm">💵 Precio: <b>$ {product.price}</b></p>
-        <p className="text-sm">📦 Stock: <b>{product.quantity > 0 ? "Si ✅" : "No ❌"}</b></p>
+        <p className="text-sm">👁 Mostrar en tienda: <b>{product.is_active ? "Si ✅" : "No ❌"}</b></p>
         <p className="text-sm line-clamp-2">🏷️ Categoría: <b>{product.category.description}</b></p>
+        <p className="text-sm">📦 Stock: <b>{product.quantity > 0 ? "Si ✅" : "No ❌"}</b></p>
       </div>
       <div className="flex justify-center flex-col gap-2 w-1/6">
         <Link href={`/admin/productos/${product.id}`} className="bg-indigo-600 text-white text-center px-4 py-2 rounded-lg">Editar</Link>
