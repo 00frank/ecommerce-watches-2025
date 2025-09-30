@@ -78,11 +78,22 @@ export default function CategoryPage() {
     try {
       setSaving(true);
 
+      const categoryData = {
+        title: formData.title,
+        slug: formData.slug,
+        description: formData.description,
+        parent_id: !!formData.parent_id ? formData.parent_id : null,
+        is_active: formData.is_active,
+        meta_title: !!formData.meta_title ? formData.meta_title : null,
+        meta_description: !!formData.meta_description ? formData.meta_description : null,
+      };
+
+      console.log("categoryData", categoryData);
       // Update product data
       const { error, data } = await supabase
         .from('categories')
         .update({
-          ...formData
+          ...categoryData
         })
         .eq('id', id);
 
@@ -111,7 +122,11 @@ export default function CategoryPage() {
       .delete()
       .eq('id', id);
 
-    if (error) throw error;
+    if (error) {
+      console.error('Error deleting category:', error);
+      toast.error('Error al eliminar la categoria: ' + error.message);
+      return;
+    };
 
     toast.success('Categoria eliminada correctamente');
     router.push('/admin/categorias');
