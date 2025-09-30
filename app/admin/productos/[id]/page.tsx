@@ -31,6 +31,7 @@ export default function ProductPage() {
 		quantity: 0,
 		sku: '',
 		brand: '',
+		is_active: true,
 		color: '#000000'
 	});
 	const supabase = createClient();
@@ -58,6 +59,7 @@ export default function ProductPage() {
 					quantity: data.quantity || 0,
 					sku: data.sku || '',
 					brand: data.brand || '',
+					is_active: data.is_active || true,
 					color: data.color || '#000000'
 				});
 			} catch (err) {
@@ -83,6 +85,13 @@ export default function ProductPage() {
 		setFormData(prev => ({
 			...prev,
 			quantity: checked ? 1 : 0
+		}));
+	};
+
+	const handleShowInStoreChange = (checked: boolean) => {
+		setFormData(prev => ({
+			...prev,
+			is_active: checked
 		}));
 	};
 
@@ -271,7 +280,7 @@ export default function ProductPage() {
 
 						<div className="space-y-2">
 							<div className="flex flex-row gap-4">
-								<div className="space-y-2 w-2/3">
+								<div className="space-y-2">
 									<Label htmlFor="price">Precio</Label>
 									<div className="relative">
 										<span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">$</span>
@@ -289,7 +298,16 @@ export default function ProductPage() {
 									</div>
 								</div>
 
-								<div className="space-y-2 w-1/3">
+								<div className="space-y-2">
+									<Label htmlFor="available">Mostrar en tienda</Label>
+									<Switch
+										id="available"
+										checked={formData.quantity > 0}
+										onCheckedChange={handleShowInStoreChange}
+									/>
+								</div>
+
+								<div className="space-y-2">
 									<Label htmlFor="available">Stock</Label>
 									<Switch
 										id="available"
