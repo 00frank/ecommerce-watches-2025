@@ -5,7 +5,6 @@ import { Search, X, Package, Tag } from 'lucide-react';
 import { createClient } from '@/utils/supabase/client';
 import { Label } from '@/components/ui/label';
 import { SidebarInput } from '@/components/ui/sidebar';
-import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 
 type SearchResult = {
