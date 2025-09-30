@@ -18,9 +18,18 @@ type BannerImage = {
   order: number;
 };
 
+type Banner = {
+  id: number;
+  image_url: string;
+  order: number;
+  created_at: string;
+};
+
 export default function BannersPage() {
   const supabase = createClient();
   const [images, setImages] = useState<BannerImage[]>([]);
+  const [existingBanners, setExistingBanners] = useState<Banner[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
 
   // Configuración de sensores para el drag and drop
@@ -154,12 +163,74 @@ export default function BannersPage() {
     }
   };
 
+  // Cargar banners existentes al montar el componente
+  useEffect(() => {
+    const fetchBanners = async () => {
+      try {
+        const { data: banners, error } = await supabase
+          .from('banners')
+          .select('*')
+          .order('order', { ascending: true });
+
+        if (error) throw error;
+        
+        setExistingBanners(banners || []);
+      } catch (error) {
+        console.error('Error al cargar los banners:', error);
+        toast.error('Error al cargar los banners existentes');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchBanners();
+  }, []);
+
   // Limpiar las URLs de las previsualizaciones al desmontar
   useEffect(() => {
     return () => {
       images.forEach(image => URL.revokeObjectURL(image.preview));
     };
   }, [images]);
+
+  // Convertir URL de imagen a archivo (para mostrar imágenes existentes)
+  const urlToFile = async (url: string, filename: string): Promise<File> => {
+    const response = await fetch(url);
+    const data = await response.blob();
+    return new File([data], filename, { type: data.type });
+  };
+
+  // Cargar imágenes existentes al área de arrastrar
+  const loadExistingBanners = async () => {
+    try {
+      setIsLoading(true);
+      const bannerFiles = await Promise.all(
+        existingBanners.map(async (banner, index) => {
+          const file = await urlToFile(banner.image_url, `banner-${banner.id}.jpg`);
+          return {
+            id: `existing-${banner.id}`,
+            file,
+            preview: banner.image_url,
+            order: banner.order - 1, // Ajustar a índice base 0
+          };
+        })
+      );
+      
+      setImages(bannerFiles);
+    } catch (error) {
+      console.error('Error al cargar imágenes existentes:', error);
+      toast.error('Error al cargar las imágenes existentes');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Cargar imágenes existentes cuando cambia el estado de existingBanners
+  useEffect(() => {
+    if (existingBanners.length > 0) {
+      loadExistingBanners();
+    }
+  }, [existingBanners.length]);
 
   return (
     <div className="container mx-auto p-6">
@@ -172,8 +243,17 @@ export default function BannersPage() {
       </div>
 
       <Card className="mb-6">
-        <CardHeader>
+        <CardHeader className="flex flex-row justify-between items-center">
           <CardTitle>Subir imágenes</CardTitle>
+          {existingBanners.length > 0 && (
+            <Button 
+              variant="outline" 
+              onClick={loadExistingBanners}
+              disabled={isLoading}
+            >
+              {isLoading ? 'Cargando...' : 'Cargar banners existentes'}
+            </Button>
+          )}
         </CardHeader>
         <CardContent>
           <div 
@@ -196,10 +276,13 @@ export default function BannersPage() {
         </CardContent>
       </Card>
 
-      {images.length > 0 && (
+      {(images.length > 0 || existingBanners.length > 0) && (
         <Card>
           <CardHeader>
-            <CardTitle>Imágenes del banner ({images.length})</CardTitle>
+            <CardTitle>
+              Imágenes del banner ({images.length > 0 ? images.length : existingBanners.length})
+              {existingBanners.length > 0 && images.length === 0 && ' (guardadas)'}
+            </CardTitle>
             <p className="text-sm text-gray-500">Arrastra para reordenar las imágenes</p>
           </CardHeader>
           <CardContent>
@@ -213,15 +296,35 @@ export default function BannersPage() {
                   items={images.map(img => img.id)}
                   strategy={verticalListSortingStrategy}
                 >
-                  {images.map((image) => (
-                    <SortableItem 
-                      key={image.id} 
-                      id={image.id}
-                      src={image.preview} 
-                      onRemove={() => removeImage(image.id)}
-                      order={image.order + 1}
-                    />
-                  ))}
+                  {images.length > 0 ? (
+                    images.map((image) => (
+                      <SortableItem 
+                        key={image.id} 
+                        id={image.id}
+                        src={image.preview} 
+                        onRemove={() => removeImage(image.id)}
+                        order={image.order + 1}
+                      />
+                    ))
+                  ) : (
+                    existingBanners.map((banner) => (
+                      <div 
+                        key={`existing-${banner.id}`}
+                        className="relative group rounded-lg overflow-hidden border border-gray-200 bg-white"
+                      >
+                        <div className="relative pt-[100%]">
+                          <img
+                            src={banner.image_url}
+                            alt={`Banner ${banner.order}`}
+                            className="absolute top-0 left-0 w-full h-full object-cover"
+                          />
+                          <div className="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
+                            {banner.order}
+                          </div>
+                        </div>
+                      </div>
+                    ))
+                  )}
                 </SortableContext>
               </div>
             </DndContext>
