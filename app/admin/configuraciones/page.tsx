@@ -59,7 +59,7 @@ export default async function Configuraciones() {
           <div className="grid w-full gap-3" id="whatsapp">
             <Label htmlFor="phone_number">
               <Phone className="size-4" />
-              Número de teléfono
+              Número de teléfono (WhatsApp)
             </Label>
             <Input
               id="phone_number"
