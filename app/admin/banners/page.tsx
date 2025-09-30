@@ -8,6 +8,8 @@ import { SortableItem } from './components/SortableItem';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Upload, Save } from 'lucide-react';
+import { createClient } from '@/utils/supabase/client';
+import { toast } from 'sonner';
 
 type BannerImage = {
   id: string;
@@ -17,6 +19,7 @@ type BannerImage = {
 };
 
 export default function BannersPage() {
+  const supabase = createClient();
   const [images, setImages] = useState<BannerImage[]>([]);
   const [isSaving, setIsSaving] = useState(false);
 
@@ -70,18 +73,85 @@ export default function BannersPage() {
     setImages(images.filter(img => img.id !== id));
   };
 
+  // Subir imagen al storage y obtener su URL pública
+  const uploadImage = async (file: File, index: number) => {
+    try {
+      const fileExt = file.name.split('.').pop();
+      const filePath = `banner-${Date.now()}-${index}.${fileExt}`;
+
+      const { error: uploadError } = await supabase.storage
+        .from('banners')
+        .upload(filePath, file);
+
+      if (uploadError) throw uploadError;
+
+      // Obtener URL pública
+      const { data: { publicUrl } } = supabase.storage
+        .from('banners')
+        .getPublicUrl(filePath);
+
+      return publicUrl;
+    } catch (error) {
+      console.error('Error subiendo imagen:', error);
+      throw error;
+    }
+  };
+
   // Guardar los cambios
-  const handleSave = () => {
+  const handleSave = async () => {
+    if (images.length === 0) return;
+    
     setIsSaving(true);
     
-    // Aquí irá la lógica para guardar en Supabase
-    console.log('Imágenes a guardar:', images);
-    
-    // Simulamos un guardado
-    setTimeout(() => {
+    try {
+      // 1. Eliminar banners existentes
+      const { error: deleteError } = await supabase
+        .from('banners')
+        .delete()
+        .neq('id', 0); // Esto eliminará todos los registros
+      
+      if (deleteError) throw deleteError;
+
+      // 2. Subir imágenes y guardar en la base de datos
+      const uploadPromises = images.map(async (image, index) => {
+        try {
+          const imageUrl = await uploadImage(image.file, index);
+          
+          // 3. Guardar en la tabla banners
+          const { error: insertError } = await supabase
+            .from('banners')
+            .insert([
+              { 
+                image_url: imageUrl,
+                order: index + 1
+              }
+            ]);
+            
+          if (insertError) throw insertError;
+          
+          return { success: true };
+        } catch (error) {
+          console.error(`Error procesando imagen ${index + 1}:`, error);
+          return { success: false, error };
+        }
+      });
+
+      const results = await Promise.all(uploadPromises);
+      const hasErrors = results.some(result => !result.success);
+      
+      if (hasErrors) {
+        throw new Error('Algunas imágenes no se pudieron guardar correctamente');
+      }
+      
+      toast.success('Banners actualizados correctamente');
+      
+    } catch (error) {
+      console.error('Error al guardar los banners:', error);
+      const errorMessage = error instanceof Error ? error.message : 'Ocurrió un error desconocido';
+      toast.error(`Error al guardar: ${errorMessage}`);
+    } finally {
       setIsSaving(false);
-      // Aquí podrías mostrar un toast de éxito
-    }, 1500);
+    }
   };
 
   // Limpiar las URLs de las previsualizaciones al desmontar
