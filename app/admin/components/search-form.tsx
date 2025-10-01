@@ -149,6 +149,7 @@ export function SearchForm() {
                   <Tag className="h-4 w-4 text-muted-foreground" />
                 )}
                 <span className="truncate">{item.name}</span>
+                <span className="text-gray-500">{item.type === 'product' ? item.brand : 'Categoría'}</span>
                 <span className="ml-auto text-xs text-muted-foreground">
                   {item.type === 'product' ? 'Producto' : 'Categoría'}
                 </span>
