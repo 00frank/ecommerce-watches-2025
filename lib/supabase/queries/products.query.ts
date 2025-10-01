@@ -4,7 +4,7 @@ import { SupabaseClientType } from "@/types/supabaseClient.type";
 
 interface ProductFilter {
   categories_id?: Array<number>,
-  brand?: Array<string> | string,
+  brand?: Array<string>,
   product_name?: string
 }
 
@@ -50,7 +50,7 @@ export default class ProductsQuery {
     }
 
     if (brand) {
-      query = query.in("brand", Array.isArray(brand) ? brand : [brand])
+      query = query.in("brand", brand)
     }
 
     if (product_name) {
@@ -76,7 +76,7 @@ export default class ProductsQuery {
       .select("", { count: "exact", head: true })
 
     if (brand) {
-      query = query.in("brand", Array.isArray(brand) ? brand : [brand])
+      query = query.in("brand", brand)
     }
 
     if (categories_id) {
@@ -88,13 +88,13 @@ export default class ProductsQuery {
     }
 
     const { count: c } = await query
-    const count = c || 0
+    const total_products = c || 0
 
-    const isExact = count % ITEMS_PER_PAGE === 0
+    const isExact = total_products % ITEMS_PER_PAGE === 0
 
     return {
-      count,
-      total_pages: Math.floor(count / ITEMS_PER_PAGE) - (isExact ? 1 : 0),
+      total_products,
+      total_pages: Math.floor(total_products / ITEMS_PER_PAGE) - (isExact ? 1 : 0),
     }
   }
 

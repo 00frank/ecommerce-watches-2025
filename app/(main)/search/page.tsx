@@ -8,15 +8,15 @@ import ProductList from "../common/container/product-list";
 
 export default async function SearchPage({ searchParams: sp }: { searchParams: Promise<SearchParams> }) {
 
-    const { brand = "", sort_by, query, page } = await sp
+    const { brand, sort_by, query, page } = await sp
 
     const normalizedPage = Number(page) || 0
-
+    const normalizedBrand = Array.isArray(brand) ? brand : brand ? [brand] : undefined
     const client = await createClient()
 
     const products = await ProductsQuery.getProducts(client, {
         filter: {
-            brand: brand,
+            brand: normalizedBrand,
             product_name: query,
         },
         sort: sort_by,
@@ -26,7 +26,7 @@ export default async function SearchPage({ searchParams: sp }: { searchParams: P
     const brands = await ProductsQuery.getBrandsByProductName(client, query || "")
 
     const countInfo = await ProductsQuery.getProductCounts(client, {
-        brand: brand,
+        brand: normalizedBrand,
         product_name: query
     })
 
@@ -40,7 +40,7 @@ export default async function SearchPage({ searchParams: sp }: { searchParams: P
                 <ProductList
                     brands={brands}
                     products={products}
-                    product_count={countInfo.count}
+                    product_count={countInfo.total_products}
                     pagination_info={{
                         total_pages: countInfo.total_pages,
                         current_page: normalizedPage

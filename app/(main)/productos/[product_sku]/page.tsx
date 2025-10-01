@@ -47,7 +47,7 @@ const ProductInfo = ({
                 <span className="font-semibold text-black"> {quantity ? "Disponible" : "No disponible"}</span>
             </p>
             <button className="cursor-pointer hover:scale-95 duration-300 transition-all h-[60px] w-full md:w-[300px]">
-                <a className="w-full h-full  rounded-xs bg-primary-800 text-white flex items-center justify-center" href="/carrito">
+                <a className="w-full h-full  rounded-xs bg-primary-700 text-white flex items-center justify-center" href="/carrito">
                     Comprar ahora
                 </a>
             </button>

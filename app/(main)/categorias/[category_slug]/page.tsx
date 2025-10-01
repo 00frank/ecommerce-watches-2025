@@ -6,18 +6,27 @@ import { notFound } from "next/navigation"
 import { createClient } from "@/lib/supabase/server"
 import CategoriesQuery from "@/lib/supabase/queries/categories.query"
 import ProductList from "../../common/container/product-list"
+import { Suspense } from "react"
 
-export default async function CategoryPage({ searchParams: sp, params: p }: { searchParams: Promise<SearchParams>, params: Promise<Params> }) {
+interface CategoryPageProps {
+    searchParams: Promise<SearchParams>
+    params: Promise<Params>
+}
+
+export default async function CategoryPage({ searchParams: sp, params: p }: CategoryPageProps) {
 
     const { category_slug = "" } = await p
-    const { brand = "", sort_by } = await sp
+    const { brand = "", sort_by, page } = await sp
+
+    const normalizedPage = Number(page) || 0
+    const normalizedBrand = Array.isArray(brand) ? brand : brand ? [brand] : undefined
 
     const client = await createClient()
 
     const categorias = await CategoriesQuery.getSubCategoriesIdsBySlug(client, category_slug)
 
     const count_info = await ProductsQuery.getProductCounts(client, {
-        brand: brand,
+        brand: normalizedBrand,
         categories_id: categorias,
     })
 
@@ -26,9 +35,10 @@ export default async function CategoryPage({ searchParams: sp, params: p }: { se
     const products = await ProductsQuery.getProducts(client, {
         filter: {
             categories_id: categorias,
-            brand: brand,
+            brand: normalizedBrand,
         },
-        sort: sort_by
+        sort: sort_by,
+        page: normalizedPage
     })
 
     if (!products || products.length == 0) return notFound()
@@ -39,16 +49,19 @@ export default async function CategoryPage({ searchParams: sp, params: p }: { se
 
     if (!brands) return notFound()
 
+
     return (
         <Container>
-            <ProductList
-                brands={brands}
-                products={products}
-                pagination_info={{
-                    total_pages: count_info.total_pages,
-                    current_page: 1
-                }}
-                product_count={count_info.count} />
+            <Suspense fallback={<div>Loadfffing...</div>}>
+                <ProductList
+                    brands={brands}
+                    products={products}
+                    pagination_info={{
+                        total_pages: count_info.total_pages,
+                        current_page: normalizedPage,
+                    }}
+                    product_count={count_info.total_products} />
+            </Suspense>
         </Container>
     )
 }

@@ -12,14 +12,16 @@ export const useProductSearchContext = () => {
 
 const getSearchQuery = () => {
     //Solo se ejecuta un sola vez al montarse la web.
+    if (typeof window !== "object") return ""
     const searchParams = new URLSearchParams(window.location.search)
-    return searchParams.get("search") || ""
+    return searchParams.get("query") || ""
 }
 
 
 export default function ProductSearchProvider({ children }: { children: React.ReactNode }) {
 
-    const [search, setSearch] = useState(() => getSearchQuery())
+
+    const [search, setSearch] = useState(getSearchQuery)
 
     return (
         <createProductSearchContext.Provider value={{
