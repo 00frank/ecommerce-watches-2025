@@ -12,6 +12,7 @@ type SearchResult = {
   id: number | string;
   name: string;
   url: string;
+  brand?: string;
 };
 
 export function SearchForm() {
