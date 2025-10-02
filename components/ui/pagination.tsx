@@ -1,12 +1,12 @@
-import * as React from "react"
+import { Button, buttonVariants } from "@/components/ui/button"
+import { cn } from "@/lib/utils"
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
   MoreHorizontalIcon,
 } from "lucide-react"
-import Link, { LinkProps } from "next/link"
-import { cn } from "@/lib/utils"
-import { Button, buttonVariants } from "@/components/ui/button"
+import Link from "next/link"
+import * as React from "react"
 
 function Pagination({ className, ...props }: React.ComponentProps<"nav">) {
   return (
@@ -56,8 +56,10 @@ function PaginationLink({
         buttonVariants({
           variant: isActive ? "outline" : "ghost",
           size,
+          className: isActive ? "border-primary-700 text-primary-700 hover:bg-white" : "hover:bg-primary-50 hover:text-primary-700"
         }),
-        className
+        className,
+
       )}
       {...props}
     />
@@ -115,10 +117,5 @@ function PaginationEllipsis({
 
 export {
   Pagination,
-  PaginationContent,
-  PaginationLink,
-  PaginationItem,
-  PaginationPrevious,
-  PaginationNext,
-  PaginationEllipsis,
+  PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious
 }
