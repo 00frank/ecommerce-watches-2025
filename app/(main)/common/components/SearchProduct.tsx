@@ -52,7 +52,6 @@ export default function SearchProduct({ onSearch }: Props) {
                 onFocus={() => setIsFocused(true)}
                 onBlur={() => {
                     setIsFocused(false)
-                    if (!hasValue) handleSearch("")
                 }}
                 placeholder=" "
                 className={clsx("w-full border rounded-md px-3 py-6 pr-10 transition-colors duration-200",
