@@ -44,6 +44,7 @@ export default class ProductsQuery {
       .select("*, category:categories(slug)")
       .range(rangeFrom, rangeTo)
       .order(sortQuery.column, { ascending: sortQuery.ascending })
+      .filter("is_active", "eq", true)
 
     if (categories_id) {
       query = query.in("category_id", categories_id)
@@ -74,6 +75,7 @@ export default class ProductsQuery {
     let query = client
       .from("products")
       .select("", { count: "exact", head: true })
+      .filter("is_active", "eq", true)
 
     if (brand) {
       query = query.in("brand", brand)
@@ -140,6 +142,7 @@ export default class ProductsQuery {
     const { data } = await client
       .from("products")
       .select("*")
+      .filter("is_active", "eq", true)
       .eq("sku", sku)
       .single()
 
