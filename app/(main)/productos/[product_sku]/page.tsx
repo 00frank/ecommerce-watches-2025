@@ -33,7 +33,7 @@ const ProductInfo = ({
         <section className="flex-1 p-6 flex  gap-10 flex-col">
             <header className="space-y-2">
                 <div>
-                    <h1 className="uppercase text-[12px] font-medium text-default-700">{brand}</h1>
+                    <h1 className="text-[12px] font-semibold tracking-wide text-default-500 uppercase">{brand}</h1>
                     <h2 className="uppercase text-4xl font-bold">{name}</h2>
                 </div>
                 <p className="text-default-600">{description}</p>
@@ -46,8 +46,8 @@ const ProductInfo = ({
                 Stock:
                 <span className="font-semibold text-black"> {quantity ? "Disponible" : "No disponible"}</span>
             </p>
-            <button className="cursor-pointer hover:scale-95 duration-300 transition-all h-[60px] w-full md:w-[300px]">
-                <a className="w-full h-full  rounded-xs bg-primary-700 text-white flex items-center justify-center" href="/carrito">
+            <button className="cursor-pointer hover:scale-95 duration-200 transition-all h-[60px] w-full md:w-[300px]">
+                <a className="w-full h-full  rounded-sm hover:bg-primary-700 hover:text-white border border-primary-700 text-primary-700 px-6 py-2 flex items-center justify-center" href="/carrito">
                     Comprar ahora
                 </a>
             </button>

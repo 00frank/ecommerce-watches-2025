@@ -29,7 +29,7 @@ export default function ProductCard({
                     </h3>
                 </div>
                 <div className="py-3 flex justify-center">
-                    <span className="font-medium text-sm transition-all duration-200 ease-in-out group-hover:bg-primary-700 group-hover:text-white text-primary-700 border border-primary-700 px-6 py-2 rounded-md">
+                    <span className="font-medium text-sm transition-all duration-200 ease-in-out group-hover:bg-primary-700 group-hover:text-white text-primary-700 border border-primary-700 px-6 py-2 rounded-sm">
                         Ver más
                     </span>
                 </div>
