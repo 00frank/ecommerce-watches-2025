@@ -19,15 +19,15 @@ interface ButtonOpenCategoryProps {
 }
 
 const classNameCategory = {
-  default: "text-default-700 hover:text-default-950 text-[15px] p-2  items-center text-semibold bg-white flex uppercase cursor-pointer font-normal hover:underline transition-colors duration-200",
-  active: "font-medium underline text-default-950",
+  default: "text-default-700 max-w-[300px] truncate underline-offset-2 hover:text-default-950 text-[15px] p-2  items-center text-semibold bg-white flex uppercase cursor-pointer font-normal hover:underline transition-colors duration-200",
+  active: "font-medium underline  text-default-950",
 }
 
 const SubCategories = ({ category, category_slug }: { category: Category, category_slug?: string }) => {
   return (
     <ul className={
       clsx(
-        "bg-white border-b grid p-10 border-black/10 mt-[1px]  w-full absolute left-0 top-full z-10",
+        "bg-white border-b grid p-4 border-black/10 shadow-sm mt-[1px]  w-full absolute left-0 top-full z-10",
         category.subCategories.length > 3 && "grid-cols-3 justify-items-center"
       )
     }>
@@ -71,7 +71,7 @@ const ButtonOpenCategory = memo(({
       classNameCategory.default,
       (isSelected || isActive) && classNameCategory.active
     )}>
-      {category.title}
+      <p className="truncate ">{category.title}</p>
       <ChevronDown
         strokeWidth={1}
         size={18}

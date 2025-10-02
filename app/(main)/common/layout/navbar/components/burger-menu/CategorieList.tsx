@@ -33,11 +33,11 @@ const CategoryItem = memo(({ category, isLinkActive, seeAllActive }: CategoryIte
         <li>
             <button
                 className={clsx(
-                    "flex group w-full hover:bg-gray-100 p-1 px-2  cursor-pointer items-center justify-between text-default-700",
+                    "flex group w-full hover:bg-gray-100 p-2 cursor-pointer items-center justify-between text-default-700",
                     isLinkActive && "bg-gray-100 text-default-950"
                 )}
                 onClick={() => setIsOpen(!isOpen)}>
-                <h3 className="text-semibold  text-md uppercase group-hover:text-default-950 transition-colors duration-200">
+                <h3 className="text-semibold truncate  text-md uppercase group-hover:text-default-950 transition-colors duration-200">
                     {category.title}
                 </h3>
                 <ArrowRight size={20} strokeWidth={1} />
@@ -46,9 +46,9 @@ const CategoryItem = memo(({ category, isLinkActive, seeAllActive }: CategoryIte
                 <div className="absolute space-y-2 py-2 top-0 left-0 w-full h-full bg-white">
                     <button
                         onClick={onClose}
-                        className="flex items-center px-2  w-full gap-3 cursor-pointer py-1 uppercase">
+                        className="flex items-center p-2 w-full gap-3 cursor-pointer uppercase">
                         <ArrowLeft size={20} strokeWidth={1} />
-                        <h3>{category.title}</h3>
+                        <h3 className="truncate">{category.title}</h3>
                     </button>
                     <CategoryLink
                         slug={category.slug || ""}
@@ -67,15 +67,17 @@ const CategoryItem = memo(({ category, isLinkActive, seeAllActive }: CategoryIte
 const CategoryLink = ({ slug, title, isLinkActive }: CategoryLinkProps) => {
     return (
         <li className={clsx(
-            "p-1 px-2 flex",
+            "p-2 flex",
             isLinkActive && "bg-gray-100"
         )}>
             <Link
                 className={clsx(
-                    "hover:underline w-full text-default-700 text-semibold text-md uppercase hover:text-default-950 transition-colors duration-200  cursor-pointer",
+                    "hover:underline w-full underline-offset-2  text-default-700 text-semibold text-md uppercase hover:text-default-950 transition-colors duration-200  cursor-pointer",
                     isLinkActive && "underline !text-default-950 "
                 )}
-                href={`/categorias/${slug}`}>{title}</Link>
+                href={`/categorias/${slug}`}>
+                <p className="truncate text-start">{title}</p>
+            </Link>
         </li>
     )
 }
