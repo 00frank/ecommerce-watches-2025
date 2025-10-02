@@ -4,6 +4,7 @@ import "../globals.css";
 import Footer from "./common/layout/footer";
 import Header from "./common/layout/Header.layout";
 import Navbar from "./common/layout/navbar";
+import WhatsAppFloat from "./common/layout/WhatsAppFloat.layout";
 import ProductSearchProvider from "./common/provider/ProductSearch.provider";
 
 
@@ -35,6 +36,7 @@ export default function RootLayout({
           <Navbar />
           {children}
           <Footer />
+          <WhatsAppFloat />
         </ProductSearchProvider>
       </body>
     </html>
