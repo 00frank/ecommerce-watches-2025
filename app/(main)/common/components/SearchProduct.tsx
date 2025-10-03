@@ -1,9 +1,9 @@
 "use client"
-import clsx from "clsx"
 import { Input } from "@/components/ui/input"
+import clsx from "clsx"
 import { Search, X } from "lucide-react"
-import { useState } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
+import { useState } from "react"
 import { useProductSearchContext } from "../provider/ProductSearch.provider"
 
 interface Props {

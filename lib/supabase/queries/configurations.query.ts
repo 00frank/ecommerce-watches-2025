@@ -3,9 +3,9 @@ import { SupabaseClientType } from "@/types/supabaseClient.type";
 
 export default class ConfigurationsQuery {
 
-    static async getConfiguration(client: SupabaseClientType, field: "*" | string = "*") {
+    static async getConfiguration(client: SupabaseClientType) {
         const res = await client.from("configurations").
-            select(field).single()
+            select("*").single()
         return (res.data || {}) as ConfigurationsType
     }
 

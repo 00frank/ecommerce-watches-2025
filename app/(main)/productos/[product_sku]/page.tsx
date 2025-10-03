@@ -7,6 +7,8 @@ import { ProductDatabase } from "@/types/product.interface"
 import clsx from "clsx"
 import Image from "next/image"
 import { notFound } from "next/navigation"
+import AskWhatsAppButton from "./components/AskWhatsAppButton"
+import { Category } from "@/types"
 
 const ImageContainer = ({ image_url, name }: Pick<ProductDatabase, "image_url" | "name">) => {
     return (
@@ -21,14 +23,18 @@ const ImageContainer = ({ image_url, name }: Pick<ProductDatabase, "image_url" |
     )
 }
 
-interface ProductInfoProps extends Omit<ProductDatabase, "image_url"> { }
+type ProductInfoProps = Omit<ProductDatabase, "image_url"> & {
+    category: Pick<Category, "title"> | null
+}
 
 const ProductInfo = ({
     brand,
     name,
     quantity,
-    description
+    description,
+    category
 }: ProductInfoProps) => {
+
     return (
         <section className="flex-1 p-6 flex  gap-10 flex-col">
             <header className="space-y-2">
@@ -46,11 +52,7 @@ const ProductInfo = ({
                 Stock:
                 <span className="font-semibold text-black"> {quantity ? "Disponible" : "No disponible"}</span>
             </p>
-            <button className="cursor-pointer hover:scale-95 duration-200 transition-all h-[60px] w-full md:w-[300px]">
-                <a className="w-full h-full  rounded-sm hover:bg-primary-700 hover:text-white border border-primary-700 text-primary-700 px-6 py-2 flex items-center justify-center" href="/carrito">
-                    Comprar ahora
-                </a>
-            </button>
+            <AskWhatsAppButton product_name={name || ""} category_title={category?.title || ""} />
         </section>
     )
 }
