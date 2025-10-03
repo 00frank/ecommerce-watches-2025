@@ -24,14 +24,19 @@ export default async function Navbar() {
             )}>
                 <Container className="flex h-[var(--nav-height)] items-center gap-2 justify-between">
                     <DrawerMenuTrigger />
-                    <Link href="/">
-                        <Image
-                            src="/logo.png"
-                            alt="Logo"
-                            width={200}
-                            height={200}
-                        />
-                    </Link>
+                    <div className="flex items-center gap-2">
+                        <Link href="/">
+                            <Image
+                                src="/logo.png"
+                                alt="Logo"
+                                width={100}
+                                height={100}
+                            />
+                        </Link>
+                        <p className="text-[14px]  font-medium">
+                            Importadora la unión
+                        </p>
+                    </div>
                     <SearchProductModal />
                 </Container>
                 <CategoriesBar categories={categories} />

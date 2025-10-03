@@ -1,4 +1,3 @@
-
 import SortProducts from "./components/SortProducts";
 import Products from "./components/Products";
 import BrandFilter from "./components/BrandFilter";
@@ -13,9 +12,7 @@ interface Props {
     product_count: number
 }
 
-
 export default function ProductList({ brands, products, pagination_info, product_count }: Props) {
-
 
     return (
         <main

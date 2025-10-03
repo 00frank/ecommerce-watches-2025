@@ -27,8 +27,7 @@ const SubCategories = ({ category, category_slug }: { category: Category, catego
   return (
     <ul className={
       clsx(
-        "bg-white border-b grid p-4 border-black/10 shadow-sm mt-[1px]  w-full absolute left-0 top-full z-10",
-        category.subCategories.length > 3 && "grid-cols-3 justify-items-center"
+        "bg-white border-b grid p-4 border-black/10 shadow-sm mt-[1px]  w-full absolute left-0 top-full z-10 grid-cols-3 justify-items-center",
       )
     }>
       <li className="py-1">

@@ -44,7 +44,7 @@ export default class ProductsQuery {
       .select("*, category:categories(slug)")
       .range(rangeFrom, rangeTo)
       .order(sortQuery.column, { ascending: sortQuery.ascending })
-    // .filter("is_active", "eq", true)
+      .filter("is_active", "eq", true)
 
     if (categories_id) {
       query = query.in("category_id", categories_id)
@@ -142,7 +142,7 @@ export default class ProductsQuery {
     const { data } = await client
       .from("products")
       .select("*,category:categories(title)")
-      // .filter("is_active", "eq", true)
+      .filter("is_active", "eq", true)
       .eq("sku", sku)
       .single()
 
