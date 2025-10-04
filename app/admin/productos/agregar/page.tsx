@@ -54,7 +54,7 @@ export default async function AgregarProducto() {
 
             <div className="space-y-2">
               <div className="flex flex-row gap-4">
-                <div className="space-y-2 w-2/3">
+                <div className="space-y-2">
                   <Label htmlFor="price">Precio*</Label>
                   <div className="relative">
                     <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">$</span>
@@ -71,7 +71,16 @@ export default async function AgregarProducto() {
                   </div>
                 </div>
 
-                <div className="space-y-2 w-1/3">
+                <div className="space-y-2">
+									<Label htmlFor="is_active">Mostrar en tienda</Label>
+									<Switch
+										id="is_active"
+                    name="is_active"
+                    defaultChecked
+									/>
+								</div>
+
+                <div className="space-y-2">
                   <Label htmlFor="available">Stock</Label>
                   <Switch
                     checked

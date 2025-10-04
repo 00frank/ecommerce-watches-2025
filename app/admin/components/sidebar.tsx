@@ -14,6 +14,7 @@ import { NavMain } from "@/app/admin/components/nav-main"
 import { NavSecondary } from "@/app/admin/components/nav-secondary"
 import { NavUser } from "@/app/admin/components/nav-user"
 import Link from "next/link";
+import { Badge } from "@/components/ui/badge";
 
 const data = {
   user: {
@@ -46,6 +47,7 @@ const data = {
       title: "Categorias",
       url: "/admin/categorias",
       icon: BookOpenText,
+      isActive: true,
       items: [
         {
           title: "Agregar",
@@ -60,17 +62,7 @@ const data = {
     {
       title: "Banners",
       url: "/admin/banners",
-      icon: Wallpaper,
-      items: [
-        {
-          title: "Agregar",
-          url: "/admin/banners/agregar",
-        },
-        {
-          title: "Listado",
-          url: "/admin/banners/listado",
-        },
-      ],
+      icon: Wallpaper
     },
     {
       title: "Configuraciones",
@@ -79,11 +71,11 @@ const data = {
       items: [
         {
           title: "General",
-          url: "/admin/configuraciones/general",
+          url: "/admin/configuraciones",
         },
         {
           title: "Whatsapp",
-          url: "/admin/configuraciones/whatsapp",
+          url: "/admin/configuraciones#whatsapp",
         }
       ],
     },
@@ -100,23 +92,6 @@ const data = {
       icon: Send,
     },
   ],
-  // projects: [
-  //   {
-  //     name: "Design Engineering",
-  //     url: "#",
-  //     icon: Frame,
-  //   },
-  //   {
-  //     name: "Sales & Marketing",
-  //     url: "#",
-  //     icon: PieChart,
-  //   },
-  //   {
-  //     name: "Travel",
-  //     url: "#",
-  //     icon: Map,
-  //   },
-  // ],
 }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
@@ -133,9 +108,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
                   <Command className="size-4" />
                 </div>
-                <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">Empresa de relojes</span>
-                  <span className="truncate text-xs">Plan Pro CZ9</span>
+                <div className="grid flex-1 gap-0.5 text-left text-sm leading-tight">
+                  <span className="truncate font-medium">Importadora La Unión</span>
+                  <Badge variant="secondary" className="text-xs">Plan Pro</Badge>
                 </div>
               </Link>
             </SidebarMenuButton>

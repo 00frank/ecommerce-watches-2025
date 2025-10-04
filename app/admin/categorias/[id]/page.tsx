@@ -11,18 +11,15 @@ import { MainCategoriesSelect } from '../components/MainCategoriesSelect';
 import { toast } from 'sonner';
 
 import Category from '@/types/category.interface';
-import { Select } from '@/components/ui/select';
+import { Captions } from 'lucide-react';
 
 export default function CategoryPage() {
   const { id } = useParams();
   const router = useRouter();
-  const fileInputRef = useRef<HTMLInputElement>(null);
   const [category, setCategory] = useState<Category | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     title: '',
     slug: '',
@@ -77,45 +74,26 @@ export default function CategoryPage() {
     }));
   };
 
-  const handleAvailabilityChange = (checked: boolean) => {
-    setFormData(prev => ({
-      ...prev,
-      quantity: checked ? 1 : 0
-    }));
-  };
-
-  const uploadImage = async (file: File) => {
-    try {
-      const fileExt = file.name.split('.').pop();
-      const filePath = `${Math.random().toString(36).substring(2)}-${Date.now()}.${fileExt}`;
-
-      const { error: uploadError } = await supabase.storage
-        .from('product-images')
-        .upload(filePath, file);
-
-      if (uploadError) throw uploadError;
-
-      // Get public URL
-      const { data: { publicUrl } } = supabase.storage
-        .from('product-images')
-        .getPublicUrl(filePath);
-
-      return publicUrl;
-    } catch (error) {
-      console.error('Error uploading image:', error);
-      throw error;
-    }
-  };
-
   const handleSave = async () => {
     try {
       setSaving(true);
 
+      const categoryData = {
+        title: formData.title,
+        slug: formData.slug,
+        description: formData.description,
+        parent_id: !!formData.parent_id ? formData.parent_id : null,
+        is_active: formData.is_active,
+        meta_title: !!formData.meta_title ? formData.meta_title : null,
+        meta_description: !!formData.meta_description ? formData.meta_description : null,
+      };
+
+      console.log("categoryData", categoryData);
       // Update product data
       const { error, data } = await supabase
         .from('categories')
         .update({
-          ...formData
+          ...categoryData
         })
         .eq('id', id);
 
@@ -130,6 +108,29 @@ export default function CategoryPage() {
       setSaving(false);
     }
   };
+
+  const handleAvailabilityChange = (checked: boolean) => {
+    setFormData(prev => ({
+      ...prev,
+      is_active: checked
+    }));
+  };
+
+  const handleDelete = async () => {
+    const { error } = await supabase
+      .from('categories')
+      .delete()
+      .eq('id', id);
+
+    if (error) {
+      console.error('Error deleting category:', error);
+      toast.error('Error al eliminar la categoria: ' + error.message);
+      return;
+    };
+
+    toast.success('Categoria eliminada correctamente');
+    router.push('/admin/categorias');
+  }
 
   if (loading) {
     return (
@@ -163,102 +164,110 @@ export default function CategoryPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div className="space-y-6">
             <div className="space-y-2">
-              <Label htmlFor="title">Nombre de la categoria</Label>
+              <Label htmlFor="title">Titulo*</Label>
               <Input
                 id="title"
                 name="title"
                 value={formData.title}
                 onChange={handleInputChange}
-                placeholder="Nombre de la categoria"
+                required
+                placeholder="Titulo"
               />
             </div>
 
             <div className="space-y-2">
               <div className="flex flex-row gap-4">
                 <div className="space-y-2 w-2/4">
-                  <Label>Slug</Label>
-                  <Input
-                    id="slug"
-                    name="slug"
-                    value={formData.slug}
-                    onChange={handleInputChange}
-                    placeholder="Ej: REL-XYZ-001"
-                  />
-                </div>
-                <div className="space-y-2 w-2/4">
-                  <Label>Descripción</Label>
-                  <Input
-                    id="description"
-                    name="description"
-                    value={formData.description}
-                    onChange={handleInputChange}
-                    placeholder="Ej: Casio, Rolex, etc."
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* <div className="space-y-2">
-              <div className="flex flex-row gap-4">
-                <div className="space-y-2 w-2/3">
-                  <Label htmlFor="price">Precio</Label>
+                  <Label htmlFor="slug">Identificador web*</Label>
                   <div className="relative">
-                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">$</span>
+                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">/</span>
                     <Input
-                      id="price"
-                      name="price"
-                      type="number"
-                      value={formData.price}
+                      id="slug"
+                      name="slug"
+                      type="text"
+                      required
+                      value={formData.slug}
                       onChange={handleInputChange}
-                      placeholder="0.00"
-                      min="0"
-                      step="1"
+                      placeholder=""
                       className="pl-8"
                     />
                   </div>
                 </div>
-
-                <div className="space-y-2 w-1/3">
-                  <Label htmlFor="available">Stock</Label>
+                <div className="space-y-2 w-2/4">
+                  <Label htmlFor="is_active">Mostrar en la web</Label>
                   <Switch
-                    id="available"
-                    checked={formData.quantity > 0}
+                    id="is_active"
+                    name="is_active"
+                    checked={formData.is_active}
                     onCheckedChange={handleAvailabilityChange}
                   />
+                  <p className="inline pl-2 text-sm">
+                    {formData.is_active ? "Si" : "No"}
+                  </p>
                 </div>
               </div>
-            </div> */}
+            </div>
 
-            {/* <div className="space-y-2">
-              <div className="flex flex-row gap-4">
-                <div className="space-y-2 w-2/3">
-                  <Label>Categoría</Label>
-                  <CategoriesSelect onValueChange={handleCategoryChange} value={formData.category_id.toString()} />
-                </div>
-                <div className="space-y-2 w-1/3">
-                  <Label>Color</Label>
-                  <Input
-                    id="color"
-                    name="color"
-                    type="color"
-                    defaultValue={formData.color}
-                    onBlur={handleInputChange}
+            <div className="space-y-2">
+              <div className="flex flex-row gap-4 h-[66px]">
+                <div className="space-y-2 w-2/6">
+                  <Label htmlFor="is_subcategory">Es subcategoria?</Label>
+                  <Switch
+                    name="is_subcategory"
+                    id="is_subcategory"
+                    checked={!!formData.parent_id}
+                    disabled
                   />
+                  <p className="inline pl-2 text-sm">
+                    {!!formData.parent_id ? "Si" : "No"}
+                  </p>
                 </div>
+                {!!formData.parent_id && (
+                  <div className="space-y-2 w-4/6">
+                    <Label htmlFor="categoryId">Categoría padre</Label>
+                    <MainCategoriesSelect value={formData.parent_id.toString()} onValueChange={handleInputChange} required />
+                  </div>
+                )}
               </div>
-            </div> */}
+            </div>
           </div>
 
           <div className="space-y-6">
             <div className="space-y-2">
-              <Label>Categoria padre</Label>
-              <MainCategoriesSelect value={formData.mainCategory.title} />
+              <Label htmlFor="meta_title">Titulo para SEO</Label>
+              <div className="relative">
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">
+                  <Captions className="size-4" />
+                </span>
+                <Input
+                  id="meta_title"
+                  name="meta_title"
+                  type="text"
+                  placeholder=""
+                  className="pl-8"
+                  value={formData.meta_title}
+                  onChange={handleInputChange}
+                />
+              </div>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="meta_description">Descripción</Label>
+              <textarea
+                id="meta_description"
+                name="meta_description"
+                rows={4}
+                autoCorrect="off"
+                autoCapitalize="off"
+                className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm resize-none"
+                value={formData.meta_description}
+                onChange={handleInputChange}
+              />
             </div>
           </div>
         </div>
-        <div className="mt-8 pt-6 border-t flex justify-end space-x-4">
-          <Button variant="outline" onClick={() => router.push('/admin/productos')}>
-            Cancelar
+        <div className="mt-8 pt-6 border-t flex justify-between space-x-4">
+          <Button variant="destructive" onClick={handleDelete}>
+            Eliminar
           </Button>
           <Button onClick={handleSave} disabled={saving}>
             {saving ? 'Guardando...' : 'Guardar cambios'}

@@ -13,6 +13,7 @@ interface ProductFormData {
   quantity: number
   category_id: string
   image_url?: string
+  is_active: boolean
 }
 
 export async function createProduct(formData: FormData) {
@@ -25,6 +26,7 @@ export async function createProduct(formData: FormData) {
     color: formData.get('color') as string,
     quantity: Boolean(formData.get('available') as string) ? 1 : 0,
     category_id: formData.get('categoryId') as string,
+    is_active: Boolean(formData.get('is_active') as string)
   }
 
   console.log("productData", productData);

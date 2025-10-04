@@ -23,7 +23,7 @@ export default async function Configuraciones() {
 
   return (
     <div className="p-6">
-      <h1 className="text-2xl font-bold mb-6">Configuraciones</h1>
+      <h1 className="text-2xl font-bold mb-6" id="general">Configuraciones</h1>
       <div className="flex gap-6">
         <form className="space-y-4 w-3/4">
           <div className="grid w-full gap-3">
@@ -56,10 +56,10 @@ export default async function Configuraciones() {
             </p>
           </div>
           <Separator />
-          <div className="grid w-full gap-3">
+          <div className="grid w-full gap-3" id="whatsapp">
             <Label htmlFor="phone_number">
               <Phone className="size-4" />
-              Número de teléfono
+              Número de teléfono (WhatsApp)
             </Label>
             <Input
               id="phone_number"
