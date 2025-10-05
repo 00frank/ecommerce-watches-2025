@@ -52,16 +52,14 @@ export default async function CategoryPage({ searchParams: sp, params: p }: Cate
 
     return (
         <Container>
-            <Suspense fallback={<div>Loadfffing...</div>}>
-                <ProductList
-                    brands={brands}
-                    products={products}
-                    pagination_info={{
-                        total_pages: count_info.total_pages,
-                        current_page: normalizedPage,
-                    }}
-                    product_count={count_info.total_products} />
-            </Suspense>
+            <ProductList
+                brands={brands}
+                products={products}
+                pagination_info={{
+                    total_pages: count_info.total_pages,
+                    current_page: normalizedPage,
+                }}
+                product_count={count_info.total_products} />
         </Container>
     )
 }

@@ -24,8 +24,11 @@ export default async function Navbar() {
             )}>
                 <Container className="flex h-[var(--nav-height)] items-center gap-2 justify-between">
                     <DrawerMenuTrigger />
-                    <div className="flex items-center gap-2">
-                        <Link href="/">
+                    <div className="items-center flex flex-col justify-center">
+                        <h1 className="text-[16px] tracking-wide">
+                            Importadora La Unión
+                        </h1>
+                        <Link className="flex justify-center" href="/">
                             <Image
                                 src="/logo.png"
                                 alt="Logo"
@@ -33,9 +36,6 @@ export default async function Navbar() {
                                 height={100}
                             />
                         </Link>
-                        <p className="text-[14px]  font-medium">
-                            Importadora la unión
-                        </p>
                     </div>
                     <SearchProductModal />
                 </Container>
