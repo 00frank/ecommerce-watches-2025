@@ -1,3 +1,6 @@
+import { Product } from "@/types";
+import { CategoryDatabase } from "@/types/category.interface";
+import { ProductDatabase } from "@/types/product.interface";
 import ProductSortTypes from "@/types/productSort.type";
 import { SupabaseClientType } from "@/types/supabaseClient.type";
 
@@ -41,7 +44,7 @@ export default class ProductsQuery {
     const sortQuery = this.getSortQuery(sort)
     let query = client
       .from("products")
-      .select("*, category:categories(slug)")
+      .select("*")
       .range(rangeFrom, rangeTo)
       .order(sortQuery.column, { ascending: sortQuery.ascending })
       .filter("is_active", "eq", true)
@@ -149,5 +152,20 @@ export default class ProductsQuery {
 
     return data
   }
+
+  static async getRecommendedProducts(
+    client: SupabaseClientType
+    , product: ProductDatabase & { category: Pick<CategoryDatabase, "title"> | null }) {
+
+    const { data } = await client
+      .from("products")
+      .select("*")
+      .neq("name", product.name)
+      .or(`brand.ilike.%${product.brand}%`)
+      .eq("is_active", true)
+      .limit(5)
+    return data
+  }
+
 
 }

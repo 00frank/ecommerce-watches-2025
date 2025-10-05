@@ -80,19 +80,27 @@ export default async function ProductPage({ params }: { params: Params }) {
 
     const { product_sku = "" } = params
 
-    const product = await ProductsQuery.getProductBySku(await createClient(), { sku: product_sku })
+    const client = await createClient()
+
+    const product = await ProductsQuery.getProductBySku(client, { sku: product_sku })
 
     if (!product) return notFound()
+
+    const recommendedProducts = await ProductsQuery.getRecommendedProducts(client, product)
+
+    console.log(recommendedProducts)
+
+    if (!recommendedProducts) return notFound()
 
     return (
         <Container
             as="div"
             className="p-8 my-10 gap-10 flex flex-col">
-            <main className="gap-8 w-full min-h-[60dvh] md:max-h-[60dvh]  flex-col md:flex-row flex">
+            <main className="gap-8 w-full min-h-[75dvh] md:max-h-[75dvh]  flex-col md:flex-row flex">
                 <ImageContainer image_url={product.image_url} name={product.name} />
                 <ProductInfo {...product} />
             </main>
-            <ProductRecommendations products={[product]} />
+            <ProductRecommendations products={recommendedProducts} />
         </Container>
     )
 }
