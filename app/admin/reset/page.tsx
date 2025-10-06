@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import ErrorMessage from "./components/ErrorMessage";
 import { PasswordInputs } from "./components/PasswordInputs";
 
@@ -9,7 +10,9 @@ export default function ResetPasswordPage() {
         <form className="mt-8 space-y-6">
           <PasswordInputs />
         </form>
-        <ErrorMessage />
+        <Suspense fallback={<div>Cargando...</div>}>
+          <ErrorMessage />
+        </Suspense>
       </div>
     </div>
   );
