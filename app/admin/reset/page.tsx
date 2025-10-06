@@ -2,9 +2,11 @@
 
 import { PasswordInputs } from "./components/PasswordInputs";
 import { useCreateSession } from "./hooks/useCreateSession";
+import { useSearchParams } from "next/navigation";
 
-export default async function ResetPasswordPage({ searchParams }: { searchParams: Promise<{ error?: string }> }) {
-  const { error } = await searchParams;
+export default function ResetPasswordPage() {
+  const searchParams = useSearchParams();
+  const error = searchParams.get("error");
   useCreateSession();
 
   return (
