@@ -1,6 +1,8 @@
 import { SubmitButton } from './components/SubmitButton';
 
-export default function AdminLoginPage() {
+export default async function AdminLoginPage({ searchParams }: { searchParams: Promise<{ error?: string }> }) {
+  const { error } = await searchParams;
+
   return (
     <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
@@ -53,6 +55,9 @@ export default function AdminLoginPage() {
             </div>
           </div>
           <SubmitButton />
+          {error && <p className="text-red-500">{
+            error === 'invalid_credentials' ? 'Credenciales inválidas' : 'Algo salió mal'
+          }</p>}
         </form>
       </div>
     </div>

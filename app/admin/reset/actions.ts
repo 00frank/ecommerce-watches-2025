@@ -17,7 +17,8 @@ export async function resetPassword(formData: FormData) {
   const { error } = await supabase.auth.updateUser(data)
 
   if (error) {
-    redirect('/error')
+    console.log(error)
+    redirect('/admin/reset?error=' + error.message)
   }
 
   revalidatePath('/admin/dashboard', 'layout')
