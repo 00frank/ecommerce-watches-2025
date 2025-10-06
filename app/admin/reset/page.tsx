@@ -1,12 +1,10 @@
 "use client"
 
+import ErrorMessage from "./components/ErrorMessage";
 import { PasswordInputs } from "./components/PasswordInputs";
 import { useCreateSession } from "./hooks/useCreateSession";
-import { useSearchParams } from "next/navigation";
 
 export default function ResetPasswordPage() {
-  const searchParams = useSearchParams();
-  const error = searchParams.get("error");
   useCreateSession();
 
   return (
@@ -16,7 +14,7 @@ export default function ResetPasswordPage() {
         <form className="mt-8 space-y-6">
           <PasswordInputs />
         </form>
-        {error && <p className="text-red-500">{error}</p>}
+        <ErrorMessage />
       </div>
     </div>
   );
