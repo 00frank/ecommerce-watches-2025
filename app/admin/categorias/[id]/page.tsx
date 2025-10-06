@@ -25,7 +25,7 @@ export default function CategoryPage() {
     slug: '',
     description: '',
     mainCategory: { id: 0, title: '' },
-    parent_id: 0,
+    parent_id: '0',
     is_active: true,
     meta_title: '',
     meta_description: '',
@@ -66,11 +66,26 @@ export default function CategoryPage() {
     fetchCategory();
   }, [id]);
 
-  const handleInputChange = (e: any) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
       [name]: name === 'price' ? parseFloat(value) || 0 : value
+    }));
+  };
+
+  const handleSelectChange = (e: string) => {
+    setFormData(prev => ({
+      ...prev,
+      parent_id: e
+    }));
+  }
+
+  const handleTextAreaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const { value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      meta_description: value
     }));
   };
 
@@ -225,7 +240,7 @@ export default function CategoryPage() {
                 {!!formData.parent_id && (
                   <div className="space-y-2 w-4/6">
                     <Label htmlFor="categoryId">Categoría padre</Label>
-                    <MainCategoriesSelect value={formData.parent_id.toString()} onValueChange={handleInputChange} required />
+                    <MainCategoriesSelect value={formData.parent_id.toString()} onValueChange={handleSelectChange} required />
                   </div>
                 )}
               </div>
@@ -260,7 +275,7 @@ export default function CategoryPage() {
                 autoCapitalize="off"
                 className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm resize-none"
                 value={formData.meta_description}
-                onChange={handleInputChange}
+                onChange={handleTextAreaChange}
               />
             </div>
           </div>
