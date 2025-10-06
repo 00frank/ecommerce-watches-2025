@@ -8,14 +8,14 @@ export async function deleteCategory(formData: FormData) {
     const id = formData.get('id')
 
     // borrar subcategorias relacionadas a este id
-    let { error } = await supabase.from('categories').delete().eq('parent_id', id)
+    const { error } = await supabase.from('categories').delete().eq('parent_id', id)
 
     if (error) {
         throw error
     }
 
     // borrar la categoria
-    let { error: error2 } = await supabase.from('categories').delete().eq('id', id)
+    const { error: error2 } = await supabase.from('categories').delete().eq('id', id)
 
     if (error2) {
         throw error2
