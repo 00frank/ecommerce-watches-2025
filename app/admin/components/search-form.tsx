@@ -170,7 +170,7 @@ export function SearchForm() {
       {/* Sin resultados */}
       {isOpen && query.length >= 2 && !isLoading && results.length === 0 && (
         <div className="absolute z-50 mt-1 w-full rounded-md border bg-popover p-4 text-sm text-muted-foreground">
-          No se encontraron resultados para "{query}"
+          No se encontraron resultados para &quot;{query}&quot;
         </div>
       )}
     </div>
