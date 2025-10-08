@@ -22,10 +22,10 @@ const Brand = ({
             <Checkbox
                 checked={is_checked}
                 color="#000"
-                className="h-5 w-5 border-default-500 hover:border-primary-700  data-[state=checked]:bg-primary-700 rounded-[4px] data-[state=checked]:border-primary-600 cursor-pointer transition-transform active:scale-95 !text-white" />
+                className="h-5 w-5 border-default-500 hover:border-primary-500  data-[state=checked]:bg-primary-500 rounded-[4px] data-[state=checked]:border-primary-600 cursor-pointer transition-transform active:scale-95 !text-white" />
             <p className="text-default-800">
                 {name}
-                <span className={clsx(is_checked && "text-primary-600")}> ({item_count})
+                <span className={clsx(is_checked && "text-primary-400")}> ({item_count})
                 </span>
             </p>
         </li>
