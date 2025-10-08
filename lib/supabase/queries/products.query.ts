@@ -144,9 +144,9 @@ export default class ProductsQuery {
   ) {
     const { data } = await client
       .from("products")
-      .select("*,category:categories(title)")
+      .select("*,category:categories(title,id)")
       .filter("is_active", "eq", true)
-      .eq("sku", sku)
+      .eq("id", Number(sku))
       .single()
 
 
@@ -155,17 +155,24 @@ export default class ProductsQuery {
 
   static async getRecommendedProducts(
     client: SupabaseClientType
-    , product: ProductDatabase & { category: Pick<CategoryDatabase, "title"> | null }) {
+    , product: ProductDatabase & { category: Pick<CategoryDatabase, "title" | "id"> | null }) {
+
+    const id = product.category?.id
+
+
+    if (!product.name) return []
+
+    const orFilters = product.name.split(" ").filter(b => b.length > 2).map(b => `name.ilike.%${b}%`).join(',');
 
     const { data } = await client
       .from("products")
       .select("*")
       .neq("name", product.name)
-      .or(`brand.ilike.%${product.brand}%`)
+      .or(`brand.ilike.%${product.brand}%,${orFilters},category_id.eq.${id}`)
       .eq("is_active", true)
       .limit(5)
-    return data
-  }
+    return data || []
 
+  }
 
 }

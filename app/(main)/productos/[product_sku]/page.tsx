@@ -88,9 +88,6 @@ export default async function ProductPage({ params }: { params: Params }) {
 
     const recommendedProducts = await ProductsQuery.getRecommendedProducts(client, product)
 
-    console.log(recommendedProducts)
-
-    if (!recommendedProducts) return notFound()
 
     return (
         <Container
@@ -100,7 +97,7 @@ export default async function ProductPage({ params }: { params: Params }) {
                 <ImageContainer image_url={product.image_url} name={product.name} />
                 <ProductInfo {...product} />
             </main>
-            <ProductRecommendations products={recommendedProducts} />
+            {recommendedProducts.length > 0 && <ProductRecommendations products={recommendedProducts} />}
         </Container>
     )
 }

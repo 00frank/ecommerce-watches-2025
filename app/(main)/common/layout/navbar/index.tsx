@@ -25,15 +25,12 @@ export default async function Navbar() {
                 <Container className="flex h-[var(--nav-height)] items-center gap-2 justify-between">
                     <DrawerMenuTrigger />
                     <div className="items-center flex flex-col justify-center">
-                        <h1 className="text-[16px] tracking-wide">
-                            Importadora La Unión
-                        </h1>
                         <Link className="flex justify-center" href="/">
                             <Image
                                 src="/logo.png"
                                 alt="Logo"
-                                width={100}
-                                height={100}
+                                width={140}
+                                height={140}
                             />
                         </Link>
                     </div>
