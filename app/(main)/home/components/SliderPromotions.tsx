@@ -26,7 +26,7 @@ export default function SliderPromotions({
                             <img
                                 loading="lazy"
                                 src={banner.image_url!}
-                                className="w-full h-full object-cover"
+                                className="w-full max-h-[900px] h-full object-cover"
                                 alt="promocion relojes"
                             />
                         </picture>

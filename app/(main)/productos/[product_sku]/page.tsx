@@ -16,7 +16,7 @@ const ImageContainer = ({ image_url, name }: Pick<ProductDatabase, "image_url" |
             <Image
                 src={image_url || ""}
                 alt={name || ""}
-                className="m-auto h-full w-full object-contain"
+                className=" h-full w-full object-contain"
                 width={1920}
                 height={1080} />
         </section>
@@ -76,9 +76,9 @@ const ProductRecommendations = ({ products }: { products: ProductDatabase[] }) =
     )
 }
 
-export default async function ProductPage({ params }: { params: Params }) {
+export default async function ProductPage({ params }: { params: Promise<Params> }) {
 
-    const { product_sku = "" } = params
+    const { product_sku = "" } = await params
 
     const client = await createClient()
 
