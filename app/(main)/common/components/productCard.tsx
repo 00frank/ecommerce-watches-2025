@@ -1,4 +1,5 @@
 import { ProductDatabase } from "@/types/product.interface";
+import Image from "next/image";
 import Link from "next/link";
 
 
@@ -16,8 +17,10 @@ export default function ProductCard({
                 className="h-[340px] max-h-[340px] cursor-pointer group hover:shadow-lg hover:border-default-300 p-3 rounded-md overflow-hidden border flex flex-col items-stretch border-default-200 transition-shadow duration-300"
             >
                 <div className="flex-none overflow-hidden rounded-md">
-                    <img
+                    <Image
                         src={image_url || ""}
+                        width={500}
+                        height={500}
                         className="object-contain rounded-md w-full h-40 transition-transform duration-300 ease-in-out group-hover:scale-110"
                         alt={sku || ""}
                     />

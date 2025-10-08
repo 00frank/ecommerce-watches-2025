@@ -38,13 +38,14 @@ export default function PaginationProducts({
     pagination_info: PaginationInfo
 }) {
 
+    const searchParams = useSearchParams()
+
     if (pagination_info.total_pages == 0) return
 
     const { current_page, total_pages } = pagination_info
 
     const { visiblePages, ellipsisStart, ellipsisEnd } = getPagination(pagination_info)
 
-    const searchParams = useSearchParams()
 
     const handlePageChange = (page: number) => {
         const current = new URLSearchParams(searchParams)

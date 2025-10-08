@@ -36,7 +36,7 @@ export default class CategoriesQuery {
 
         if (!category) return
 
-        let query = client
+        const query = client
             .from('categories')
             .select('id')
 

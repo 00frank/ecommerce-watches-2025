@@ -83,6 +83,8 @@ const ButtonOpenCategory = memo(({
   )
 })
 
+ButtonOpenCategory.displayName = "ButtonOpenCategory"
+
 const LinkCategory = memo(({
   category,
   category_slug,
@@ -102,6 +104,8 @@ const LinkCategory = memo(({
     </Link>
   )
 })
+
+LinkCategory.displayName = "LinkCategory"
 
 export default function CategoriesBar({ categories }: { categories: Array<Category> }) {
 

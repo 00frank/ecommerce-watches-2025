@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { createClient } from "@/lib/supabase/server"
-import { Product } from '@/types';
 import { ProductCard } from './components/ProductCard';
+import { Product } from '@/types';
 
 // Número de productos por página
 const ITEMS_PER_PAGE = 10;
@@ -46,8 +46,8 @@ export default async function ProductosPage({ searchParams }: { searchParams: Se
     <div className="p-6">
       <h1 className="text-2xl font-bold mb-6">Gestión de Productos</h1>
       <div className="bg-white rounded-lg shadow overflow-hidden mb-6">
-        {products?.map((product: Product) => (
-          <ProductCard key={product.id} product={product} />
+        {products?.map((product) => (
+          <ProductCard key={product.id} product={product as Product} />
         ))}
       </div>
       {totalPages > 1 && (

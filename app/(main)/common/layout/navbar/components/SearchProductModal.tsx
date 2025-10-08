@@ -1,8 +1,8 @@
 "use client";
-import { Drawer, DrawerContent, DrawerTrigger, DrawerOverlay, DrawerHeader } from "@/components/ui/drawer";
-import { useState } from "react";
-import { Search, X } from "lucide-react";
 import SearchProduct from "@/app/(main)/common/components/SearchProduct";
+import { Drawer, DrawerContent, DrawerHeader, DrawerTrigger } from "@/components/ui/drawer";
+import { Search, X } from "lucide-react";
+import { useState } from "react";
 
 const SearchProductModal = () => {
 

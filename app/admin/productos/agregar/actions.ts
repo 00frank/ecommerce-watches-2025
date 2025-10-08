@@ -1,30 +1,31 @@
 'use server'
-
 import { createClient } from '@/lib/supabase/server'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 
 interface ProductFormData {
   name: string
-  price: string
+  price: number
   sku: string
   brand: string
   color: string
   quantity: number
-  category_id: string
+  category_id: number
   image_url?: string
+  is_active: boolean
 }
 
 export async function createProduct(formData: FormData) {
   const supabase = await createClient()
   const productData: ProductFormData = {
     name: formData.get('name') as string,
-    price: formData.get('price') as string,
+    price: Number(formData.get('price')) as number,
     sku: formData.get('sku') as string,
     brand: formData.get('brand') as string,
     color: formData.get('color') as string,
     quantity: Boolean(formData.get('available') as string) ? 1 : 0,
-    category_id: formData.get('categoryId') as string,
+    category_id: Number(formData.get('categoryId')) as number,
+    is_active: Boolean(formData.get('is_active') as string)
   }
 
   console.log("productData", productData);

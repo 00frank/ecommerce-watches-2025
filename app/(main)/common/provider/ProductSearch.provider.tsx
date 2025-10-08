@@ -1,9 +1,12 @@
 "use client"
 import { createContext, useContext, useState } from "react"
 
-const createProductSearchContext = createContext({
+const createProductSearchContext = createContext<{
+    search: string,
+    setSearch: (s: string) => void
+}>({
     search: "",
-    setSearch: (s: string) => { }
+    setSearch: () => { }
 })
 
 export const useProductSearchContext = () => {

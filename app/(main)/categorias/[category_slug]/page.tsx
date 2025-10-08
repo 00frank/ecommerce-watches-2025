@@ -1,12 +1,11 @@
 import Container from "@/components/container"
+import CategoriesQuery from "@/lib/supabase/queries/categories.query"
+import ProductsQuery from "@/lib/supabase/queries/products.query"
+import { createClient } from "@/lib/supabase/server"
 import { Params } from "@/types/params.type"
 import { SearchParams } from "@/types/searchParams.type"
-import ProductsQuery from "@/lib/supabase/queries/products.query"
 import { notFound } from "next/navigation"
-import { createClient } from "@/lib/supabase/server"
-import CategoriesQuery from "@/lib/supabase/queries/categories.query"
 import ProductList from "../../common/container/product-list"
-import { Suspense } from "react"
 
 interface CategoryPageProps {
     searchParams: Promise<SearchParams>

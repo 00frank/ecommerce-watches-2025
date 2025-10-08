@@ -1,10 +1,13 @@
+import Image from 'next/image';
 import { SubmitButton } from './components/SubmitButton';
 
 export default function AdminLoginPage() {
   return (
     <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-        <img
+        <Image
+          width={100}
+          height={100}
           src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
           alt="Logo de la empresa"
           className="mx-auto h-10 w-auto"

@@ -64,6 +64,8 @@ const CategoryItem = memo(({ category, isLinkActive, seeAllActive }: CategoryIte
     )
 })
 
+CategoryItem.displayName = "CategoryItem"
+
 const CategoryLink = ({ slug, title, isLinkActive }: CategoryLinkProps) => {
     return (
         <li className={clsx(

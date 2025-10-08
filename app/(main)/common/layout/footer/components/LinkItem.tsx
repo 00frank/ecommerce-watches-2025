@@ -17,4 +17,6 @@ const LinkItem = memo(({
     )
 })
 
+LinkItem.displayName = "LinkItem"
+
 export default LinkItem

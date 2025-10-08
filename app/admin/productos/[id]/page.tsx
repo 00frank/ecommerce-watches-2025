@@ -1,16 +1,15 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-import { createClient } from '@/lib/supabase/client';
-import { useParams, useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
-import { CategoriesSelect } from '../components/CategoriesSelect';
+import { createClient } from '@/lib/supabase/client';
+import { useParams, useRouter } from 'next/navigation';
+import { useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
-
-import Product from '@/types/product.interface';
+import { CategoriesSelect } from '../components/CategoriesSelect';
+import { ProductDatabase } from '@/types/product.interface';
 import Image from 'next/image';
 
 
@@ -18,7 +17,7 @@ export default function ProductPage() {
 	const { id } = useParams();
 	const router = useRouter();
 	const fileInputRef = useRef<HTMLInputElement>(null);
-	const [product, setProduct] = useState<Product | null>(null);
+	const [product, setProduct] = useState<ProductDatabase | null>(null);
 	const [loading, setLoading] = useState(true);
 	const [saving, setSaving] = useState(false);
 	const [error, setError] = useState<string | null>(null);
@@ -35,17 +34,15 @@ export default function ProductPage() {
 	});
 	const supabase = createClient();
 
+	const normalizedID = Number(id)
 
 	useEffect(() => {
 		const fetchProduct = async () => {
 			try {
 				const { data, error } = await supabase
 					.from('products')
-					.select(`
-            *,
-            category:category_id(*)
-          `)
-					.eq('id', id)
+					.select(`*,category:category_id(*)`)
+					.eq('id', normalizedID)
 					.single();
 
 				if (error) throw error;
@@ -146,7 +143,7 @@ export default function ProductPage() {
 					...formData,
 					image_url: imageUrl
 				})
-				.eq('id', id);
+				.eq('id', normalizedID);
 
 			if (error) throw error;
 			setSelectedFile(null);
@@ -201,8 +198,8 @@ export default function ProductPage() {
 					<div>
 						<div className="border rounded-lg overflow-hidden">
 							<Image
-								src={imagePreview || product.image_url}
-								alt={product.name}
+								src={imagePreview || product.image_url || ""}
+								alt={product.name || ""}
 								width={500}
 								height={500}
 								priority
