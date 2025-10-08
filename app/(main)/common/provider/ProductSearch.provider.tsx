@@ -1,0 +1,37 @@
+"use client"
+import { createContext, useContext, useState } from "react"
+
+const createProductSearchContext = createContext<{
+    search: string,
+    setSearch: (s: string) => void
+}>({
+    search: "",
+    setSearch: () => { }
+})
+
+export const useProductSearchContext = () => {
+    return useContext(createProductSearchContext)
+}
+
+const getSearchQuery = () => {
+    //Solo se ejecuta un sola vez al montarse la web.
+    if (typeof window !== "object") return ""
+    const searchParams = new URLSearchParams(window.location.search)
+    return searchParams.get("query") || ""
+}
+
+
+export default function ProductSearchProvider({ children }: { children: React.ReactNode }) {
+
+
+    const [search, setSearch] = useState(getSearchQuery)
+
+    return (
+        <createProductSearchContext.Provider value={{
+            search,
+            setSearch
+        }}>
+            {children}
+        </createProductSearchContext.Provider>
+    )
+}
