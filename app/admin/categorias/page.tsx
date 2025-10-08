@@ -1,20 +1,15 @@
-import Link from 'next/link';
-import { createClient } from "@/lib/supabase/server"
-import { Category, Product } from '@/types';
+import { createClient } from "@/lib/supabase/server";
+import { buildCategoryTree, CategoryTree } from '@/utils';
 import { CategoriesSuperInfo } from './components/CategoriesSuperInfo';
 import { CategoryCard } from './components/CategoryCard';
-import { buildCategoryTree, CategoryTree } from '@/utils';
 
 // Número de productos por página
 const ITEMS_PER_PAGE = 10;
 
 export const revalidate = 30;
 
-type SearchParams = Promise<{ page?: string }>;
-
-export default async function CategoriasPage({ searchParams }: { searchParams: SearchParams }) {
+export default async function CategoriasPage() {
   const supabase = await createClient();
-  const params = await searchParams;
 
   const { count } = await supabase
     .from('categories')

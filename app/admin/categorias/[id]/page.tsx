@@ -10,13 +10,13 @@ import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import { MainCategoriesSelect } from '../components/MainCategoriesSelect';
 
-import Category from '@/types/category.interface';
+import { CategoryDatabase } from '@/types/category.interface';
 import { Captions } from 'lucide-react';
 
 export default function CategoryPage() {
   const { id } = useParams();
   const router = useRouter();
-  const [category, setCategory] = useState<Category | null>(null);
+  const [category, setCategory] = useState<CategoryDatabase | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -44,13 +44,13 @@ export default function CategoryPage() {
 
         if (error) throw error;
         console.log("data", data);
-        setCategory(data);
+        data && setCategory(data);
         setFormData({
           title: data.title || '',
           slug: data.slug || '',
           description: data.description || '',
-          mainCategory: data.mainCategory || null,
-          parent_id: data.parent_id || 0,
+          mainCategory: { id: data.mainCategory?.id || 0, title: data.mainCategory?.title || '' },
+          parent_id: data.parent_id?.toString() || "",
           is_active: data.is_active || true,
           meta_title: data.meta_title || '',
           meta_description: data.meta_description || '',
@@ -97,7 +97,7 @@ export default function CategoryPage() {
         title: formData.title,
         slug: formData.slug,
         description: formData.description,
-        parent_id: !!formData.parent_id ? formData.parent_id : null,
+        parent_id: !!formData.parent_id ? Number(formData.parent_id) : null,
         is_active: formData.is_active,
         meta_title: !!formData.meta_title ? formData.meta_title : null,
         meta_description: !!formData.meta_description ? formData.meta_description : null,
@@ -110,7 +110,7 @@ export default function CategoryPage() {
         .update({
           ...categoryData
         })
-        .eq('id', id);
+        .eq('id', Number(id));
 
       if (error) throw error;
 
@@ -135,7 +135,7 @@ export default function CategoryPage() {
     const { error } = await supabase
       .from('categories')
       .delete()
-      .eq('id', id);
+      .eq('id', Number(id));
 
     if (error) {
       console.error('Error deleting category:', error);
