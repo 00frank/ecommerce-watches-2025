@@ -8,7 +8,7 @@ interface CategoryFormData {
   title: string
   slug: string
   description?: string
-  parent_id?: string
+  parent_id?: number | null
   is_active: boolean
   meta_title: string
   meta_description: string
@@ -26,11 +26,12 @@ export async function createCategory(formData: FormData) {
     description: (formData.get('title') as string).trim(),
     meta_title: (formData.get('meta_title') as string).trim(),
     meta_description: (formData.get('meta_description') as string).trim(),
+    parent_id: null
   }
 
   if (isSubcategory) {
     const categoryId = formData.get('category_id') as string;
-    categoryData.parent_id = categoryId;
+    categoryData.parent_id = Number(categoryId);
     const { data: parentCategory } = await supabase.from('categories').select('*').eq('id', Number(categoryId)).single()
     categoryData.description = `${parentCategory?.description || ""} - ${categoryData.title}`;
   }

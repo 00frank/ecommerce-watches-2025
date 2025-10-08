@@ -14,6 +14,7 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 
 import { Category } from "@/types";
+import { CategoryDatabase } from "@/types/category.interface";
 
 interface CategoriesSelectProps {
   value?: string;
@@ -60,7 +61,7 @@ export function MainCategoriesSelect({
   required,
 }: CategoriesSelectProps) {
   const [loading, setLoading] = useState(true);
-  const [categories, setCategories] = useState<Category[]>([]);
+  const [categories, setCategories] = useState<CategoryDatabase[]>([]);
   const supabase = createClient();
 
   useEffect(() => {
