@@ -24,14 +24,18 @@ export default async function Navbar() {
             )}>
                 <Container className="flex h-[var(--nav-height)] items-center gap-2 justify-between">
                     <DrawerMenuTrigger />
-                    <div className="items-center flex flex-col justify-center">
-                        <Link className="flex select-none justify-center" href="/">
+                    <div className="flex mt-4 flex-col items-center justify-center space-y-2">
+                        <Link href="/" className="flex flex-col items-center select-none text-center">
                             <Image
                                 src="/logo.png"
                                 alt="Logo"
                                 width={140}
                                 height={140}
+                                className="drop-shadow-md"
                             />
+                            <p className="text-sm py-2 font-medium text-primary tracking-wide">
+                                IMPORTADORA LA UNIÓN
+                            </p>
                         </Link>
                     </div>
                     <SearchProductModal />
