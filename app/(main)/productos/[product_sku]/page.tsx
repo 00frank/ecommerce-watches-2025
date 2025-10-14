@@ -80,14 +80,15 @@ export default async function ProductPage({ params }: { params: Promise<Params> 
 
     const { product_sku = "" } = await params
 
+    const normalizedSKU = decodeURIComponent(product_sku)
+
     const client = await createClient()
 
-    const product = await ProductsQuery.getProductBySku(client, { sku: product_sku })
+    const product = await ProductsQuery.getProductBySku(client, { sku: normalizedSKU })
 
     if (!product) return notFound()
 
     const recommendedProducts = await ProductsQuery.getRecommendedProducts(client, product)
-
 
     return (
         <Container

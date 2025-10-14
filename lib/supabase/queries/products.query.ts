@@ -146,7 +146,7 @@ export default class ProductsQuery {
       .from("products")
       .select("*,category:categories(title,id)")
       .filter("is_active", "eq", true)
-      .eq("id", Number(sku))
+      .eq("sku", sku)
       .single()
 
 

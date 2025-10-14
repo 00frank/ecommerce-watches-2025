@@ -11,7 +11,7 @@ export default function ProductCard({
     id
 }: ProductDatabase) {
     return (
-        <Link href={`/productos/${id}`}
+        <Link href={`/productos/${sku}`}
             className="block">
             <article
                 className="h-[340px] max-h-[340px] cursor-pointer group hover:shadow-lg hover:border-default-300 p-3 rounded-md overflow-hidden border flex flex-col items-stretch border-default-200 transition-shadow duration-300"
