@@ -20,12 +20,15 @@ export async function ProductCard({ product }: { product: Product }) {
       <div className="flex w-3/6 items-center gap-2">
         <img className="w-24 h-24 object-cover border rounded-lg" src={product.image_url || ""} alt="" />
         <div className="w-2 h-2 rounded-full" style={{ backgroundColor: product.color || "" }} />
-        <h2 className="font-semibold line-clamp-2 max-w-[330px]">
-          {product.name}
-        </h2>
+        <div>
+          <h2 className="font-semibold line-clamp-2 max-w-[330px]">
+            {product.name}
+          </h2>
+          <p className="text-gray-500 text-sm">{product.brand}</p>
+        </div>
       </div>
       <div className="flex flex-col w-2/6">
-        <p className="text-sm">📦 Stock: <b>{product.quantity && product?.quantity > 0 ? "Si ✅" : "No ❌"}</b></p>
+        <p className="text-sm">👁️ Visible en tienda: <b>{product.is_active ? "Si ✅" : "No ❌"}</b></p>
         <p className="text-sm line-clamp-2">🏷️ Categoría: <b>{product.category.description}</b></p>
         <p className="text-sm">📦 Stock: <b>{product.quantity && product.quantity > 0 ? "Si ✅" : "No ❌"}</b></p>
       </div>
