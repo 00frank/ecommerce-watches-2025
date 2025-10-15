@@ -33,7 +33,7 @@ export default async function Navbar() {
                                 height={140}
                                 className="drop-shadow-md"
                             />
-                            <p className="text-sm py-2 font-medium text-primary tracking-wide">
+                            <p className="text-sm py-2 font-semibold text-default-900 tracking-wide">
                                 IMPORTADORA LA UNIÓN
                             </p>
                         </Link>
