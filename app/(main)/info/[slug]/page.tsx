@@ -2,11 +2,14 @@ import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 import { createClient } from '@/lib/supabase/server';
 
+type PageProps = {
+  params: { slug: string };
+  searchParams: { [key: string]: string | string[] | undefined };
+};
+
 export async function generateMetadata({
-  params
-}: {
-  params: { slug: string }
-}): Promise<Metadata> {
+  params,
+}: PageProps): Promise<Metadata> {
   const page = await getPageBySlug(params.slug);
 
   if (!page) {
@@ -17,10 +20,10 @@ export async function generateMetadata({
 
   return {
     title: `${page.title}`,
-    description: page.content.substring(0, 160),
+    description: page.content?.substring(0, 160) || '',
     openGraph: {
       title: page.title,
-      description: page.content.substring(0, 160),
+      description: page.content?.substring(0, 160) || '',
       type: 'website',
     },
   };
@@ -39,10 +42,18 @@ async function getPageBySlug(slug: string) {
     return null;
   }
 
-  return data;
+  return data as {
+    id: string;
+    title: string;
+    slug: string;
+    content: string;
+    is_active: boolean;
+    created_at: string;
+    updated_at: string;
+  };
 }
 
-export default async function Page({ params }: { params: { slug: string } }) {
+export default async function Page({ params }: PageProps) {
   const page = await getPageBySlug(params.slug);
 
   if (!page || !page.is_active) {
@@ -55,7 +66,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
         <h1 className="text-3xl font-bold mb-6">{page.title}</h1>
         <div
           className="prose max-w-none"
-          dangerouslySetInnerHTML={{ __html: page.content }}
+          dangerouslySetInnerHTML={{ __html: page.content || '' }}
         />
       </div>
     </div>
