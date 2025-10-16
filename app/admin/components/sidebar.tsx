@@ -7,6 +7,7 @@ import { Sidebar, SidebarContent, SidebarHeader, SidebarMenu, SidebarMenuButton,
 import {
   BookOpenText,
   Command,
+  FilePenLine,
   LifeBuoy,
   Send,
   Settings2,
@@ -62,6 +63,11 @@ const data = {
       title: "Banners",
       url: "/admin/banners",
       icon: Wallpaper
+    },
+    {
+      title: "Información",
+      url: "/admin/info",
+      icon: FilePenLine,
     },
     {
       title: "Configuraciones",
