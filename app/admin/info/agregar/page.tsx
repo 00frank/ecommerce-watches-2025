@@ -1,0 +1,137 @@
+"use client";
+
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Switch } from "@/components/ui/switch";
+import { Button } from "@/components/ui/button";
+import { Save } from "lucide-react";
+import { useState } from "react";
+import { toast } from "sonner";
+import { Database } from "@/types/database.type";
+import { createClient } from "@/lib/supabase/client";
+import { useRouter } from "next/navigation";
+
+async function createPage(formData: Database['public']['Tables']['pages']['Insert']) {
+  const supabase = createClient();
+  const { error } = await supabase.from('pages').insert(formData);
+  if (error) throw error;
+  return true;
+}
+
+export default function Page() {
+  const [isCreating, setIsCreating] = useState(false);
+  const [formData, setFormData] = useState({
+    title: '',
+    slug: '',
+    content: '',
+    is_active: true,
+  });
+  const router = useRouter();
+
+  const handleCreate = async () => {
+    if (!formData.title || !formData.slug || !formData.content) {
+      toast.error('Todos los campos son obligatorios');
+      return;
+    }
+
+    try {
+      setIsCreating(true);
+      const newPage = await createPage(formData);
+      if (newPage) {
+        toast.success('Página creada correctamente');
+        router.replace('/admin/info');
+      }
+    } catch (error) {
+      toast.error('Error al crear la página');
+    } finally {
+      setIsCreating(false);
+    }
+  };
+
+  const generateSlug = (title: string) => {
+    return title
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/(^-|-$)/g, '');
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleSwitchChange = (checked: boolean) => {
+    setFormData(prev => ({ ...prev, is_active: checked }));
+  };
+
+  return (
+    <div className="p-6">
+      <div className="bg-white p-6 rounded-lg shadow-md mb-6">
+        <h2 className="text-xl font-semibold mb-4">Nueva Página</h2>
+        <div className="space-y-4">
+          <div className="flex flex-col space-y-2">
+            <Label htmlFor="title">Título</Label>
+            <Input
+              id="title"
+              name="title"
+              value={formData.title}
+              onChange={(e) => {
+                handleInputChange(e);
+                setFormData(prev => ({
+                  ...prev
+                }));
+              }}
+              onBlur={(e) => {
+                handleInputChange(e);
+                setFormData(prev => ({
+                  ...prev,
+                  slug: generateSlug(e.target.value)
+                }));
+              }}
+              placeholder="Ej: Sobre Nosotros"
+            />
+          </div>
+          <div className="flex flex-col space-y-2">
+            <Label htmlFor="slug">Slug (URL)</Label>
+            <Input
+              id="slug"
+              name="slug"
+              value={formData.slug}
+              onChange={handleInputChange}
+              placeholder="ej: sobre-nosotros"
+            />
+          </div>
+          <div className="flex flex-col space-y-2">
+            <Label htmlFor="content">Contenido</Label>
+            <Textarea
+              id="content"
+              name="content"
+              value={formData.content}
+              onChange={handleInputChange}
+              rows={8}
+              placeholder="Escribe el contenido de la página aquí..."
+              className="min-h-[200px]"
+            />
+          </div>
+          <div className="flex items-center space-x-2">
+            <Switch
+              id="is_active"
+              checked={formData.is_active}
+              onCheckedChange={handleSwitchChange}
+            />
+            <Label htmlFor="is_active">Página activa</Label>
+          </div>
+          <div className="flex justify-end space-x-2 pt-4">
+            <Button variant="outline" onClick={() => router.back()}>
+              Cancelar
+            </Button>
+            <Button onClick={handleCreate} disabled={isCreating}>
+              <Save className="mr-2 h-4 w-4" /> Guardar
+            </Button>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}

@@ -1,20 +1,22 @@
-import contactLinks from "@/constants/contactLinks.constant"
 import CategoriesList from "./components/CategoriesList"
 import LinkItem from "./components/LinkItem"
 import CategoriesQuery from "@/lib/supabase/queries/categories.query"
 import { createClient } from "@/lib/supabase/server"
 
 
-const Info = () => {
+const Info = async () => {
+    const supabase = await createClient();
+    const { data: contactLinks } = await supabase.from('pages').select('*');
+
     return (
         <section className="  space-y-4 h-full">
             <h4 className="text-xl">Información</h4>
             <ul className="space-y-2">
-                {contactLinks.map((link) => (
+                {contactLinks?.map((link) => (
                     <LinkItem
-                        key={link.name}
-                        name={link.name}
-                        href={link.href} />
+                        key={link.title}
+                        name={link.title}
+                        href={"/info/"+link.slug} />
                 ))}
             </ul>
         </section>
