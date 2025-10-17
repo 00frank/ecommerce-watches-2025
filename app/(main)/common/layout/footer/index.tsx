@@ -26,11 +26,11 @@ const Info = async () => {
 const AboutUs = () => {
     return (
         <section className="space-y-4  h-full">
-            <h4 className="text-xl">El Mundo del Reloj</h4>
+            {/* <h4 className="text-xl">El Mundo del Reloj</h4>
             <p className="text-default-800">
                 Desde hace 40 años proveemos a todo el país de toda la gama de productos para joyerías,
                 relojerías, artesanos, revendedores e independientes.
-            </p>
+            </p> */}
         </section>
     )
 }
