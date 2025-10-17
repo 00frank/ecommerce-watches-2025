@@ -88,12 +88,12 @@ const data = {
   navSecondary: [
     {
       title: "Soporte",
-      url: "https://web.whatsapp.com/send?phone=+5491122681302&text=Hola, necesito ayuda con ...",
+      url: "https://wa.me/5491122681302&text=Hola, necesito ayuda con ...",
       icon: LifeBuoy,
     },
     {
       title: "Feedback",
-      url: "https://web.whatsapp.com/send?phone=+5491122681302&text=Hola quisiera dar un feedback de ...",
+      url: "https://wa.me/5491122681302&text=Hola quisiera dar un feedback de ...",
       icon: Send,
     },
   ],

@@ -14,7 +14,7 @@ export default function ContactButton() {
         )}>
         <a
             target="_blank"
-            href={`https://web.whatsapp.com/send?phone=${phone_number}`}
+            href={`https://wa.me/${phone_number}`}
         >
             Contactarme
         </a>
