@@ -3,14 +3,14 @@ import { Metadata } from 'next';
 import { createClient } from '@/lib/supabase/server';
 
 type PageProps = {
-  params: { slug: string };
-  searchParams: { [key: string]: string | string[] | undefined };
+  params: Promise<{ slug: string }>;
 };
 
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
-  const page = await getPageBySlug(params.slug);
+  const paramsResolved = await params;
+  const page = await getPageBySlug(paramsResolved.slug);
 
   if (!page) {
     return {
@@ -54,7 +54,8 @@ async function getPageBySlug(slug: string) {
 }
 
 export default async function Page({ params }: PageProps) {
-  const page = await getPageBySlug(params.slug);
+  const paramsResolved = await params;
+  const page = await getPageBySlug(paramsResolved.slug);
 
   if (!page || !page.is_active) {
     notFound();
