@@ -65,10 +65,9 @@ export default async function Page({ params }: PageProps) {
     <div className="container mx-auto px-4 py-12">
       <div className="max-w-3xl mx-auto">
         <h1 className="text-3xl font-bold mb-6">{page.title}</h1>
-        <div
-          className="prose max-w-none"
-          dangerouslySetInnerHTML={{ __html: page.content || '' }}
-        />
+        <div className="prose max-w-none whitespace-pre-line">
+          {page.content}
+        </div>
       </div>
     </div>
   );

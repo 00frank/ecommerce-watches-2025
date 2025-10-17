@@ -20,9 +20,9 @@ async function getPageById(id: string) {
   return data;
 }
 
-async function createPage(formData: Database['public']['Tables']['pages']['Insert']) {
+async function updatePage(formData: Database['public']['Tables']['pages']['Update'], id: string) {
   const supabase = createClient();
-  const { error } = await supabase.from('pages').insert(formData);
+  const { error } = await supabase.from('pages').update(formData).eq('id', id);
   if (error) throw error;
   return true;
 }
@@ -74,13 +74,13 @@ export default function Page() {
 
     try {
       setIsEditing(true);
-      const newPage = await createPage(formData);
+      const newPage = await updatePage(formData, id as string);
       if (newPage) {
-        toast.success('Página creada correctamente');
+        toast.success('Página actualizada correctamente');
         router.replace('/admin/info');
       }
     } catch (error) {
-      toast.error('Error al crear la página');
+      toast.error('Error al actualizar la página');
     } finally {
       setIsEditing(false);
     }
