@@ -42,7 +42,7 @@ const ProductInfo = ({
                     <h1 className="text-[12px] font-semibold tracking-wide text-default-500 uppercase">{brand}</h1>
                     <h2 className="uppercase text-4xl font-bold">{name}</h2>
                 </div>
-                <p className="text-default-600">{description}</p>
+                <p className="prose max-w-none whitespace-pre-line text-default-600">{description}</p>
             </header>
             <p className={
                 clsx(

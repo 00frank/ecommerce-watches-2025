@@ -11,6 +11,7 @@ import { toast } from 'sonner';
 import { CategoriesSelect } from '../components/CategoriesSelect';
 import { ProductDatabase } from '@/types/product.interface';
 import Image from 'next/image';
+import { Textarea } from '@/components/ui/textarea';
 
 
 export default function ProductPage() {
@@ -27,6 +28,7 @@ export default function ProductPage() {
 		name: '',
 		price: 0,
 		category_id: 0,
+		description: '',
 		quantity: 0,
 		sku: '',
 		brand: '',
@@ -53,10 +55,11 @@ export default function ProductPage() {
 					name: data.name || '',
 					price: data.price || 0,
 					category_id: data.category_id || 0,
+					description: data.description || '',
 					quantity: data.quantity || 0,
 					sku: data.sku || '',
 					brand: data.brand || '',
-					is_active: data.is_active || true,
+					is_active: Boolean(data.is_active),
 					color: data.color || '#000000'
 				});
 			} catch (err) {
@@ -70,7 +73,7 @@ export default function ProductPage() {
 		fetchProduct();
 	}, [id]);
 
-	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
 		const { name, value } = e.target;
 		setFormData(prev => ({
 			...prev,
@@ -299,7 +302,7 @@ export default function ProductPage() {
 									<Label htmlFor="available">Mostrar en tienda</Label>
 									<Switch
 										id="available"
-										checked={formData.quantity > 0}
+										checked={formData.is_active}
 										onCheckedChange={handleShowInStoreChange}
 									/>
 								</div>
@@ -332,6 +335,17 @@ export default function ProductPage() {
 									/>
 								</div>
 							</div>
+						</div>
+
+						<div className="space-y-2">
+							<Label htmlFor="description">Descripción</Label>
+							<Textarea
+								id="description"
+								name="description"
+								value={formData.description}
+								onChange={handleInputChange}
+								placeholder="Descripción del producto"
+							/>
 						</div>
 					</div>
 

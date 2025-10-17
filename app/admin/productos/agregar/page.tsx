@@ -6,6 +6,7 @@ import { ServerCategoriesSelect } from "../components/CategoriesSelect"
 import { ImageProductInput } from "../components/ImageProductInput"
 import { SubmitButton } from "../components/SubmitButton"
 import { createProduct } from "./actions"
+import { Textarea } from "@/components/ui/textarea"
 
 export default async function AgregarProducto() {
   return (
@@ -107,7 +108,14 @@ export default async function AgregarProducto() {
                 </div>
               </div>
             </div>
-            <div className="space-y-2" />
+            <div className="space-y-2">
+              <Label htmlFor="description">Descripción</Label>
+              <Textarea
+                id="description"
+                name="description"
+                placeholder="Descripción del producto"
+              />
+            </div>
           </div>
         </div>
 
