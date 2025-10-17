@@ -19,7 +19,7 @@ import Link from 'next/link';
 const supabase = createClient();
 
 async function getAllPages() {
-  const { data, error } = await supabase.from('pages').select('*');
+  const { data, error } = await supabase.from('pages').select('*').order('created_at', { ascending: false });
   if (error) throw error;
   return data;
 }
@@ -67,7 +67,7 @@ export default function PagesAdminPage() {
   return (
     <div className="container mx-auto p-6">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">Gestión de Páginas</h1>
+        <h1 className="text-2xl font-bold">Gestión de páginas</h1>
         <Link href="/admin/info/agregar">
           <Button>
             <Plus className="mr-2 h-4 w-4" /> Nueva página

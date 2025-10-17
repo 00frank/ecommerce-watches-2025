@@ -6,7 +6,7 @@ import { createClient } from "@/lib/supabase/server"
 
 const Info = async () => {
     const supabase = await createClient();
-    const { data: contactLinks } = await supabase.from('pages').select('*');
+    const { data: contactLinks } = await supabase.from('pages').select('*').eq('is_active', true);
 
     return (
         <section className="  space-y-4 h-full">

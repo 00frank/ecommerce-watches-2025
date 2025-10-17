@@ -35,6 +35,7 @@ async function getPageBySlug(slug: string) {
     .from('pages')
     .select('*')
     .eq('slug', slug)
+    .eq('is_active', true)
     .single();
 
   if (error || !data) {
