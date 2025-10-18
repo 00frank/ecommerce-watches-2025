@@ -24,9 +24,7 @@ export default function SearchProduct({ onSearch }: Props) {
 
     const handleSearch = (value: string = search) => {
         if (value === searchParams.get("query")) return //En caso de que el valor cambio, no se haga ningun cambio de URL (evita peticiones innecesarias)
-        const s = new URLSearchParams(searchParams)
-        s.set("query", value)
-        router.push(`/search/?${s}`)
+        router.push(`/search/?query=${value}`)
         onSearch && onSearch()
     }
 

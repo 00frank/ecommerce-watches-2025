@@ -3,13 +3,8 @@ import Image from "next/image";
 import Link from "next/link";
 
 
-export default function ProductCard({
-    name,
-    image_url,
-    sku,
-    brand,
-    id
-}: ProductDatabase) {
+export default function ProductCard(props: ProductDatabase) {
+    const { image_url, sku, name, brand } = props
     return (
         <Link href={`/productos/${sku}`}
             className="block">
