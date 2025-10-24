@@ -17,10 +17,10 @@ export default async function ProductosPage({ searchParams }: { searchParams: Se
   const params = await searchParams;
 
   const page = params?.page
-    ? Math.max(1, parseInt(params.page || '1', 10))
-    : 1;
+    ? Number(params.page)
+    : 0;
 
-  const from = (page - 1) * ITEMS_PER_PAGE;
+  const from = (page) * ITEMS_PER_PAGE;
   const to = from + ITEMS_PER_PAGE - 1;
 
   const { count } = await supabase
@@ -37,7 +37,7 @@ export default async function ProductosPage({ searchParams }: { searchParams: Se
     return <div>Error al cargar los productos</div>;
   }
 
-  const totalPages = count ? Math.ceil(count / ITEMS_PER_PAGE) : 0;
+  const totalPages = count ? Math.ceil((count / ITEMS_PER_PAGE) - 1) : 0;
 
   const pageNumbers = [];
   for (let i = 1; i <= totalPages; i++) {
