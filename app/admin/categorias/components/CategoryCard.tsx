@@ -24,10 +24,10 @@ export async function CategoryCard({ category }: { category: CategoryTree }) {
         </h2>
       </div>
       <div className="flex flex-col w-3/6 pr-4">
-        {!category.subCategories && (
+        {category.subCategories.length === 0 && (
           <p className="text-gray-500 text-center">(Sin subcategorias)</p>
         )}
-        {category.subCategories && (
+        {category.subCategories.length > 0 && (
           <DropdownMenu>
             <DropdownMenuTrigger>Mostrar subcategorias</DropdownMenuTrigger>
             <DropdownMenuContent>
