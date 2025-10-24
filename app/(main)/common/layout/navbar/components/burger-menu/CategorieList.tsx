@@ -57,7 +57,7 @@ const CategoryItem = memo(({ category, isLinkActive, seeAllActive, onCloseDrawer
                         onCloseDrawer={onCloseDrawer}
                         slug={category.slug || ""}
                         title={"Ver todo"}
-                        isLinkActive={seeAllActive}
+                        isLinkActive={false}
                     />
                     <CategoriesList
                         categories={category.subCategories}
@@ -110,14 +110,14 @@ export default function CategoriesList({ categories }: { categories: Category[] 
                     <CategoryItem
                         key={cat.id}
                         onCloseDrawer={onCloseDrawer}
-                        isLinkActive={isCategoryActive(cat, category_slug)}
+                        isLinkActive={false}
                         seeAllActive={isEqualSlug}
                         category={cat} /> :
                     <CategoryLink
                         key={cat.id}
                         slug={cat.slug || ""}
                         title={cat.title || ""}
-                        isLinkActive={isEqualSlug}
+                        isLinkActive={false}
                         onCloseDrawer={onCloseDrawer}
                     />
             })}

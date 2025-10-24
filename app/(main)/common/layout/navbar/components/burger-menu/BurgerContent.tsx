@@ -1,6 +1,7 @@
 "use client"
 import { useLayoutEffect, useState } from "react"
-import { DrawerContent } from "@/components/ui/drawer"
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden"
+import { DrawerContent, DrawerTitle } from "@/components/ui/drawer"
 import { useDrawerContext } from "../../provider/Drawer.provider"
 
 export default function BurgerContent({ children }: { children: React.ReactNode }) {
@@ -24,6 +25,9 @@ export default function BurgerContent({ children }: { children: React.ReactNode 
             style={{
                 top: `calc(var(--nav-height) + var(--header-height) - ${y}px)`,
             }}>
+            <VisuallyHidden>
+                <DrawerTitle>Menu</DrawerTitle>
+            </VisuallyHidden>
             {children}
         </DrawerContent>
     )
