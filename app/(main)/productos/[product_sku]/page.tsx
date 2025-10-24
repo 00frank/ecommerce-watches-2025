@@ -1,14 +1,14 @@
-import Container from "@/components/container"
 import ProductCard from "@/app/(main)/common/components/productCard"
+import Container from "@/components/container"
 import ProductsQuery from "@/lib/supabase/queries/products.query"
 import { createClient } from "@/lib/supabase/server"
+import { Category } from "@/types"
 import { Params } from "@/types/params.type"
 import { ProductDatabase } from "@/types/product.interface"
 import clsx from "clsx"
 import Image from "next/image"
-import { notFound } from "next/navigation"
 import AskWhatsAppButton from "./components/AskWhatsAppButton"
-import { Category } from "@/types"
+import NotFoundProduct from "./not-found"
 
 const ImageContainer = ({ image_url, name }: Pick<ProductDatabase, "image_url" | "name">) => {
     return (
@@ -86,7 +86,7 @@ export default async function ProductPage({ params }: { params: Promise<Params> 
 
     const product = await ProductsQuery.getProductBySku(client, { sku: normalizedSKU })
 
-    if (!product) return notFound()
+    if (!product) return NotFoundProduct()
 
     const recommendedProducts = await ProductsQuery.getRecommendedProducts(client, product)
 
@@ -94,7 +94,7 @@ export default async function ProductPage({ params }: { params: Promise<Params> 
         <Container
             as="div"
             className="p-8 my-10 gap-10 flex flex-col">
-            <main className="gap-8 w-full min-h-[75dvh] md:max-h-[75dvh]  flex-col md:flex-row flex">
+            <main className="gap-8 w-full min-h-[55dvh] md:max-h-[55dvh]  flex-col md:flex-row flex">
                 <ImageContainer image_url={product.image_url} name={product.name} />
                 <ProductInfo {...product} />
             </main>

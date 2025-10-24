@@ -5,22 +5,25 @@ import clsx from "clsx"
 import { ArrowLeft, ArrowRight } from "lucide-react"
 import Link from "next/link"
 import { useParams } from "next/navigation"
-import { memo, useState } from "react"
+import { memo, useCallback, useState } from "react"
+import { useDrawerContext } from "../../provider/Drawer.provider"
 
 interface CategoryItemProps {
     category: Category,
     isLinkActive: boolean,
-    seeAllActive: boolean
+    seeAllActive: boolean,
+    onCloseDrawer: () => void
 }
 
 
 interface CategoryLinkProps {
     slug: string,
     title: string,
-    isLinkActive: boolean
+    isLinkActive: boolean,
+    onCloseDrawer: () => void
 }
 
-const CategoryItem = memo(({ category, isLinkActive, seeAllActive }: CategoryItemProps) => {
+const CategoryItem = memo(({ category, isLinkActive, seeAllActive, onCloseDrawer }: CategoryItemProps) => {
 
     const [isOpen, setIsOpen] = useState(false)
 
@@ -51,6 +54,7 @@ const CategoryItem = memo(({ category, isLinkActive, seeAllActive }: CategoryIte
                         <h3 className="truncate">{category.title}</h3>
                     </button>
                     <CategoryLink
+                        onCloseDrawer={onCloseDrawer}
                         slug={category.slug || ""}
                         title={"Ver todo"}
                         isLinkActive={seeAllActive}
@@ -66,13 +70,14 @@ const CategoryItem = memo(({ category, isLinkActive, seeAllActive }: CategoryIte
 
 CategoryItem.displayName = "CategoryItem"
 
-const CategoryLink = ({ slug, title, isLinkActive }: CategoryLinkProps) => {
+const CategoryLink = ({ slug, title, isLinkActive, onCloseDrawer }: CategoryLinkProps) => {
     return (
         <li className={clsx(
             "p-2 flex",
             isLinkActive && "bg-gray-100"
         )}>
             <Link
+                onClick={onCloseDrawer}
                 className={clsx(
                     "hover:underline w-full underline-offset-2  text-default-700 text-semibold text-md uppercase hover:text-default-950 transition-colors duration-200  cursor-pointer",
                     isLinkActive && "underline !text-default-950 "
@@ -90,6 +95,13 @@ export default function CategoriesList({ categories }: { categories: Category[] 
 
     const { category_slug } = useParams()
 
+    const { setOpen } = useDrawerContext()
+
+    const onCloseDrawer = useCallback(() => {
+        setOpen(false)
+    }, [])
+
+
     return (
         <ul className="space-y-1">
             {categories.map((cat) => {
@@ -97,6 +109,7 @@ export default function CategoriesList({ categories }: { categories: Category[] 
                 return cat.subCategories.length > 0 ?
                     <CategoryItem
                         key={cat.id}
+                        onCloseDrawer={onCloseDrawer}
                         isLinkActive={isCategoryActive(cat, category_slug)}
                         seeAllActive={isEqualSlug}
                         category={cat} /> :
@@ -105,6 +118,7 @@ export default function CategoriesList({ categories }: { categories: Category[] 
                         slug={cat.slug || ""}
                         title={cat.title || ""}
                         isLinkActive={isEqualSlug}
+                        onCloseDrawer={onCloseDrawer}
                     />
             })}
         </ul>

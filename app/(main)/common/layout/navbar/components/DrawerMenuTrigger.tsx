@@ -4,7 +4,7 @@ import { Menu, X } from "lucide-react";
 import { useDrawerContext } from "../provider/Drawer.provider";
 
 export default function DrawerMenuTrigger() {
-    const open = useDrawerContext()
+    const { open } = useDrawerContext()
     return (
         <DrawerTrigger className="cursor-pointer hover:scale-105">
             {
