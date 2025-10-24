@@ -83,6 +83,7 @@ export function ServerCategoriesSelect() {
     const fetchCategories = async () => {
       const { data, error } = await supabase.from('categories').select('*');
       if (error) throw error;
+      console.log("buildCategoryTree(data)", buildCategoryTree(data))
       setCategoriesTree(buildCategoryTree(data));
       setLoading(false);
     };
@@ -97,7 +98,7 @@ export function ServerCategoriesSelect() {
       <SelectContent>
         {categoriesTree.map((category) => (
           <SelectGroup key={category.id}>
-            {!category.subCategories && (
+            {category.subCategories.length === 0 && (
               <>
                 <SelectLabel>{category.title}</SelectLabel>
                 <SelectItem key={category.id} value={category.id.toString()}>
@@ -105,7 +106,7 @@ export function ServerCategoriesSelect() {
                 </SelectItem>
               </>
             )}
-            {category.subCategories && (
+            {category.subCategories.length > 0 && (
               <>
                 <SelectLabel>{category.title}</SelectLabel>
                 {category.subCategories.map((subCategory) => (
