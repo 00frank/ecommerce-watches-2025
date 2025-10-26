@@ -49,7 +49,7 @@ export function CategoriesSelect({
       <SelectContent>
         {categoriesTree.map((category) => (
           <SelectGroup key={category.id}>
-            {!category.subCategories && (
+            {category.subCategories.length === 0 && (
               <>
                 <SelectLabel>{category.title}</SelectLabel>
                 <SelectItem key={category.id} value={category.id.toString()}>
@@ -57,7 +57,7 @@ export function CategoriesSelect({
                 </SelectItem>
               </>
             )}
-            {category.subCategories && (
+            {category.subCategories.length > 0 && (
               <>
                 <SelectLabel>{category.title}</SelectLabel>
                 {category.subCategories.map((subCategory) => (
