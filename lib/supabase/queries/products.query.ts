@@ -58,7 +58,7 @@ export default class ProductsQuery {
     }
 
     if (product_name) {
-      query = query.ilike("name", `%${product_name}%`)
+      query = query.ilike("normalized_name", `%${product_name}%`)
     }
 
     const { data } = await query
@@ -89,7 +89,7 @@ export default class ProductsQuery {
     }
 
     if (product_name) {
-      query = query.ilike("name", `%${product_name}%`)
+      query = query.ilike("normalized_name", `%${product_name}%`)
     }
 
     const { count: c } = await query
@@ -162,12 +162,12 @@ export default class ProductsQuery {
 
     if (!product.name) return []
 
-    const orFilters = product.name.split(" ").filter(b => b.length > 2).map(b => `name.ilike.%${b}%`).join(',');
+    const orFilters = product.name.split(" ").filter(b => b.length > 2).map(b => `normalized_name.ilike.%${b}%`).join(',');
 
     const { data } = await client
       .from("products")
       .select("*")
-      .neq("name", product.name)
+      .neq("normalized_name", product.name)
       .or(`brand.ilike.%${product.brand}%,${orFilters},category_id.eq.${id}`)
       .eq("is_active", true)
       .limit(5)
