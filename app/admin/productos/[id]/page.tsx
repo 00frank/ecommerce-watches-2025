@@ -148,6 +148,22 @@ export default function ProductPage() {
 				imageUrl = await uploadImage(selectedFile);
 			}
 
+			if (!formData.brand) {
+				formData.brand = "Sin marca"
+			}
+
+			if (!formData.sku) {
+				const category_slug = await supabase
+					.from('categories')
+					.select('slug')
+					.eq('id', formData.category_id)
+					.single();
+
+				if (category_slug.data) {
+					formData.sku = `${category_slug.data.slug}-${formData.brand}-${formData.name}`.toLowerCase();
+				}
+			}
+
 			// Update product data
 			const { error, data } = await supabase
 				.from('products')
@@ -280,7 +296,7 @@ export default function ProductPage() {
 
 						<div className="space-y-2">
 							<div className="flex flex-row gap-4">
-								<div className="space-y-2">
+								{/* <div className="space-y-2">
 									<Label htmlFor="price">Precio</Label>
 									<div className="relative">
 										<span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">$</span>
@@ -296,7 +312,7 @@ export default function ProductPage() {
 											className="pl-8"
 										/>
 									</div>
-								</div>
+								</div> */}
 
 								<div className="space-y-2">
 									<Label htmlFor="available">Mostrar en tienda</Label>

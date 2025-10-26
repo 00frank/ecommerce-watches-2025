@@ -13,6 +13,7 @@ interface ProductFormData {
   category_id: number
   image_url?: string
   is_active: boolean
+  description: string
 }
 
 export async function createProduct(formData: FormData) {
@@ -25,7 +26,8 @@ export async function createProduct(formData: FormData) {
     color: formData.get('color') as string,
     quantity: Boolean(formData.get('available') as string) ? 1 : 0,
     category_id: Number(formData.get('categoryId')) as number,
-    is_active: Boolean(formData.get('is_active') as string)
+    is_active: Boolean(formData.get('is_active') as string),
+    description: formData.get('description') as string,
   }
 
   console.log("productData", productData);
@@ -50,6 +52,22 @@ export async function createProduct(formData: FormData) {
         .getPublicUrl(uploadData.path)
 
       productData.image_url = publicUrl
+    }
+
+    if (!productData.brand) {
+      productData.brand = "Sin marca"
+    }
+
+    if (!productData.sku) {
+      const category_slug = await supabase
+        .from('categories')
+        .select('slug')
+        .eq('id', productData.category_id)
+        .single();
+
+      if (category_slug.data) {
+        productData.sku = `${category_slug.data.slug}-${productData.brand}-${productData.name}`.toLowerCase();
+      }
     }
 
     // Insert product
