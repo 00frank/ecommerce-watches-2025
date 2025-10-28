@@ -43,7 +43,7 @@ export default async function AgregarProducto() {
                       name="slug"
                       type="text"
                       required
-                      placeholder=""
+                      placeholder="separado-por-guiones"
                       className="pl-8"
                     />
                   </div>
