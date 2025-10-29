@@ -27,7 +27,7 @@ export default class ProductsQuery {
     client: SupabaseClientType,
     {
       filter,
-      sort = "date-desc",
+      sort = "alpha-asc",
       page = 0
     }: {
       filter: ProductFilter,
