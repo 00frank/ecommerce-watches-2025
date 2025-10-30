@@ -9,6 +9,7 @@ import ProductSearchProvider from "./common/provider/ProductSearch.provider";
 import AppConfigProvider from "./common/provider/AppConfig.provider";
 import ConfigurationsQuery from "@/lib/supabase/queries/configurations.query";
 import { createClient } from "@/lib/supabase/server";
+import ScrollToTop from "./common/layout/ScrollToTop";
 
 
 const lato = Lato({
@@ -41,6 +42,7 @@ export default async function RootLayout({
           <ProductSearchProvider>
             <Header />
             <Navbar />
+            <ScrollToTop />
             {children}
             <Footer />
             <WhatsAppFloat />
