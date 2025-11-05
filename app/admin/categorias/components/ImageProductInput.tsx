@@ -25,8 +25,8 @@ export function ImageProductInput({ product }: ImageProductInputProps) {
     }
 
     // Check file size (max 5MB)
-    if (file.size > 5 * 1024 * 1024) {
-      toast.error('La imagen no puede pesar más de 5MB');
+    if (file.size > 4 * 1024 * 1024) {
+      toast.error('La imagen no puede pesar más de 4MB');
       return;
     }
 
