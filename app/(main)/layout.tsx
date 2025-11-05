@@ -21,8 +21,8 @@ const lato = Lato({
 
 
 export const metadata: Metadata = {
-  title: "Relojes elegantes y deportivos | Importadora La Unión",
-  description: "Descubre relojes clásicos, modernos y deportivos en Importadora La Unión. Calidad, estilo y los mejores precios en relojería.",
+  title: "Pilas, Relojes y partes | Importadora La Unión",
+  description: "Descubre pilas, relojes y partes en Importadora La Unión. Calidad, estilo y los mejores precios en relojería.",
 };
 
 export default async function RootLayout({
