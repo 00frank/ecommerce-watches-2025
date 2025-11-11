@@ -31,7 +31,7 @@ export default async function SearchPage({ searchParams: sp }: { searchParams: P
     })
 
     return (
-        <Container>
+        <Container className="bg-white">
             <header className="flex flex-col items-center gap-5 justify-center py-10 w-full">
                 <h2 className="text-2xl">Resultados de búsqueda</h2>
                 <SearchProduct />
