@@ -25,12 +25,13 @@ export default async function ProductosPage({ searchParams }: { searchParams: Se
 
   const { count } = await supabase
     .from('products')
-    .select('*', { count: 'exact', head: true });
+    .select('*', { count: 'exact', head: true })
+    .order('name', { ascending: false });
 
   const { data: products, error } = await supabase
     .from('products')
     .select('*, category:category_id(*)')
-    .order('created_at', { ascending: false })
+    .order('name', { ascending: true })
     .range(from, to);
 
   if (error) {
