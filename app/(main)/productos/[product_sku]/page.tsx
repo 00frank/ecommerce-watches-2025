@@ -28,6 +28,7 @@ type ProductInfoProps = Omit<ProductDatabase, "image_url"> & {
 }
 
 const ProductInfo = ({
+    id,
     brand,
     name,
     quantity,
@@ -54,7 +55,7 @@ const ProductInfo = ({
                 Stock:
                 <span className="font-semibold text-black"> {quantity ? "Disponible" : "No disponible"}</span>
             </p>
-            <AskWhatsAppButton product_name={name || ""} category_title={category?.title || ""} />
+            <AskWhatsAppButton product_id={id} product_name={name || ""} category_title={category?.title || ""} />
         </section>
     )
 }
