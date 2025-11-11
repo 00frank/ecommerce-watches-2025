@@ -18,7 +18,7 @@ export default function SliderPromotions({
                 loop: true,
             }}
             plugins={[plugin.current]}
-            className="overflow-hidden">
+            className="overflow-hidden bg-white">
             <CarouselContent className="h-full">
                 {banners.map((banner) => (
                     <CarouselItem key={banner.id}>
@@ -26,7 +26,7 @@ export default function SliderPromotions({
                             <img
                                 loading="lazy"
                                 src={banner.image_url!}
-                                className="w-full max-h-[900px] h-full object-cover"
+                                className="w-full max-h-[400px] h-full object-contain"
                                 alt="promocion relojes"
                             />
                         </picture>
