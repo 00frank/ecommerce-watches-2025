@@ -19,7 +19,7 @@ export default async function Navbar() {
     return (
         <DrawerProvider >
             <NavigationMenu className={clsx(
-                "flex gap-2 flex-col max-h-min p-0 max-w-full",
+                "flex flex-col max-h-min p-0 max-w-full",
                 "w-full sticky border-b border-black/10 top-0 left-0 z-[51] bg-white justify-center",
             )}>
                 <Container className="flex h-[var(--nav-height)] items-center gap-2 justify-between">

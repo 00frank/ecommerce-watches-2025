@@ -19,7 +19,7 @@ interface ButtonOpenCategoryProps {
 }
 
 const classNameCategory = {
-  default: "text-default-700 max-w-[300px] truncate underline-offset-2 hover:text-default-950 text-[15px] p-2  items-center text-semibold bg-white flex uppercase cursor-pointer font-normal hover:underline transition-colors duration-200",
+  default: "text-default-700 font-medium max-w-[300px] truncate underline-offset-2 hover:text-default-950 text-[13px] tracking-wider p-1.5  items-center text-semibold bg-white flex uppercase cursor-pointer font-normal hover:underline transition-colors duration-200",
   active: "font-medium underline  text-default-950",
 }
 
@@ -139,7 +139,7 @@ export default function CategoriesBar({ categories }: { categories: Array<Catego
     <div
       ref={containerRef}
       className="max-md:hidden">
-      <NavigationMenuList className="py-2 max-w-5xl w-full  flex-wrap gap-2">
+      <NavigationMenuList className="py-2 max-w-5xl w-full  flex-wrap gap-x-3 gap-y-2">
         {categories.map((category) => (
           <NavigationMenuItem
             key={category.id}
