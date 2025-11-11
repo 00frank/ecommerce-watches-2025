@@ -22,7 +22,7 @@ export default function ProductCard(props: ProductDatabase) {
                 </div>
                 <div className="flex-1  pt-2 text-center ">
                     <p className="text-[12px] font-semibold tracking-wide text-default-500 uppercase">
-                        {brand}
+                        {brand === "Sin marca" ? "" : brand}
                     </p>
                     <h3 className="text-default-800 uppercase text-[14px] font-medium mt-1 group-hover:underline underline-offset-2 break-words line-clamp-3">
                         {name}

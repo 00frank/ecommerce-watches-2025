@@ -39,7 +39,9 @@ const ProductInfo = ({
         <section className="flex-1 p-6 flex  gap-8 flex-col">
             <header className="space-y-2">
                 <div>
-                    <h1 className="text-[12px] font-semibold tracking-wide text-default-500 uppercase">{brand}</h1>
+                    <h1 className="text-[12px] font-semibold tracking-wide text-default-500 uppercase">
+                        {brand === "Sin marca" ? "" : brand}
+                    </h1>
                     <h2 className="uppercase text-4xl font-bold">{name}</h2>
                 </div>
                 <p className="prose max-w-none whitespace-pre-line text-default-600">{description}</p>
