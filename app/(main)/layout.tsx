@@ -36,7 +36,7 @@ export default async function RootLayout({
   return (
     <html lang="es">
       <body
-        className={`${lato.className} antialiased`}
+        className={`${lato.className} antialiased bg-primary-400`}
       >
         <AppConfigProvider config={config}>
           <ProductSearchProvider>

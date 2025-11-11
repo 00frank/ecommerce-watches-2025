@@ -70,7 +70,7 @@ export default async function CategoryPage({ searchParams: sp, params: p }: Cate
 
 
     return (
-        <Container>
+        <Container className="bg-white">
             <ProductList
                 brands={brands}
                 products={products}

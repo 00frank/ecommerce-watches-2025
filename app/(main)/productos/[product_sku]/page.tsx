@@ -36,7 +36,7 @@ const ProductInfo = ({
 }: ProductInfoProps) => {
 
     return (
-        <section className="flex-1 p-6 flex  gap-10 flex-col">
+        <section className="flex-1 p-6 flex  gap-8 flex-col">
             <header className="space-y-2">
                 <div>
                     <h1 className="text-[12px] font-semibold tracking-wide text-default-500 uppercase">{brand}</h1>
@@ -93,7 +93,7 @@ export default async function ProductPage({ params }: { params: Promise<Params> 
     return (
         <Container
             as="div"
-            className="p-8 my-10 gap-10 flex flex-col">
+            className="bg-white p-8 gap-10 flex flex-col">
             <main className="gap-8 w-full min-h-[55dvh] md:max-h-[55dvh]  flex-col md:flex-row flex">
                 <ImageContainer image_url={product.image_url} name={product.name} />
                 <ProductInfo {...product} />
