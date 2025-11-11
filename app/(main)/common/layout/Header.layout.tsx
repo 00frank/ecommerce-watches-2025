@@ -8,7 +8,7 @@ export default function Header() {
     if (!welcome_message) return null
     return (
         <header className="w-full h-[var(--header-height)] z-[1000] bg-primary-400 flex items-center justify-center ">
-            <p className="text-white p-1 text-center line-clamp-2">{welcome_message}</p>
+            <p className="text-white text-sm tracking-wider p-1 text-center line-clamp-2">{welcome_message}</p>
         </header>
     )
 }
