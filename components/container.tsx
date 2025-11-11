@@ -10,7 +10,7 @@ interface ContainerProps {
 export default function Container({ children, className, as }: ContainerProps) {
     const Component = as || "div"
     return (
-        <Component className={clsx("max-w-7xl w-full mx-auto px-4 md:px-8", className)}>
+        <Component className={clsx("w-full mx-auto px-4 md:px-8", className)}>
             {children}
         </Component>
     )
