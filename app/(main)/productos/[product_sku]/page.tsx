@@ -9,6 +9,7 @@ import clsx from "clsx"
 import AskWhatsAppButton from "./components/AskWhatsAppButton"
 import ImageZoomContainer from "./components/ImageZoomContainer"
 import NotFoundProduct from "./not-found"
+import BackButton from "./components/BackButton"
 
 const ImageContainer = ({ image_url, name }: Pick<ProductDatabase, "image_url" | "name">) => {
     return (
@@ -90,7 +91,8 @@ export default async function ProductPage({ params }: { params: Promise<Params> 
         <Container
             as="div"
             className="bg-white p-8 gap-10 flex flex-col">
-            <main className="gap-8 w-full min-h-[55dvh] md:max-h-[55dvh]  flex-col md:flex-row flex">
+            <main className="gap-8 w-full min-h-[55dvh] md:max-h-[55dvh] relative flex-col md:flex-row flex">
+                <BackButton />
                 <ImageContainer image_url={product.image_url} name={product.name} />
                 <ProductInfo {...product} />
             </main>

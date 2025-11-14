@@ -26,7 +26,7 @@ export default function ImageZoomContainer({ image_url, name }: ImageZoomContain
   }, [isOpen]);
 
   return (
-    <section className="relative flex-1 border-1 border-black/5 rounded-xs ">
+    <section className="relative flex-1 border-1 border-black/5 rounded-xs mt-8 md:mt-0">
       <Image
         src={image_url}
         alt={name}
@@ -35,7 +35,7 @@ export default function ImageZoomContainer({ image_url, name }: ImageZoomContain
         height={1080} />
       <div
         onClick={() => setIsOpen(prev => !prev)}
-        className="absolute cursor-pointer right-2 bottom-2 p-4 border rounded-2xl">
+        className="hidden md:block absolute cursor-pointer bg-white right-2 bottom-2 p-4 border rounded-2xl">
         <ZoomIn />
       </div>
       {isOpen && (
