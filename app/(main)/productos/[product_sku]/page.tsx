@@ -6,20 +6,13 @@ import { Category } from "@/types"
 import { Params } from "@/types/params.type"
 import { ProductDatabase } from "@/types/product.interface"
 import clsx from "clsx"
-import Image from "next/image"
 import AskWhatsAppButton from "./components/AskWhatsAppButton"
+import ImageZoomContainer from "./components/ImageZoomContainer"
 import NotFoundProduct from "./not-found"
 
 const ImageContainer = ({ image_url, name }: Pick<ProductDatabase, "image_url" | "name">) => {
     return (
-        <section className="flex-1 border-1 border-black/5 rounded-xs ">
-            <Image
-                src={image_url || ""}
-                alt={name || ""}
-                className=" h-full w-full object-contain"
-                width={1920}
-                height={1080} />
-        </section>
+        <ImageZoomContainer image_url={image_url || ""} name={name || ""} />
     )
 }
 
