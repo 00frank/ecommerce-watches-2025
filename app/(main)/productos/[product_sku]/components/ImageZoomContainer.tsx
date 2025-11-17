@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { ZoomIn, ZoomOut } from "lucide-react";
 import { useState, useEffect } from "react";
+import BackButton from "./BackButton";
 
 interface ImageZoomContainerProps {
   image_url: string,
@@ -26,16 +27,17 @@ export default function ImageZoomContainer({ image_url, name }: ImageZoomContain
   }, [isOpen]);
 
   return (
-    <section className="relative flex-1 border-1 border-black/5 rounded-xs mt-8 md:mt-0">
+    <section className="relative flex gap-2 flex-col flex-1 mt-4 md:mt-0">
+      <BackButton />
       <Image
         src={image_url}
         alt={name}
-        className=" h-full w-full object-contain"
+        className="border-1 border-black/5 rounded-xs h-full w-full object-contain"
         width={1920}
         height={1080} />
       <div
         onClick={() => setIsOpen(prev => !prev)}
-        className="hidden md:block absolute cursor-pointer bg-white right-2 bottom-2 p-4 border rounded-2xl">
+        className="hidden md:block absolute cursor-pointer bg-white right-0 bottom-0 translate-y-1/2 p-4 border rounded-2xl">
         <ZoomIn />
       </div>
       {isOpen && (

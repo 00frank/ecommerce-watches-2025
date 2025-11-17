@@ -5,9 +5,9 @@ import { ArrowLeft } from "lucide-react";
 export default function BackButton() {
   const router = useRouter();
   return (
-    <div className="absolute h-6 flex gap-2 md:hidden underline" onClick={() => router.back()}>
+    <div className="h-6 flex cursor-pointer gap-2" onClick={() => router.back()}>
       <ArrowLeft />
-      Volver atras
+      <span className="underline md:no-underline hover:underline">Volver atras</span>
     </div>
   )
 }
