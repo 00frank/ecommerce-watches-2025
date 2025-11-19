@@ -29,7 +29,7 @@ export default function ImageZoomContainer({ image_url, name }: ImageZoomContain
   return (
     <section className="relative flex gap-2 flex-col flex-1 mt-4 md:mt-0">
       <BackButton />
-      <Image
+      <img
         src={image_url}
         alt={name}
         className="border-1 border-black/5 rounded-xs h-full w-full object-contain"

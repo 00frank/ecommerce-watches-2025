@@ -41,7 +41,11 @@ export async function ProductCard({ product }: { product: Product }) {
               <AlertDialogTitle>¿Estás seguro?</AlertDialogTitle>
               <div className="flex justify-around items-center gap-2">
                 <div className="relative h-24 w-24">
-                  <Image className="object-cover border rounded-lg" fill src={product.image_url || ""} alt={product.name || ""} />
+                  <img
+                    className="object-cover border rounded-lg"
+                    // fill
+                    src={product.image_url || ""}
+                    alt={product.name || ""} />
                 </div>
                 <AlertDialogDescription className="w-2/3">
                   Esta acción no puede ser deshecha. Esta acción eliminará el producto <b>{product.name}</b> de la base de datos.

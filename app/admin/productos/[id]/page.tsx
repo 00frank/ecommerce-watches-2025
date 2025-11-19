@@ -225,12 +225,12 @@ export default function ProductPage() {
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-8">
 					<div>
 						<div className="border rounded-lg overflow-hidden">
-							<Image
+							<img
 								src={imagePreview || product.image_url || ""}
 								alt={product.name || ""}
 								width={500}
 								height={500}
-								priority
+								// priority
 								className="w-full h-80 object-contain bg-gray-50"
 								onError={(e) => {
 									const target = e.target as HTMLImageElement;

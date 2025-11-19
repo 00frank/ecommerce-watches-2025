@@ -26,7 +26,7 @@ export default async function Navbar() {
                     <DrawerMenuTrigger />
                     <div className="flex mt-4 flex-col items-center justify-center space-y-2">
                         <Link href="/" className="flex flex-col items-center select-none text-center">
-                            <Image
+                            <img
                                 src="/logo.png"
                                 alt="Logo"
                                 width={140}

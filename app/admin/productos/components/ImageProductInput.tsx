@@ -36,12 +36,12 @@ export function ImageProductInput({ product }: ImageProductInputProps) {
   return (
     <div className="flex flex-col">
       <div className="border rounded-lg overflow-hidden">
-        <Image
+        <img
           src={imagePreview || product?.image_url || 'https://hpmcbbwdmsotqwjvewlp.supabase.co/storage/v1/object/public/product-images/defaultimage.jpg'}
           alt={product?.name || 'Imagen del producto'}
           width={500}
           height={500}
-          priority
+          // priority
           className="w-full h-80 object-contain bg-gray-50"
           onError={(e) => {
             const target = e.target as HTMLImageElement;

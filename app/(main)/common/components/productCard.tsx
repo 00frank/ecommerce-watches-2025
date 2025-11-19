@@ -12,7 +12,7 @@ export default function ProductCard(props: ProductDatabase) {
                 className="h-[340px] max-h-[340px] cursor-pointer group hover:shadow-lg hover:border-default-300 p-3 rounded-md overflow-hidden border flex flex-col items-stretch border-default-200 transition-shadow duration-300"
             >
                 <div className="flex-none overflow-hidden rounded-md">
-                    <Image
+                    <img
                         src={image_url || ""}
                         width={500}
                         height={500}
