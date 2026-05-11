@@ -10,6 +10,7 @@ import AppConfigProvider from "./common/provider/AppConfig.provider";
 import ConfigurationsQuery from "@/lib/supabase/queries/configurations.query";
 import { createClient } from "@/lib/supabase/server";
 import ScrollToTop from "./common/layout/ScrollToTop";
+import { Analytics } from '@vercel/analytics/next';
 
 
 const lato = Lato({
@@ -48,6 +49,7 @@ export default async function RootLayout({
             <WhatsAppFloat />
           </ProductSearchProvider>
         </AppConfigProvider>
+        <Analytics />
       </body>
     </html>
   );
