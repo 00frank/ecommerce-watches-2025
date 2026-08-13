@@ -34,11 +34,11 @@ function getFieldLabel(field: string) {
   return map[field] ?? field.replaceAll('_', ' ').replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
-function formatValueForDisplay(value: any) {
+function formatValueForDisplay(value: unknown) {
   if (value === null || value === undefined) return '-';
   if (typeof value === 'object') {
     try {
-      const str = JSON.stringify(value);
+      const str = JSON.stringify(value as Record<string, unknown>);
       return str.length > 120 ? str.slice(0, 117) + '...' : str;
     } catch (e) {
       return String(value);
