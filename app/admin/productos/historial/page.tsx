@@ -5,8 +5,8 @@ import { Product } from "@/types";
 import { DiffProductItem, getAuditLogDiff, getColorForAudit, getIconForAudit, getLabelForAudit } from "@/utils";
 import Link from "next/link";
 
-function formatDateToDMY(dateInput: string | Date | undefined) {
-  if (!dateInput) return "";
+function formatDateToDMY(dateInput: string | Date | null | undefined) {
+  if (dateInput === null || dateInput === undefined || dateInput === '') return "";
   const d = typeof dateInput === 'string' ? new Date(dateInput) : dateInput;
   if (Number.isNaN(d.getTime())) return String(dateInput);
   const day = String(d.getDate()).padStart(2, '0');
